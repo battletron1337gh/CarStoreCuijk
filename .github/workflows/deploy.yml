@@ -32,13 +32,28 @@ jobs:
           rm -rf node_modules package-lock.json
           npm install
       
-      - name: Build
-        run: npm run build
+      - name: Check Next.js config
+        run: cat next.config.ts
+      
+      - name: Build with debug
+        run: |
+          set -x
+          npm run build 2>&1
         env:
           NEXT_TELEMETRY_DISABLED: 1
+          CI: true
+        continue-on-error: false
       
-      - name: List dist directory
-        run: ls -la dist/
+      - name: Check dist exists
+        run: |
+          ls -la
+          if [ -d "dist" ]; then
+            ls -la dist/
+            echo "Dist exists with $(ls dist/ | wc -l) files"
+          else
+            echo "ERROR: dist directory not found!"
+            exit 1
+          fi
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
