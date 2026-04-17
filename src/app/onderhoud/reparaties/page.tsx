@@ -5,9 +5,9 @@ import { contactInfo } from '@/data/cars';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Auto Reparatie Cuijk | 1ste Eigenaar Auto\'s Onderhoud',
-  description: 'Vakkundige auto reparatie in Cuijk. Specialist in onderhoud van 1ste eigenaar autos. Distributieriem, ketting, koppeling, remblokken. Alle merken, BOVAG erkend. 168 reviews, 5 sterren.',
-  keywords: 'auto reparatie Cuijk, 1ste eigenaar auto onderhoud, distributieriem vervangen, ketting vervangen, koppeling vervangen, remblokken vervangen, auto reparatie, alle merken, BOVAG werkplaats',
+  title: 'Auto Reparatie Cuijk | 22:00 Bereikbaar - Spoed Reparatie Service',
+  description: 'Vakkundige auto reparatie in Cuijk. Garage open tot 22:00, bereikbaar voor spoed reparatie. Specialist in 1ste eigenaar autos. Distributieriem, ketting, koppeling, remblokken. Altijd bereikbaar voor spoed, ook na sluitingstijd. Alle merken, BOVAG erkend. 168 reviews, 5 sterren.',
+  keywords: 'auto reparatie Cuijk, spoed reparatie, garage open tot 22:00, 22:00 bereikbaar, reparatie na sluitingstijd, altijd bereikbaar voor spoed, 1ste eigenaar auto onderhoud, distributieriem vervangen, ketting vervangen, koppeling vervangen, remblokken vervangen, auto reparatie, alle merken, BOVAG werkplaats',
   openGraph: {
     title: 'Auto Reparatie Cuijk | Distributieriem, Koppeling, Remmen',
     description: 'Vakkundige auto reparatie. Distributieriem, ketting, koppeling, remblokken. 168 reviews, 5 sterren.',
@@ -36,14 +36,14 @@ export default function ReparatiesPage() {
             <div className="text-center">
               <span className="inline-flex items-center gap-2 bg-[#c8102e]/20 border border-[#c8102e]/40 text-white rounded-full px-4 py-2 mb-6">
                 <Wrench className="w-4 h-4" />
-                Vakkundige reparaties
+                22:00 bereikbaar - Spoed reparatie service
               </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
                 Auto <span className="text-[#c8102e]">Reparaties</span> Cuijk
               </h1>
               <p className="text-xl text-white/50 max-w-2xl mx-auto">
-                Professionele reparaties voor alle automerken. Onze ervaren monteurs lossen elk probleem op, 
-                groot of klein. Snelle service tegen eerlijke prijzen.
+                Professionele reparaties voor alle automerken. Garage open tot 22:00, bereikbaar voor spoed reparatie. 
+                Onze ervaren monteurs lossen elk probleem op, groot of klein. Altijd bereikbaar voor spoed, ook na sluitingstijd.
               </p>
             </div>
           </div>
@@ -55,8 +55,13 @@ export default function ReparatiesPage() {
             <div className="text-center mb-16">
               <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">Onze reparatiediensten</h2>
               <p className="text-lg text-white/50 max-w-2xl mx-auto">
-                Van kleine reparaties tot grote onderhoudsbeurten. Wij staan voor u klaar.
+                Van kleine reparaties tot grote onderhoudsbeurten. Garage open tot 22:00 voor spoed reparaties. 
+                Wij staan voor u klaar, ook na sluitingstijd.
               </p>
+              <div className="mt-4 inline-flex items-center gap-2 bg-[#c8102e]/20 border border-[#c8102e]/40 text-white rounded-full px-4 py-2">
+                <Clock className="w-4 h-4" />
+                <span className="text-sm font-medium">22:00 bereikbaar voor spoed - Bel ons!</span>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -107,7 +112,8 @@ export default function ReparatiesPage() {
                 Direct een afspraak maken?
               </h2>
               <p className="text-white/50 mb-8 text-lg max-w-2xl mx-auto">
-                Neem contact met ons op voor een vrijblijvende offerte of plan direct een afspraak.
+                Neem contact met ons op voor een vrijblijvende offerte of plan direct een afspraak. 
+                Garage open tot 22:00, altijd bereikbaar voor spoed reparatie.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">

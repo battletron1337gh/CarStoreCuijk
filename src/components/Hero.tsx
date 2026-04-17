@@ -58,7 +58,7 @@ export default function Hero() {
           className="inline-flex items-center gap-2 bg-[#c8102e]/10 border border-[#c8102e]/30 rounded-full px-4 py-2 mb-8"
         >
           <span className="w-2 h-2 bg-[#c8102e] rounded-full animate-pulse" />
-          <span className="text-white/80 text-sm font-medium">7 dagen per week open</span>
+          <span className="text-white/80 text-sm font-medium">Garage open tot 22:00 - Altijd bereikbaar voor spoed</span>
         </motion.div>
 
         <motion.h1
@@ -75,7 +75,7 @@ export default function Hero() {
           className="text-lg sm:text-xl text-white/50 max-w-2xl mx-auto mb-10"
         >
           Ruim aanbod tweedehands auto's en gebruikte auto's van alle merken. 
-          Auto inkoop, onderhoud, reparatie en airco vullen. 168 reviews, 5 sterren.
+          Garage open tot 22:00, bereikbaar voor spoed reparatie. Auto inkoop, onderhoud, reparatie en airco vullen. 168 reviews, 5 sterren.
         </motion.p>
 
         {/* Review Stats Badge */}
@@ -142,7 +142,7 @@ export default function Hero() {
           <span className="hidden sm:block text-white/20">•</span>
           <span>168 reviews, 5 sterren</span>
           <span className="hidden sm:block text-white/20">•</span>
-          <span>7 dagen open</span>
+          <span>Open tot 22:00</span>
         </motion.div>
       </motion.div>
 

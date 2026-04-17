@@ -6,9 +6,9 @@ import { openingHours, contactInfo } from '@/data/cars';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Auto Onderhoud Cuijk | Garage Alle Merken - 1ste Eigenaar Specialist',
-  description: 'Professioneel auto onderhoud in Cuijk voor alle merken. Specialist in 1ste eigenaar autos. APK, kleine en grote beurt, vakkundige service. 168 reviews, 5 sterren.',
-  keywords: 'auto onderhoud Cuijk, 1ste eigenaar autos onderhoud, auto onderhoud, alle merken, APK keuring, kleine beurt, grote beurt, garage Cuijk, BOVAG garage',
+  title: 'Auto Onderhoud Cuijk | Garage Open tot 22:00 - Spoed Service',
+  description: 'Professioneel auto onderhoud in Cuijk voor alle merken. Garage open tot 22:00, bereikbaar voor spoed reparatie. Specialist in 1ste eigenaar autos. APK, kleine en grote beurt. Altijd bereikbaar voor spoed, ook na sluitingstijd. 168 reviews, 5 sterren.',
+  keywords: 'auto onderhoud Cuijk, garage open tot 22:00, 22:00 bereikbaar, spoed reparatie, reparatie na sluitingstijd, altijd bereikbaar voor spoed, 1ste eigenaar autos onderhoud, auto onderhoud, alle merken, APK keuring, kleine beurt, grote beurt, garage Cuijk, BOVAG garage',
   openGraph: {
     title: 'Auto Onderhoud Cuijk | Garage Alle Merken',
     description: 'Professioneel auto onderhoud voor alle merken. APK, kleine en grote beurt. 168 reviews, 5 sterren.',
@@ -28,14 +28,14 @@ export default function OnderhoudPage() {
             <div className="text-center">
               <span className="inline-flex items-center gap-2 bg-[#c8102e]/20 border border-[#c8102e]/40 text-white rounded-full px-4 py-2 mb-6">
                 <Wrench className="w-4 h-4" />
-                Vakkundige service
+                Garage open tot 22:00 - Spoed service
               </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
                 Auto <span className="text-[#c8102e]">Onderhoud</span> Cuijk
               </h1>
               <p className="text-xl text-white/50 max-w-2xl mx-auto">
-                Professioneel auto onderhoud voor alle merken. APK, kleine en grote beurt. 
-                Vertrouw op onze ervaren monteurs en moderne werkplaats. 168 reviews, 5 sterren.
+                Professioneel auto onderhoud voor alle merken. Garage open tot 22:00, altijd bereikbaar voor spoed reparatie. 
+                APK, kleine en grote beurt. Vertrouw op onze ervaren monteurs en moderne werkplaats. 168 reviews, 5 sterren.
               </p>
             </div>
           </div>
@@ -88,7 +88,7 @@ export default function OnderhoudPage() {
                   </h2>
                   <p className="text-white/50 mb-8 text-lg">
                     Plan uw onderhoud, APK of reparatie eenvoudig via WhatsApp of telefoon. 
-                    Wij zorgen voor een snelle en vakkundige service.
+                    Garage open tot 22:00, ook bereikbaar voor spoed na sluitingstijd. Wij zorgen voor een snelle en vakkundige service.
                   </p>
                   
                   <div className="flex flex-col sm:flex-row gap-4">
@@ -121,8 +121,8 @@ export default function OnderhoudPage() {
                       </div>
                     ))}
                   </div>
-                  <p className="text-sm text-white/30 mt-4">
-                    Na 18:00 op afspraak mogelijk
+                  <p className="text-sm text-[#c8102e] font-medium mt-4">
+                    Garage open tot 22:00 - Altijd bereikbaar voor spoed!
                   </p>
                 </div>
               </div>

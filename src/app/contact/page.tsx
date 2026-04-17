@@ -6,9 +6,9 @@ import { contactInfo, openingHours } from '@/data/cars';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Contact Car Store Cuijk | 1ste Eigenaar Auto\'s',
-  description: 'Neem contact op met Car Store Cuijk. Specialist in 1ste eigenaar autos. Auto inkoop, verkoop, onderhoud. Bel of WhatsApp ons. 168 reviews, 5 sterren.',
-  keywords: 'contact Car Store Cuijk, 1ste eigenaar autos, auto inkoop Cuijk, auto verkopen Cuijk, garage Cuijk',
+  title: 'Contact Car Store Cuijk | Garage Open tot 22:00 - Altijd Bereikbaar',
+  description: 'Neem contact op met Car Store Cuijk. Garage open tot 22:00, altijd bereikbaar voor spoed reparatie. Specialist in 1ste eigenaar autos. Bel of WhatsApp ons, ook na sluitingstijd. 168 reviews, 5 sterren.',
+  keywords: 'contact Car Store Cuijk, garage open tot 22:00, 22:00 bereikbaar, spoed reparatie, reparatie na sluitingstijd, altijd bereikbaar voor spoed, 1ste eigenaar autos, auto inkoop Cuijk, auto verkopen Cuijk, garage Cuijk',
   openGraph: {
     title: 'Contact Car Store Cuijk | 1ste Eigenaar Auto\'s',
     description: 'Neem contact op met Car Store Cuijk. Specialist in 1ste eigenaar autos.',
@@ -31,7 +31,7 @@ export default function ContactPage() {
               </h1>
               <p className="text-xl text-white/50 max-w-2xl mx-auto">
                 Heeft u vragen of wilt u een afspraak maken? 
-                Neem gerust contact met ons op. Wij helpen u graag!
+                Neem gerust contact met ons op. Garage open tot 22:00, altijd bereikbaar voor spoed!
               </p>
             </div>
           </div>
@@ -54,7 +54,7 @@ export default function ContactPage() {
                     </div>
                     <h3 className="text-lg font-bold text-white mb-2">Telefoon</h3>
                     <p className="text-[#c8102e] font-semibold">{contactInfo.telefoon}</p>
-                    <p className="text-white/40 text-sm mt-2">Direct iemand te spreken</p>
+                    <p className="text-[#c8102e] font-medium text-sm mt-2">22:00 bereikbaar voor spoed!</p>
                   </a>
 
                   {/* WhatsApp */}
@@ -117,8 +117,8 @@ export default function ContactPage() {
                       </div>
                     ))}
                   </div>
-                  <p className="text-sm text-white/30 mt-4">
-                    <span className="text-[#c8102e] font-medium">Let op:</span> Na 18:00 op afspraak mogelijk
+                  <p className="text-sm text-white/80 mt-4 bg-[#c8102e]/20 border border-[#c8102e]/40 rounded-lg px-3 py-2">
+                    <span className="text-[#c8102e] font-bold">Garage open tot 22:00!</span> Altijd bereikbaar voor spoed reparatie, ook na sluitingstijd.
                   </p>
                 </div>
 

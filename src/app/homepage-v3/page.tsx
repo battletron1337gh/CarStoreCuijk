@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, MessageCircle, Phone, ChevronDown, Star, Shield, Users, Clock, Award, Wrench, BadgeCheck } from 'lucide-react';
+import CarMarquee from '@/components/CarMarquee';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { cars, services, contactInfo, testimonials } from '@/data/cars';
@@ -131,7 +132,7 @@ function DNABackground() {
 
 const stats = [
   { value: '500+', label: 'Tevreden klanten' },
-  { value: '18+', label: 'Jaar ervaring' },
+  { value: '5+', label: 'Jaar ervaring' },
   { value: '7', label: 'Dagen per week open' },
   { value: '100%', label: 'Servicegericht' },
 ];
@@ -153,7 +154,7 @@ function StatsSection() {
   );
 }
 
-const featuredCars = cars.filter(car => car.status === 'beschikbaar').sort((a, b) => b.bouwjaar - a.bouwjaar).slice(0, 6);
+const featuredCars = cars.filter(car => car.status === 'beschikbaar').sort((a, b) => b.bouwjaar - a.bouwjaar).slice(0, 3);
 
 function DNASpiralSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -202,7 +203,7 @@ function DNASpiralSection() {
           <p className="text-lg lg:text-xl text-white/50 max-w-2xl mx-auto">Scroll door onze collectie en zie de auto&apos;s in een unieke 3D spiraal. Elke auto draait naar je toe en weer verder.</p>
         </motion.div>
 
-        <div className="relative" style={{ transformStyle: 'preserve-3d', minHeight: `${featuredCars.length * 80}vh` }}>
+        <div className="relative" style={{ transformStyle: 'preserve-3d', minHeight: `${featuredCars.length * 100}vh` }}>
           {featuredCars.map((car, index) => {
             const isLeft = index % 2 === 0;
             return (
@@ -414,6 +415,7 @@ export default function HomeV3() {
         <Hero />
         <StatsSection />
         <DNASpiralSection />
+        <CarMarquee />
         <WhyChooseUsSection />
         <ServicesSection />
         <ReviewsSection />
