@@ -5,12 +5,12 @@ import { contactInfo } from '@/data/cars';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Airco Vullen Cuijk | Airco Service & Onderhoud | Car Store Cuijk',
-  description: 'Professionele airco vullen en service in Cuijk. R134a en R1234yf. Airco onderhoud, reparatie en lekdetectie. Maak direct een afspraak.',
-  keywords: 'airco vullen Cuijk, airco service, airco onderhoud, airco reparatie, R134a, R1234yf, airco bijvullen auto, klimaatregeling',
+  title: 'Airco Vullen Cuijk | Service voor 1ste Eigenaar Auto\'s',
+  description: 'Airco vullen in Cuijk vanaf €89. Specialist in onderhoud van 1ste eigenaar autos. R134a en R1234yf koelmiddel. 168 reviews, 5 sterren. Bel nu!',
+  keywords: 'airco vullen Cuijk, 1ste eigenaar auto onderhoud, airco service, airco onderhoud, airco reparatie, R134a, R1234yf, auto airco',
   openGraph: {
-    title: 'Airco Vullen & Service Cuijk | Car Store Cuijk',
-    description: 'Professionele airco service. Vullen, onderhoud en reparatie. Alle koelmiddelen.',
+    title: 'Airco Vullen Cuijk | Airco Service & Onderhoud',
+    description: 'Airco vullen vanaf €89. R134a en R1234yf. Onderhoud en reparatie. 168 reviews, 5 sterren.',
     type: 'website',
   },
 };
@@ -176,21 +176,22 @@ export default function AircoPage() {
         {/* SEO Content */}
         <section className="bg-[#0a0a0a] border-t border-white/5">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <h2 className="text-2xl font-bold text-white mb-4">Airco vullen in Cuijk en omgeving</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">Airco vullen in Cuijk - Professionele service</h2>
             <p className="text-white/60 mb-4">
               Een goed werkende airco is essentieel voor comfort in de auto, zowel in de zomer als winter. 
-              Bij Car Store Cuijk kunt u terecht voor alle airco diensten. Wij vullen uw airco met het juiste 
-              koelmiddel: R134a voor oudere auto\'s en R1234yf voor nieuwere modellen.
+              Bij Car Store Cuijk kunt u terecht voor professioneel airco vullen en alle airco diensten. 
+              Wij vullen uw airco met het juiste koelmiddel: R134a voor oudere auto's en R1234yf voor nieuwere modellen.
             </p>
             <p className="text-white/60 mb-4">
-              Naast bijvullen bieden wij ook complete airco service aan. Dit omvat lekdetectie, 
-              vervanging van de aircofilter, reiniging van het systeem en controle van alle componenten. 
-              Zo voorkomt u storingen en houdt u het systeem in topconditie.
+              Wij zijn BOVAG erkend met 168 reviews en 5 sterren op Google reviews. Naast airco vullen bieden wij 
+              ook complete airco service aan. Dit omvat lekdetectie, vervanging van de aircofilter, 
+              reiniging van het systeem en controle van alle componenten. Zo voorkomt u storingen en houdt u 
+              het systeem in topconditie.
             </p>
             <p className="text-white/60">
               Wij adviseren om uw airco jaarlijks te laten controleren en elke twee jaar te laten bijvullen. 
-              Dit zorgt voor optimale prestaties en voorkomt dure reparaties. Maak vandaag nog een afspraak 
-              voor airco service in Cuijk.
+              Dit zorgt voor optimale prestaties en voorkomt dure reparaties. Airco vullen vanaf €89. 
+              Maak vandaag nog een afspraak voor airco service in Cuijk.
             </p>
           </div>
         </section>

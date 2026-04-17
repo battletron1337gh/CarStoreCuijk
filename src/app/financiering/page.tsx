@@ -4,6 +4,19 @@ import FinancingCalculator from '@/components/FinancingCalculator';
 import { Calculator, CheckCircle, Shield, Clock, Wallet, Percent } from 'lucide-react';
 import Link from 'next/link';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Financiering Cuijk | 1ste Eigenaar Auto\'s Leasen',
+  description: 'Flexibele financiering voor 1ste eigenaar autos in Cuijk. Scherpe rentes, snelle afhandeling. Voor occasions en 1e eigenaar autos. 168 reviews, 5 sterren.',
+  keywords: 'financiering Cuijk, 1ste eigenaar auto financieren, auto lease, occasion financiering, auto lening, alle merken',
+  openGraph: {
+    title: 'Financiering Cuijk | 1ste Eigenaar Auto\'s Leasen',
+    description: 'Flexibele financiering voor 1ste eigenaar autos. Scherpe rentes, snelle afhandeling.',
+    type: 'website',
+  },
+};
+
 export default function FinancieringPage() {
   return (
     <>

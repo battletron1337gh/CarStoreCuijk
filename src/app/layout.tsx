@@ -10,9 +10,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Car Store Cuijk | Occasions, Onderhoud & Reparaties",
-  description: "Car Store Cuijk - Uw specialist in occasions, onderhoud, reparaties, airco service en koplampen polijsten. 7 dagen per week open. BOVAG erkend.",
-  keywords: "Car Store Cuijk, occasions Cuijk, auto kopen, auto verkopen, auto onderhoud, auto reparatie, airco vullen, koplampen polijsten, BOVAG garage Cuijk",
+  title: "Car Store Cuijk | Tweedehands Auto's & Garage",
+  description: "Car Store Cuijk - Uw specialist in tweedehands auto's, gebruikte auto's van alle merken. Auto inkoop, onderhoud, reparatie, airco vullen. 168 reviews, 5 sterren Google reviews. 7 dagen open.",
+  keywords: "Car Store Cuijk, tweedehands auto's, gebruikte auto's, alle merken, auto inkoop, auto onderhoud, auto reparatie, airco vullen, koplampen polijsten, BOVAG garage Cuijk, occasions Cuijk",
   authors: [{ name: "Car Store Cuijk" }],
   creator: "Car Store Cuijk",
   publisher: "Car Store Cuijk",
@@ -21,16 +21,16 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Car Store Cuijk | Occasions, Onderhoud & Reparaties",
-    description: "Uw specialist in occasions, onderhoud en reparaties. BOVAG erkend. 7 dagen per week open.",
+    title: "Car Store Cuijk | Tweedehands Auto's & Garage",
+    description: "Uw specialist in tweedehands auto's en gebruikte auto's van alle merken. Auto inkoop, onderhoud, reparatie. 168 reviews, 5 sterren. BOVAG erkend. 7 dagen open.",
     type: "website",
     locale: "nl_NL",
     siteName: "Car Store Cuijk",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Car Store Cuijk | Occasions, Onderhoud & Reparaties",
-    description: "Uw specialist in occasions, onderhoud en reparaties. BOVAG erkend.",
+    title: "Car Store Cuijk | Tweedehands Auto's & Garage",
+    description: "Uw specialist in tweedehands auto's en gebruikte auto's. 168 reviews, 5 sterren. BOVAG erkend.",
   },
   robots: {
     index: true,
@@ -59,7 +59,7 @@ const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "AutoDealer",
   "name": "Car Store Cuijk",
-  "description": "Uw specialist in occasions, onderhoud, reparaties, airco service en koplampen polijsten. BOVAG erkend.",
+  "description": "Uw specialist in tweedehands auto's, gebruikte auto's van alle merken. Auto inkoop, onderhoud, reparatie, airco vullen. 168 reviews, 5 sterren Google reviews. BOVAG erkend.",
   "url": "https://www.carstorecuijk.nl",
   "telephone": "+31687118768",
   "email": "info@carstorecuijk.nl",
@@ -98,7 +98,21 @@ const localBusinessSchema = {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Occasions"
+          "name": "Tweedehands auto's"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Gebruikte auto's"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Auto inkoop"
         }
       },
       {
@@ -112,17 +126,66 @@ const localBusinessSchema = {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "APK Keuring"
+          "name": "Auto reparatie"
         }
       },
       {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Airco service"
+          "name": "Distributieriem vervangen"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Ketting vervangen"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Koppeling vervangen"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Remblokken vervangen"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Airco vullen"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Koplampen polijsten"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "APK Keuring"
         }
       }
     ]
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "reviewCount": "168",
+    "bestRating": "5",
+    "worstRating": "1"
   }
 };
 

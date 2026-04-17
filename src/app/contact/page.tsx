@@ -3,6 +3,18 @@ import Footer from '@/components/Footer';
 import ContactForm from '@/components/ContactForm';
 import { MapPin, Phone, Mail, MessageCircle, Clock } from 'lucide-react';
 import { contactInfo, openingHours } from '@/data/cars';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Contact Car Store Cuijk | 1ste Eigenaar Auto\'s',
+  description: 'Neem contact op met Car Store Cuijk. Specialist in 1ste eigenaar autos. Auto inkoop, verkoop, onderhoud. Bel of WhatsApp ons. 168 reviews, 5 sterren.',
+  keywords: 'contact Car Store Cuijk, 1ste eigenaar autos, auto inkoop Cuijk, auto verkopen Cuijk, garage Cuijk',
+  openGraph: {
+    title: 'Contact Car Store Cuijk | 1ste Eigenaar Auto\'s',
+    description: 'Neem contact op met Car Store Cuijk. Specialist in 1ste eigenaar autos.',
+    type: 'website',
+  },
+};
 
 export default function ContactPage() {
   return (
@@ -168,18 +180,39 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                {/* Map Placeholder */}
-                <div className="bg-[#1a1a1a] rounded-2xl p-8 text-center aspect-square flex flex-col items-center justify-center border border-white/5">
-                  <MapPin className="w-12 h-12 text-[#c8102e] mb-4" />
-                  <p className="text-white font-medium">Google Maps</p>
-                  <p className="text-white/40 text-sm mt-2">{contactInfo.adres}, {contactInfo.plaats}</p>
+                {/* Google Maps Embed */}
+                <div className="bg-[#1a1a1a] rounded-2xl p-6 border border-white/5">
+                  <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                    <MapPin className="w-5 h-5 text-[#c8102e]" />
+                    Locatie
+                  </h3>
+                  <div className="rounded-xl overflow-hidden border border-white/10">
+                    <iframe
+                      src="https://maps.google.com/maps?q=Lange%20Beijerd%203d,%205431%20NR%20Cuijk&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                      width="100%"
+                      height="300"
+                      style={{ border: 0 }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      title="Car Store Cuijk Locatie"
+                      className="w-full"
+                    />
+                  </div>
+                  <div className="mt-4 space-y-1">
+                    <p className="text-white font-medium">{contactInfo.adres}</p>
+                    <p className="text-white/50 text-sm">{contactInfo.postcode} {contactInfo.plaats}</p>
+                  </div>
                   <a
                     href={`https://maps.google.com/?q=${contactInfo.adres}, ${contactInfo.postcode} ${contactInfo.plaats}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[#c8102e] hover:underline text-sm mt-4"
+                    className="inline-flex items-center gap-1 text-[#c8102e] hover:text-[#e01432] text-sm mt-3 font-medium transition-colors"
                   >
-                    Open in Google Maps →
+                    Route plannen in Google Maps
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
                   </a>
                 </div>
               </div>

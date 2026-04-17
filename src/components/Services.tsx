@@ -61,10 +61,11 @@ export default function Services() {
             Onderhoud & Service
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
-            Onderhoud bij Car Store Cuijk
+            Auto Onderhoud & Reparatie Cuijk
           </h2>
           <p className="text-lg text-white/50 max-w-2xl mx-auto">
-            Van APK-keuring tot complete onderhoudsbeurten – wij zorgen ervoor dat uw auto in topconditie blijft.
+            Professioneel auto onderhoud voor alle merken. APK, kleine en grote beurt, 
+            distributieriem, koppeling, remblokken. 168 reviews, 5 sterren.
           </p>
         </motion.div>
 
@@ -136,8 +137,8 @@ export default function Services() {
             Direct een afspraak maken?
           </h3>
           <p className="text-white/50 mb-8 max-w-xl mx-auto">
-            Plan uw onderhoud, APK of reparatie eenvoudig via WhatsApp of telefoon. 
-            Wij zorgen voor een snelle service!
+            Plan uw auto onderhoud, APK of reparatie eenvoudig via WhatsApp of telefoon. 
+            Alle merken, vakkundige service. 168 reviews, 5 sterren!
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a

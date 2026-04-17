@@ -5,24 +5,24 @@ import { contactInfo } from '@/data/cars';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Auto Reparaties Cuijk | Vakkundige Werkplaats | Car Store Cuijk',
-  description: 'Professionele auto reparaties in Cuijk. Alle merken, snelle service, transparante prijzen. BOVAG erkend. Maak direct een afspraak voor uw reparatie.',
-  keywords: 'auto reparatie Cuijk, auto reparatie, werkplaats Cuijk, autogarage, auto monteur, reparatie alle merken, BOVAG werkplaats',
+  title: 'Auto Reparatie Cuijk | 1ste Eigenaar Auto\'s Onderhoud',
+  description: 'Vakkundige auto reparatie in Cuijk. Specialist in onderhoud van 1ste eigenaar autos. Distributieriem, ketting, koppeling, remblokken. Alle merken, BOVAG erkend. 168 reviews, 5 sterren.',
+  keywords: 'auto reparatie Cuijk, 1ste eigenaar auto onderhoud, distributieriem vervangen, ketting vervangen, koppeling vervangen, remblokken vervangen, auto reparatie, alle merken, BOVAG werkplaats',
   openGraph: {
-    title: 'Auto Reparaties Cuijk | Car Store Cuijk',
-    description: 'Vakkundige auto reparaties voor alle merken. Snelle service, transparante prijzen.',
+    title: 'Auto Reparatie Cuijk | Distributieriem, Koppeling, Remmen',
+    description: 'Vakkundige auto reparatie. Distributieriem, ketting, koppeling, remblokken. 168 reviews, 5 sterren.',
     type: 'website',
   },
 };
 
 export default function ReparatiesPage() {
   const reparaties = [
-    { title: 'Motorreparaties', desc: 'Diagnose en reparatie van motorproblemen' },
-    { title: 'Remmen', desc: 'Remschijven, remblokken en remvloeistof vervangen' },
+    { title: 'Distributieriem Vervangen', desc: 'Vervanging van distributieriem of distributieketting volgens schema' },
+    { title: 'Remmen', desc: 'Remschijven, remblokken en remvloeistof vervangen voor alle merken' },
+    { title: 'Koppeling Vervangen', desc: 'Koppeling, drukgroep en koppelingslager vervangen' },
+    { title: 'Motorreparaties', desc: 'Diagnose en reparatie van motorproblemen voor alle merken' },
     { title: 'Uitlaat', desc: 'Reparatie en vervanging van uitlaatsystemen' },
-    { title: 'Vering & Demping', desc: 'Schokdempers, veren en stabilisatoren' },
-    { title: 'Stuurinrichting', desc: 'Stuurhuis, spoorstangen en stuurstangen' },
-    { title: 'Aandrijving', desc: 'Koppeling, versnellingsbak en differentieel' },
+    { title: 'Vering & Demping', desc: 'Schokdempers, veren en stabilisatoren vervangen' },
   ];
 
   return (
@@ -135,16 +135,21 @@ export default function ReparatiesPage() {
         {/* SEO Content */}
         <section className="bg-[#0a0a0a] border-t border-white/5">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <h2 className="text-2xl font-bold text-white mb-4">Auto reparatie in Cuijk en omgeving</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">Auto reparatie in Cuijk - Alle merken</h2>
             <p className="text-white/60 mb-4">
               Zoekt u een betrouwbare garage in Cuijk voor uw auto reparatie? Car Store Cuijk is uw specialist 
-              voor alle merken. Onze moderne werkplaats is uitgerust met de nieuwste diagnoseapparatuur en onze 
+              voor alle merken. Van distributieriem vervangen tot koppeling en remblokken - wij regelen het voor u. 
+              Onze moderne werkplaats is uitgerust met de nieuwste diagnoseapparatuur en onze 
               monteurs volgen regelmatig bijscholing.
             </p>
+            <p className="text-white/60 mb-4">
+              Wij zijn BOVAG erkend met 168 reviews en 5 sterren op Google reviews. Of het nu gaat om een kleine reparatie 
+              of een grote onderhoudsbeurt, wij staan voor u klaar. Wij werken met originele onderdelen of A-merk 
+              alternatieven van hoge kwaliteit. Alle reparaties worden uitgevoerd volgens fabrieksvoorschriften.
+            </p>
             <p className="text-white/60">
-              Of het nu gaat om een kleine reparatie of een grote onderhoudsbeurt, wij staan voor u klaar. 
-              Wij werken met originele onderdelen of A-merk alternatieven van hoge kwaliteit. Alle reparaties 
-              worden uitgevoerd volgens fabrieksvoorschriften.
+              Specialisaties: distributieriem vervangen, ketting vervangen, koppeling vervangen, remblokken vervangen, 
+              en alle andere auto reparaties. Maak direct een afspraak voor vakkundige service in Cuijk.
             </p>
           </div>
         </section>

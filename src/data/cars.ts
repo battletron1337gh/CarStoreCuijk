@@ -1,4 +1,5 @@
 import { Car, Service, ContactInfo, OpeningHours, Testimonial } from '@/types';
+import { googleReviews } from './google-reviews';
 
 export const cars: Car[] = [
   {
@@ -349,7 +350,7 @@ export const services: Service[] = [
   {
     id: 'apk',
     title: 'APK Keuring',
-    description: 'Officieel erkend APK-station voor alle merken en types. Snelle, correcte afhandeling van uw verplichte keuring.',
+    description: 'Officieel erkend APK-station voor alle merken. Snelle, correcte afhandeling van uw verplichte keuring in Cuijk.',
     icon: 'ClipboardCheck',
     features: ['Officieel erkend', 'Alle merken', 'Direct resultaat'],
     price: 29.50
@@ -357,7 +358,7 @@ export const services: Service[] = [
   {
     id: 'onderhoud-klein',
     title: 'Klein Onderhoud',
-    description: 'Essentieel onderhoud om uw auto in topconditie te houden. Oliewissel, filtervervanging en basiscontroles.',
+    description: 'Essentieel auto onderhoud om uw auto in topconditie te houden. Oliewissel, filtervervanging en basiscontroles.',
     icon: 'Droplets',
     features: ['Olie verversen', 'Filter vervangen', 'Remmen inspecteren'],
     price: 149
@@ -365,33 +366,33 @@ export const services: Service[] = [
   {
     id: 'onderhoud-groot',
     title: 'Groot Onderhoud',
-    description: 'Compleet onderhoud volgens fabrieksvoorschriften. Alle filters, vloeistoffen en uitgebreide controle.',
+    description: 'Compleet auto onderhoud volgens fabrieksvoorschriften. Alle filters, vloeistoffen en uitgebreide controle voor alle merken.',
     icon: 'Wrench',
     features: ['Alle filters', 'Bougies', 'Remvloeistof', 'Uitgebreide controle'],
     price: 299
   },
   {
     id: 'airco',
-    title: 'Airco Service',
-    description: 'Complete airco-onderhoud inclusief bijvullen van koudemiddel en reiniging van het systeem.',
+    title: 'Airco Vullen',
+    description: 'Professioneel airco vullen met R134a of R1234yf koelmiddel. Inclusief lekdetectie en systeemcontrole.',
     icon: 'Wind',
-    features: ['Bijvullen koudemiddel', 'Lekdetectie', 'Interieurfilter'],
+    features: ['Airco vullen R134a', 'Airco vullen R1234yf', 'Lekdetectie', 'Interieurfilter'],
     price: 89
   },
   {
     id: 'banden',
     title: 'Bandenservice',
-    description: 'Professionele bandenwissel, balanceerwerk en opslag. Verkoop van alle A-merken banden.',
+    description: 'Professionele bandenwissel, balanceerwerk en opslag. Verkoop van alle A-merken banden in Cuijk.',
     icon: 'CircleDot',
     features: ['Seizoenswissel', 'Balanceren', 'Bandenopslag'],
     price: 25
   },
   {
     id: 'remmen',
-    title: 'Remmen & Ophanging',
-    description: 'Complete service voor uw veiligheid. Controle en reparatie van remmen en onderstel.',
+    title: 'Remmen Vervangen',
+    description: 'Vakkundige remmen service. Remblokken en remschijven vervangen voor optimale veiligheid.',
     icon: 'CarFront',
-    features: ['Remschijven', 'Schokbrekers', 'Complete diagnose'],
+    features: ['Remblokken vervangen', 'Remschijven', 'Complete diagnose'],
     price: 49
   }
 ];
@@ -416,31 +417,15 @@ export const openingHours: OpeningHours[] = [
   { dag: 'Zondag', opening: '07:30', sluiting: '18:00' }
 ];
 
-export const testimonials: Testimonial[] = [
-  {
-    id: '1',
-    naam: 'Peter van den Berg',
-    beoordeling: 'Geweldige service! Heb hier mijn tweede auto gekocht en ben weer heel tevreden. Goede prijs-kwaliteit verhouding.',
-    sterren: 5,
-    datum: '2025-02-15',
-    auto: 'Volkswagen Golf'
-  },
-  {
-    id: '2',
-    naam: 'Maria Jansen',
-    beoordeling: 'Zeer vriendelijk geholpen. Ze nemen echt de tijd voor je en denken mee. Mijn auto wordt hier altijd goed onderhouden.',
-    sterren: 5,
-    datum: '2025-01-20',
-    auto: 'Toyota Aygo'
-  },
-  {
-    id: '3',
-    naam: 'Jan Willems',
-    beoordeling: 'Snelle APK keuring en eerlijke communicatie. Geen verborgen kosten, precies zoals afgesproken.',
-    sterren: 5,
-    datum: '2025-03-01'
-  }
-];
+// Converteer Google reviews naar testimonials formaat
+export const testimonials: Testimonial[] = googleReviews.slice(0, 6).map(review => ({
+  id: review.id,
+  naam: review.naam,
+  beoordeling: review.beoordeling,
+  sterren: review.sterren,
+  datum: review.datum,
+  auto: review.auto,
+}));
 
 export const merken = [...new Set(cars.map(car => car.merk))].sort();
 export const carrosserieen = [...new Set(cars.map(car => car.carrosserie))].sort();

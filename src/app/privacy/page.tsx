@@ -1,6 +1,18 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Shield, Lock, Eye, FileText, Cookie, Mail } from 'lucide-react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy | Car Store Cuijk - 1ste Eigenaar Auto\'s',
+  description: 'Privacy policy van Car Store Cuijk. Specialist in 1ste eigenaar autos. Lees hoe wij omgaan met uw persoonsgegevens.',
+  keywords: 'privacy policy Car Store Cuijk, 1ste eigenaar autos, privacy autobedrijf, gegevensbescherming',
+  openGraph: {
+    title: 'Privacy Policy | Car Store Cuijk - 1ste Eigenaar Auto\'s',
+    description: 'Privacy policy van Car Store Cuijk. Specialist in 1ste eigenaar autos.',
+    type: 'website',
+  },
+};
 
 export default function PrivacyPage() {
   return (

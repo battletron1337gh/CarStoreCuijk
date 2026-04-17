@@ -5,12 +5,12 @@ import { contactInfo } from '@/data/cars';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Auto Verkopen Cuijk | Occasion Verkopen | Car Store Cuijk',
-  description: 'Auto verkopen via Car Store Cuijk. Consumentenverkoop, inruil en inkoop. Betrouwbaar, snel en eerlijk. Gratis waardebepaling. Bel nu.',
-  keywords: 'auto verkopen Cuijk, occasion verkopen, auto inruilen, consumentenverkoop, auto verkopen garage, waardebepaling auto',
+  title: 'Auto Verkopen Cuijk | 1ste Eigenaar Auto\'s Te Koop',
+  description: 'Auto verkopen via Car Store Cuijk. Consignatie, inruil of directe inkoop. Wij verkopen voornamelijk 1ste eigenaar autos. Gratis waardebepaling. 168 reviews, 5 sterren.',
+  keywords: 'auto verkopen Cuijk, 1ste eigenaar autos te koop, 1e eigenaar, eerste eigenaar, occasion verkopen, auto inruilen, consumentenverkoop, waardebepaling auto',
   openGraph: {
-    title: 'Auto Verkopen Cuijk | Car Store Cuijk',
-    description: 'Verkoop uw auto via ons. Consumentenverkoop, inruil of directe inkoop.',
+    title: 'Auto Verkopen Cuijk | Consignatie & Inruil',
+    description: 'Consumentenverkoop, inruil of directe inkoop. 168 reviews, 5 sterren.',
     type: 'website',
   },
 };
@@ -61,8 +61,8 @@ export default function AutoVerkopenPage() {
                 Auto <span className="text-[#c8102e]">Verkopen</span> Cuijk
               </h1>
               <p className="text-xl text-white/50 max-w-2xl mx-auto">
-                Kies de manier die bij u past: consumentenverkoop, directe inkoop of inruil. 
-                Wij regelen alles voor u.
+                1ste eigenaar autos te koop - Kies de manier die bij u past: consumentenverkoop, directe inkoop of inruil. 
+                Wij verkopen voornamelijk 1e eigenaar autos en regelen alles voor u.
               </p>
             </div>
           </div>
@@ -202,20 +202,23 @@ export default function AutoVerkopenPage() {
         {/* SEO Content */}
         <section className="bg-[#0d0d0d] border-t border-white/5">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <h2 className="text-2xl font-bold text-white mb-4">Auto verkopen via Car Store Cuijk</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">Auto verkopen Cuijk - 1ste eigenaar autos te koop</h2>
             <p className="text-white/60 mb-4">
-              Bij Car Store Cuijk heeft u verschillende opties om uw auto te verkopen. Of u nu kiest voor 
-              consumentenverkoop (consignatie), directe inkoop of inruil, wij zorgen voor een transparant 
-              en eerlijk proces. Onze ervaring in de autobranche garandeert u een professionele behandeling.
+              Bij Car Store Cuijk heeft u verschillende opties om uw auto te verkopen. Wij specialiseren ons in 
+              1ste eigenaar autos - auto's die nieuw zijn gekocht door één eigenaar. Alle merken welkom - 
+              van Volkswagen en BMW tot Audi en Mercedes. Of u nu kiest voor consumentenverkoop (consignatie), 
+              directe inkoop of inruil, wij zorgen voor een transparant en eerlijk proces. 
+              Onze ervaring in de autobranche garandeert u een professionele behandeling.
             </p>
             <p className="text-white/60 mb-4">
-              Consignatie is ideaal als u de tijd heeft en de maximale opbrengst wilt realiseren. Wij nemen 
-              dan het volledige verkooptraject uit handen: van advertentie tot garantieafhandeling. Bij directe 
-              inkoop krijgt u direct geld en bent u binnen een dag van uw auto af. De keuze is aan u.
+              Wij zijn BOVAG erkend met 168 reviews en 5 sterren op Google reviews. Consignatie is ideaal als 
+              u de tijd heeft en de maximale opbrengst wilt realiseren. Wij verkopen voornamelijk 1e eigenaar autos 
+              en nemen het volledige verkooptraject uit handen: van advertentie tot garantieafhandeling. 
+              Bij directe inkoop krijgt u direct geld en bent u binnen een dag van uw auto af. De keuze is aan u.
             </p>
             <p className="text-white/60">
-              Wij zijn BOVAG erkend en hanteren transparante prijzen. Geen verborgen kosten of verrassingen 
-              achteraf. Neem contact met ons op voor een vrijblijvende waardebepaling van uw auto.
+              Wij hanteren transparante prijzen. Geen verborgen kosten of verrassingen achteraf. 
+              Neem contact met ons op voor een vrijblijvende waardebepaling van uw auto.
             </p>
           </div>
         </section>

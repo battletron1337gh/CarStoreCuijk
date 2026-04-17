@@ -5,12 +5,12 @@ import { contactInfo } from '@/data/cars';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Auto Inkoop Cuijk | Auto Verkopen | Car Store Cuijk',
-  description: 'Auto verkopen in Cuijk? Wij kopen uw auto in voor een eerlijke prijs. Gratis taxatie, direct geld. Alle merken en bouwjaren. Bel of app nu.',
-  keywords: 'auto inkoop Cuijk, auto verkopen, auto inruilen, auto opkoper, occasion inkoop, auto verkopen particulier, taxatie auto',
+  title: 'Auto Inkoop Cuijk | Wij Kopen 1ste Eigenaar Auto\'s',
+  description: "Auto inkoop Cuijk - Wij kopen voornamelijk 1ste eigenaar autos en alle merken. Gratis taxatie, direct geld. Ook 1e eigenaar autos met schade. 168 reviews, 5 sterren.",
+  keywords: 'auto inkoop Cuijk, 1ste eigenaar autos inkoop, 1e eigenaar, eerste eigenaar auto verkopen, auto verkopen, alle merken, auto inruilen, taxatie auto',
   openGraph: {
-    title: 'Auto Inkoop Cuijk | Car Store Cuijk',
-    description: 'Verkoop uw auto snel en eenvoudig. Eerlijke prijs, direct geld. Alle merken.',
+    title: 'Auto Inkoop Cuijk | Alle Merken Gezocht',
+    description: "Wij kopen alle merken auto's. Gratis taxatie, direct geld. 168 reviews, 5 sterren.",
     type: 'website',
   },
 };
@@ -51,8 +51,8 @@ export default function AutoInkoopPage() {
                 Auto <span className="text-[#c8102e]">Inkoop</span> Cuijk
               </h1>
               <p className="text-xl text-white/50 max-w-2xl mx-auto">
-                Wilt u uw auto verkopen? Wij kopen uw auto in voor een eerlijke prijs. 
-                Gratis taxatie, snelle afhandeling, direct geld op uw rekening.
+                Wij kopen voornamelijk 1ste eigenaar autos - Wij kopen uw auto voor een eerlijke prijs. 
+                Gratis taxatie, snelle afhandeling, direct geld op uw rekening. 168 reviews, 5 sterren.
               </p>
             </div>
           </div>
@@ -168,21 +168,23 @@ export default function AutoInkoopPage() {
         {/* SEO Content */}
         <section className="bg-[#0a0a0a] border-t border-white/5">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <h2 className="text-2xl font-bold text-white mb-4">Auto verkopen in Cuijk en omgeving</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">Auto inkoop Cuijk - Wij kopen voornamelijk 1ste eigenaar autos</h2>
             <p className="text-white/60 mb-4">
               Wilt u uw auto verkopen in Cuijk, Nijmegen, of omgeving? Car Store Cuijk is uw betrouwbare partner 
-              voor auto inkoop. Wij kopen alle merken en bouwjaren, van jonge occasions tot auto\'s met hogere 
-              kilometerstanden. Ook auto\'s met schade nemen wij in overweging.
+              voor auto inkoop. Wij kopen voornamelijk 1ste eigenaar autos - auto's die nieuw zijn gekocht door één eigenaar. 
+              Alle merken en bouwjaren - van Volkswagen, BMW, Audi tot Mercedes. 
+              Heeft u een eerste eigenaar auto? Neem contact op voor een vrijblijvende taxatie.
             </p>
             <p className="text-white/60 mb-4">
-              Het verkopen van uw auto via Car Store Cuijk heeft veel voordelen ten opzichte van particuliere verkoop. 
-              U hoeft niet te wachten op geïnteresseerde kopers, geen gedoe met proefritten, en geen risico op 
-              niet-betalende kopers. Wij geven u een eerlijke prijs gebaseerd op de actuele marktwaarde.
+              Wij zijn BOVAG erkend met 168 reviews en 5 sterren op Google reviews. Het verkopen van uw auto via 
+              Car Store Cuijk heeft veel voordelen ten opzichte van particuliere verkoop. U hoeft niet te wachten 
+              op geïnteresseerde kopers, geen gedoe met proefritten, en geen risico op niet-betalende kopers. 
+              Wij geven u een eerlijke prijs gebaseerd op de actuele marktwaarde, met name voor 1e eigenaar autos.
             </p>
             <p className="text-white/60">
-              Naast inkoop van particulieren kopen wij ook auto\'s in van bedrijven en leasingmaatschappijen. 
-              Wij regelen alle administratie, inclusief RDw vrijwaring. Neem vandaag nog contact op voor een 
-              vrijblijvende taxatie van uw auto.
+              Naast inkoop van particulieren kopen wij ook auto's in van bedrijven en leasingmaatschappijen. 
+              Wij regelen alle administratie, inclusief RDW vrijwaring. Direct geld op uw rekening. 
+              Neem vandaag nog contact op voor een vrijblijvende taxatie van uw 1ste eigenaar auto.
             </p>
           </div>
         </section>

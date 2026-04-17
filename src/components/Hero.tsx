@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, MessageCircle, Phone, ChevronDown } from 'lucide-react';
+import { ArrowRight, MessageCircle, Phone, ChevronDown, Star } from 'lucide-react';
 import { contactInfo } from '@/data/cars';
+import { reviewStats } from '@/data/google-reviews';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -73,9 +74,37 @@ export default function Hero() {
           variants={itemVariants}
           className="text-lg sm:text-xl text-white/50 max-w-2xl mx-auto mb-10"
         >
-          Ruim aanbod occasions, professioneel onderhoud en persoonlijke service. 
-          Wij helpen u graag bij het vinden van de perfecte auto.
+          Ruim aanbod tweedehands auto's en gebruikte auto's van alle merken. 
+          Auto inkoop, onderhoud, reparatie en airco vullen. 168 reviews, 5 sterren.
         </motion.p>
+
+        {/* Review Stats Badge */}
+        <motion.div
+          variants={itemVariants}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10"
+        >
+          <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-5 py-2.5">
+            <div className="flex items-center gap-1">
+              <Star className="w-4 h-4 text-[#c8102e] fill-[#c8102e]" />
+              <span className="text-white font-bold">{reviewStats.gemiddelde.toFixed(1)}</span>
+            </div>
+            <div className="h-4 w-px bg-white/20" />
+            <div className="text-white/60 text-sm">
+              <span className="font-medium text-white">{reviewStats.totaal}</span> Google reviews
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-5 py-2.5">
+            <div className="flex items-center gap-1">
+              <Star className="w-4 h-4 text-[#c8102e] fill-[#c8102e]" />
+              <span className="text-white font-bold">4.7</span>
+            </div>
+            <div className="h-4 w-px bg-white/20" />
+            <div className="text-white/60 text-sm">
+              <span className="font-medium text-white">25</span> Trustpilot reviews
+            </div>
+          </div>
+        </motion.div>
 
         <motion.div
           variants={itemVariants}
@@ -110,6 +139,8 @@ export default function Hero() {
           </a>
           <span className="hidden sm:block text-white/20">•</span>
           <span>{contactInfo.adres}, {contactInfo.plaats}</span>
+          <span className="hidden sm:block text-white/20">•</span>
+          <span>168 reviews, 5 sterren</span>
           <span className="hidden sm:block text-white/20">•</span>
           <span>7 dagen open</span>
         </motion.div>

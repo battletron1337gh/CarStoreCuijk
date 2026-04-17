@@ -3,12 +3,12 @@ import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Occasions | Car Store Cuijk - Ruim Aanbod Tweedehands Auto\'s',
-  description: 'Bekijk ons ruime aanbod occasions in Cuijk. Betrouwbare tweedehands auto\'s met garantie. Auto inkoop, verkoop en inruil mogelijk. 7 dagen per week open.',
-  keywords: 'occasions Cuijk, tweedehands auto, auto kopen, auto verkopen, auto inruilen, occasions Nederland, betrouwbare occasions, BOVAG occasions',
+  title: 'Occasions Cuijk | 1ste Eigenaar Auto\'s & Tweedehands',
+  description: 'Ruim aanbod occasions in Cuijk met voornamelijk 1ste eigenaar autos. Tweedehands auto\'s van alle merken met garantie. BOVAG erkend. 168 reviews, 5 sterren.',
+  keywords: 'occasions Cuijk, 1ste eigenaar autos, 1e eigenaar, eerste eigenaar, tweedehands auto\'s, gebruikte auto\'s, alle merken, auto kopen, betrouwbare occasions, BOVAG occasions',
   openGraph: {
-    title: 'Occasions | Car Store Cuijk',
-    description: 'Ruim aanbod betrouwbare occasions met garantie. Bekijk onze voorraad online.',
+    title: 'Occasions Cuijk | Tweedehands & Gebruikte Auto\'s',
+    description: 'Ruim aanbod tweedehands en gebruikte auto\'s. Alle merken, garantie. 168 reviews, 5 sterren.',
     type: 'website',
   },
 };
@@ -54,25 +54,28 @@ export default function OccasionsPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div className="grid lg:grid-cols-2 gap-12">
               <div>
-                <h2 className="text-2xl font-bold text-white mb-4">Occasions kopen in Cuijk</h2>
+                <h2 className="text-2xl font-bold text-white mb-4">Tweedehands auto's kopen in Cuijk - Voornamelijk 1ste eigenaar</h2>
                 <p className="text-white/60 mb-4">
-                  Bij Car Store Cuijk vindt u een ruim aanbod betrouwbare occasions. Van compacte stadsauto\'s tot ruime gezinsauto\'s 
-                  en luxe modellen. Al onze auto\'s worden grondig gecontroleerd voordat ze in de verkoop gaan.
+                  Bij Car Store Cuijk vindt u een ruim aanbod betrouwbare tweedehands auto's en gebruikte auto's. 
+                  Wij specialiseren ons in 1ste eigenaar autos - auto's die nieuw zijn gekocht door één eigenaar. 
+                  Van compacte stadsauto's tot ruime gezinsauto's en luxe modellen van alle merken. 
+                  Al onze 1e eigenaar autos worden grondig gecontroleerd voordat ze in de verkoop gaan.
                 </p>
                 <p className="text-white/60">
-                  Wij zijn BOVAG erkend, wat betekent dat u garantie krijgt op uw aankoop. Daarnaast bieden wij 
-                  mogelijkheden voor financiering en verzekering.
+                  Wij zijn BOVAG erkend met 168 reviews en 5 sterren op Google reviews. Dat betekent garantie op uw aankoop 
+                  en vertrouwde service. Daarnaast bieden wij mogelijkheden voor financiering en verzekering.
                 </p>
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-white mb-4">Auto verkopen of inruilen</h2>
+                <h2 className="text-2xl font-bold text-white mb-4">Auto inkoop - Wij kopen voornamelijk 1ste eigenaar autos</h2>
                 <p className="text-white/60 mb-4">
                   Wilt u uw huidige auto verkopen of inruilen? Wij bieden een eerlijke prijs voor uw auto, 
-                  ongeacht het merk of model. Neem contact met ons op voor een vrijblijvende taxatie.
+                  met name voor 1ste eigenaar autos. Auto inkoop van alle merken - van Volkswagen en BMW tot Audi en Mercedes.
+                  Heeft u een eerste eigenaar auto? Neem contact met ons op voor een vrijblijvende taxatie.
                 </p>
                 <p className="text-white/60">
-                  Ook voor auto inkoop bent u bij ons aan het juiste adres. Wij kopen auto\'s in van particulieren 
-                  en bedrijven in heel Nederland.
+                  Ook voor auto inkoop bent u bij ons aan het juiste adres. Wij kopen voornamelijk 1e eigenaar autos in 
+                  van particulieren en bedrijven in heel Nederland. Direct geld en snelle afhandeling.
                 </p>
               </div>
             </div>

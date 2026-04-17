@@ -5,12 +5,12 @@ import { contactInfo } from '@/data/cars';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Koplampen Polijsten Cuijk | Koplampen Herstellen | Car Store Cuijk',
-  description: 'Professioneel koplampen polijsten in Cuijk. Vergeelde koplampen weer als nieuw. UV coating, garantie. Maak direct een afspraak.',
-  keywords: 'koplampen polijsten Cuijk, koplampen herstellen, vergeelde koplampen, koplampen poetsen, koplamp renovatie, koplamp coating',
+  title: 'Koplampen Polijsten Cuijk | 1ste Eigenaar Auto\'s | €59',
+  description: 'Koplampen polijsten in Cuijk vanaf €59. Ook voor 1ste eigenaar autos. Vergeelde koplampen weer als nieuw. UV coating, 6 maanden garantie. 168 reviews, 5 sterren.',
+  keywords: 'koplampen polijsten Cuijk, 1ste eigenaar auto onderhoud, koplampen herstellen, vergeelde koplampen, koplamp renovatie, koplamp coating, auto koplampen',
   openGraph: {
-    title: 'Koplampen Polijsten Cuijk | Car Store Cuijk',
-    description: 'Professioneel koplampen polijsten. Vergeelde koplampen weer helder. UV coating.',
+    title: 'Koplampen Polijsten Cuijk | Vanaf €59',
+    description: 'Vergeelde koplampen weer helder. UV coating, 6 maanden garantie. 168 reviews, 5 sterren.',
     type: 'website',
   },
 };
@@ -239,23 +239,25 @@ export default function KoplampenPage() {
         {/* SEO Content */}
         <section className="bg-[#0d0d0d] border-t border-white/5">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <h2 className="text-2xl font-bold text-white mb-4">Koplampen polijsten in Cuijk</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">Koplampen polijsten in Cuijk - Vanaf €59</h2>
             <p className="text-white/60 mb-4">
-              Vergeelde of dof geworden koplampen zijn een veelvoorkomend probleem bij auto\'s van enige leeftijd. 
+              Vergeelde of dof geworden koplampen zijn een veelvoorkomend probleem bij auto's van enige leeftijd. 
               Niet alleen ziet het er onverzorgd uit, het is ook een veiligheidsrisico omdat het lichtoppervlak 
               wordt verminderd. Bij Car Store Cuijk bieden wij een professionele oplossing: koplampen polijsten 
               met UV-bestendige coating.
             </p>
             <p className="text-white/60 mb-4">
-              Ons polijstproces bestaat uit meerdere stappen. Eerst reinigen wij de koplampen grondig. 
-              Vervolgens schuren wij het oppervlak in vijf stappen om alle verkleuring te verwijderen. 
-              Daarna polijsten wij de koplampen tot een helder resultaat. Tot slot brengen wij een 
-              UV-bestendige coating aan die de koplampen beschermt tegen nieuwe verkleuring.
+              Wij zijn BOVAG erkend met 168 reviews en 5 sterren op Google reviews. Ons polijstproces bestaat 
+              uit meerdere stappen. Eerst reinigen wij de koplampen grondig. Vervolgens schuren wij het oppervlak 
+              in vijf stappen om alle verkleuring te verwijderen. Daarna polijsten wij de koplampen tot een helder 
+              resultaat. Tot slot brengen wij een UV-bestendige coating aan die de koplampen beschermt tegen 
+              nieuwe verkleuring.
             </p>
             <p className="text-white/60">
               Het resultaat is verbluffend: uw koplampen zien er weer uit als nieuw en geven tot 70% meer licht. 
               Dit verhoogt niet alleen de veiligheid, maar ook de uitstraling en waarde van uw auto. 
-              Maak vandaag nog een afspraak voor koplampen polijsten in Cuijk.
+              Koplampen polijsten vanaf €59, inclusief UV coating en 6 maanden garantie. 
+              Maak vandaag nog een afspraak in Cuijk.
             </p>
           </div>
         </section>

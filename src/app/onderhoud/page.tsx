@@ -3,6 +3,18 @@ import Footer from '@/components/Footer';
 import Services from '@/components/Services';
 import { Wrench, Phone, MessageCircle, Clock, CheckCircle, Shield } from 'lucide-react';
 import { openingHours, contactInfo } from '@/data/cars';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Auto Onderhoud Cuijk | Garage Alle Merken - 1ste Eigenaar Specialist',
+  description: 'Professioneel auto onderhoud in Cuijk voor alle merken. Specialist in 1ste eigenaar autos. APK, kleine en grote beurt, vakkundige service. 168 reviews, 5 sterren.',
+  keywords: 'auto onderhoud Cuijk, 1ste eigenaar autos onderhoud, auto onderhoud, alle merken, APK keuring, kleine beurt, grote beurt, garage Cuijk, BOVAG garage',
+  openGraph: {
+    title: 'Auto Onderhoud Cuijk | Garage Alle Merken',
+    description: 'Professioneel auto onderhoud voor alle merken. APK, kleine en grote beurt. 168 reviews, 5 sterren.',
+    type: 'website',
+  },
+};
 
 export default function OnderhoudPage() {
   return (
@@ -19,11 +31,11 @@ export default function OnderhoudPage() {
                 Vakkundige service
               </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
-                Onderhoud & <span className="text-[#c8102e]">Service</span>
+                Auto <span className="text-[#c8102e]">Onderhoud</span> Cuijk
               </h1>
               <p className="text-xl text-white/50 max-w-2xl mx-auto">
-                Professioneel onderhoud voor uw auto, ongeacht het merk. 
-                Vertrouw op onze ervaren monteurs en moderne werkplaats.
+                Professioneel auto onderhoud voor alle merken. APK, kleine en grote beurt. 
+                Vertrouw op onze ervaren monteurs en moderne werkplaats. 168 reviews, 5 sterren.
               </p>
             </div>
           </div>
@@ -48,7 +60,7 @@ export default function OnderhoudPage() {
               {[
                 { icon: <CheckCircle className="w-8 h-8" />, title: 'BOVAG Erkend', desc: 'Wij zijn BOVAG erkend, wat staat voor kwaliteit en betrouwbaarheid.' },
                 { icon: <Shield className="w-8 h-8" />, title: 'Garantie', desc: 'Garantie op alle uitgevoerde werkzaamheden en onderdelen.' },
-                { icon: <Wrench className="w-8 h-8" />, title: 'Alle Merken', desc: 'Wij onderhouden en repareren alle automerken.' },
+                { icon: <Wrench className="w-8 h-8" />, title: 'Alle Merken', desc: 'Wij onderhouden alle automerken - van VW tot BMW, Audi tot Mercedes.' },
                 { icon: <Clock className="w-8 h-8" />, title: 'Snelle Service', desc: 'Efficiënte planning zodat u snel weer de weg op kunt.' },
                 { icon: <CheckCircle className="w-8 h-8" />, title: 'Transparante Prijzen', desc: 'Duidelijke prijzen zonder verborgen kosten.' },
                 { icon: <Shield className="w-8 h-8" />, title: 'Originele Onderdelen', desc: 'Gebruik van originele of A-merk onderdelen.' },

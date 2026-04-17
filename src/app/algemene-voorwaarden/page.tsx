@@ -1,19 +1,19 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Shield, FileText, Truck, CreditCard, Lock, MessageSquare } from 'lucide-react';
+import { Shield, FileText, Truck, CreditCard, Lock, MessageSquare, RotateCcw } from 'lucide-react';
 import { contactInfo } from '@/data/cars';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Algemene Voorwaarden | Car Store Cuijk',
-  description: 'Bekijk de algemene voorwaarden van Car Store Cuijk. BOVAG voorwaarden, garantievoorwaarden, leveringsvoorwaarden, betalingsvoorwaarden en klachtenprocedure.',
-  keywords: 'Car Store Cuijk algemene voorwaarden, BOVAG voorwaarden, garantie auto, leveringsvoorwaarden auto, klachtenprocedure autobedrijf',
+  title: 'Algemene Voorwaarden | Car Store Cuijk - 1ste Eigenaar Auto\'s',
+  description: 'Bekijk de algemene voorwaarden van Car Store Cuijk. Specialist in 1ste eigenaar autos. Garantievoorwaarden, leveringsvoorwaarden, betalingsvoorwaarden en klachtenprocedure.',
+  keywords: 'Car Store Cuijk algemene voorwaarden, 1ste eigenaar autos garantie, garantie auto, leveringsvoorwaarden auto, retourvoorwaarden auto, klachtenprocedure autobedrijf',
   alternates: {
     canonical: '/algemene-voorwaarden',
   },
   openGraph: {
     title: 'Algemene Voorwaarden | Car Store Cuijk',
-    description: 'Bekijk de algemene voorwaarden, garantie- en leveringsvoorwaarden van Car Store Cuijk. BOVAG erkend autobedrijf.',
+    description: 'Bekijk de algemene voorwaarden, garantie-, leverings- en retourvoorwaarden van Car Store Cuijk.',
     type: 'website',
     locale: 'nl_NL',
     siteName: 'Car Store Cuijk',
@@ -22,13 +22,13 @@ export const metadata: Metadata = {
 
 const voorwaardenSections = [
   {
-    id: 'bovag',
+    id: 'algemeen',
     icon: FileText,
-    title: 'BOVAG Algemene Voorwaarden',
+    title: 'Algemene Voorwaarden',
     content: [
       {
         subtitle: 'Toepasselijkheid',
-        text: 'Op alle aanbiedingen, overeenkomsten en leveringen van Car Store Cuijk zijn de BOVAG-algemene voorwaarden voor de autobranche van toepassing. Deze voorwaarden zijn gedeponeerd bij de Kamer van Koophandel.'
+        text: 'Op alle aanbiedingen, overeenkomsten en leveringen van Car Store Cuijk zijn deze algemene voorwaarden van toepassing. Deze voorwaarden zijn gedeponeerd bij de Kamer van Koophandel.'
       },
       {
         subtitle: 'Definities',
@@ -55,7 +55,7 @@ const voorwaardenSections = [
       },
       {
         subtitle: 'Occasion Garantie',
-        text: 'Op occasions bieden wij standaard 3 maanden BOVAG-garantie. Tegen meerprijs is uitbreiding naar 6, 12 of 24 maanden mogelijk. De garantiedekking geldt voor mechanische en elektrische defecten aan de aandrijflijn, motor, versnellingsbak en differentieel.'
+        text: 'Op occasions bieden wij standaard 3 maanden garantie. Tegen meerprijs is uitbreiding naar 6, 12 of 24 maanden mogelijk. De garantiedekking geldt voor mechanische en elektrische defecten aan de aandrijflijn, motor, versnellingsbak en differentieel.'
       },
       {
         subtitle: 'Uitsluitingen',
@@ -137,6 +137,29 @@ const voorwaardenSections = [
     ]
   },
   {
+    id: 'retour',
+    icon: RotateCcw,
+    title: 'Retourvoorwaarden',
+    content: [
+      {
+        subtitle: 'Retourrecht',
+        text: 'Bent u niet tevreden over uw aankoop? Bij Car Store Cuijk bieden wij u de mogelijkheid om het voertuig terug te geven onder bepaalde voorwaarden. Het voertuig moet zich in de originele staat bevinden, vrij van schade en met de volledige documentatie. Neem contact met ons op om de retourmogelijkheden te bespreken.'
+      },
+      {
+        subtitle: 'Terugbetalingsbedrag',
+        text: 'Bij retour van het voertuig ontvangt u 80% van de aanschafprijs terug. Dit betekent een vergoeding van -20% op de oorspronkelijke aankoopprijs. Dit dekt onze administratiekosten en waardepotentieel tijdens het bezit.'
+      },
+      {
+        subtitle: 'Kilometerafhankelijke korting',
+        text: 'Indien het voertuig meer dan 10.000 kilometer heeft gereden sinds aankoop, wordt er een extra korting van 10% toegepast op het terugbetalingsbedrag. Dit komt neer op een totale terugbetaling van 70% van de aanschafprijs.'
+      },
+      {
+        subtitle: 'Voorwaarden',
+        text: 'Voor retour gelden de volgende voorwaarden: voertuig in originele staat zonder schade of modificaties, volledige documentatie aanwezig (kentekenbewijs, onderhoudshistorie, alle sleutels), en het voertuig mag niet verkeersdeelnemer zijn geweest bij ongevallen. De exacte voorwaarden en termijn worden in overleg vastgesteld.'
+      }
+    ]
+  },
+  {
     id: 'klachten',
     icon: MessageSquare,
     title: 'Klachtenprocedure',
@@ -150,12 +173,12 @@ const voorwaardenSections = [
         text: 'Wij onderzoeken de klacht grondig en komen met een voorstel voor oplossing. Indien nodig nodigen wij u uit voor een gesprek. Wij streven naar een bevredigende oplossing voor alle partijen.'
       },
       {
-        subtitle: 'BOVAG Geschillencommissie',
-        text: 'Indien de klacht niet tot een oplossing leidt, kunt u het geschil voorleggen aan de Geschillencommissie van BOVAG. Deze commissie biedt een onafhankelijke en kosteloze geschillenregeling voor consumenten.'
+        subtitle: 'Geschillenregeling',
+        text: 'Indien de klacht niet tot een oplossing leidt, kunt u het geschil voorleggen aan de Geschillencommissie van de Stichting Geschillencommissies voor Consumentenzaken (SGC). Deze commissie biedt een onafhankelijke geschillenregeling voor consumenten.'
       },
       {
         subtitle: 'Contactgegevens',
-        text: 'BOVAG Geschillencommissie: Postbus 510, 2700 AM Zoetermeer. Telefoon: 079 - 3 550 550. E-mail: geschillen@bovag.nl. Website: www.bovag.nl/geschillencommissie'
+        text: 'Voor meer informatie over geschillenregeling kunt u contact opnemen met de Stichting Geschillencommissies voor Consumentenzaken via www.degeschillencommissie.nl of telefonisch via 070-310 53 10.'
       }
     ]
   }
@@ -175,7 +198,7 @@ export default function AlgemeneVoorwaardenPage() {
                 Algemene <span className="text-[#c8102e]">Voorwaarden</span>
               </h1>
               <p className="text-xl text-white/50 max-w-2xl mx-auto">
-                Op al onze diensten en overeenkomsten zijn de BOVAG-algemene voorwaarden van toepassing. 
+                Op al onze diensten en overeenkomsten zijn onderstaande algemene voorwaarden van toepassing. 
                 Hieronder vindt u een overzicht van onze belangrijkste voorwaarden.
               </p>
             </div>
