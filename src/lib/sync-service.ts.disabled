@@ -1,0 +1,251 @@
+// VWE Sync Service
+// Main synchronization logic for VWE XML/SOAP inventory
+
+import { vweXMLClient } from './vwe-xml-client';
+import { VWEXMLVehicle, SyncResult, isVWEXMLConfigured } from './vwe-xml-config';
+import { 
+  upsertVehicle, 
+  deleteVehicle, 
+  markVehiclesAsDeleted,
+  createSyncLog, 
+  updateSyncLog,
+  getSyncStats
+} from './db/database';
+import { downloadVehicleImages } from './image-downloader';
+import { Car } from '@/types';
+
+/**
+ * Convert VWE XML vehicle to Car format
+ */
+function convertVWEXMLToCar(vweVehicle: VWEXMLVehicle): Car {
+  return {
+    id: vweVehicle.id,
+    kenteken: vweVehicle.kenteken,
+    merk: capitalize(vweVehicle.merk),
+    model: vweVehicle.model,
+    variant: vweVehicle.variant || '',
+    bouwjaar: vweVehicle.bouwjaar,
+    carrosserie: capitalize(vweVehicle.carrosserie),
+    brandstof: capitalize(vweVehicle.brandstof),
+    transmissie: capitalize(vweVehicle.transmissie),
+    kilometerstand: vweVehicle.kilometerstand,
+    prijs: vweVehicle.prijs,
+    status: mapStatus(vweVehicle.status),
+    apk: vweVehicle.apk || new Date().getFullYear().toString(),
+    beschrijving: vweVehicle.beschrijving || generateDescription(vweVehicle),
+    vermogen: vweVehicle.vermogen,
+    verbruik: vweVehicle.verbruik,
+    co2: vweVehicle.co2,
+    vweId: vweVehicle.id,
+    afbeeldingen: vweVehicle.fotoUrls.length > 0 ? vweVehicle.fotoUrls : ['/cars/placeholder.svg'],
+    features: vweVehicle.opties || [],
+  };
+}
+
+/**
+ * Capitalize first letter
+ */
+function capitalize(str: string): string {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
+/**
+ * Map VWE status to our status
+ */
+function mapStatus(vweStatus: VWEXMLVehicle['status']): Car['status'] {
+  switch (vweStatus) {
+    case 'verkocht':
+      return 'verkocht';
+    case 'gereserveerd':
+      return 'gereserveerd';
+    case 'beschikbaar':
+    default:
+      return 'beschikbaar';
+  }
+}
+
+/**
+ * Generate description if none provided
+ */
+function generateDescription(vehicle: VWEXMLVehicle): string {
+  return `Prachtige ${vehicle.merk} ${vehicle.model} uit ${vehicle.bouwjaar}. ` +
+    `Deze ${vehicle.carrosserie.toLowerCase()} heeft ${vehicle.kilometerstand.toLocaleString('nl-NL')} km op de teller ` +
+    `en rijdt op ${vehicle.brandstof.toLowerCase()}. ` +
+    `De auto is voorzien van ${vehicle.transmissie.toLowerCase()} versnellingsbak. ` +
+    `Kom langs voor een proefrit!`;
+}
+
+/**
+ * Sync vehicle images
+ */
+async function syncVehicleImages(car: Car): Promise<string[]> {
+  // Filter out placeholder and already-local images
+  const remoteUrls = car.afbeeldingen.filter(url => 
+    url.startsWith('http') && !url.startsWith('/cars/')
+  );
+  
+  if (remoteUrls.length === 0) {
+    return car.afbeeldingen;
+  }
+  
+  const result = await downloadVehicleImages(car.id, remoteUrls);
+  
+  // Combine local images with any existing local paths
+  const localImages = car.afbeeldingen.map(url => {
+    if (url.startsWith('/cars/')) return url;
+    const index = remoteUrls.indexOf(url);
+    if (index !== -1 && result.downloaded[index]) {
+      return result.downloaded[index];
+    }
+    return url;
+  }).filter(Boolean);
+  
+  return localImages.length > 0 ? localImages : ['/cars/placeholder.svg'];
+}
+
+/**
+ * Main sync function
+ */
+export async function syncVWEInventory(options?: {
+  downloadImages?: boolean;
+  removeDeleted?: boolean;
+}): Promise<SyncResult> {
+  const startTime = Date.now();
+  const logId = createSyncLog();
+  const errors: string[] = [];
+  
+  const result: SyncResult = {
+    success: false,
+    added: 0,
+    updated: 0,
+    removed: 0,
+    errors,
+    timestamp: new Date().toISOString(),
+    durationMs: 0,
+  };
+
+  try {
+    console.log('🔄 Starting VWE inventory sync...');
+    
+    // Check configuration
+    if (!isVWEXMLConfigured()) {
+      throw new Error('VWE XML/SOAP not configured. Check your environment variables.');
+    }
+
+    // Fetch inventory from VWE
+    console.log('📥 Fetching inventory from VWE...');
+    const vweVehicles = await vweXMLClient.fetchInventory({ status: 'all' });
+    console.log(`   Found ${vweVehicles.length} vehicles`);
+
+    // Track IDs for cleanup
+    const processedIds: string[] = [];
+
+    // Process each vehicle
+    for (let i = 0; i < vweVehicles.length; i++) {
+      const vweVehicle = vweVehicles[i];
+      
+      try {
+        // Skip deleted vehicles in source
+        if (vweVehicle.status === 'verwijderd') {
+          processedIds.push(vweVehicle.id);
+          continue;
+        }
+
+        // Convert to Car format
+        let car = convertVWEXMLToCar(vweVehicle);
+        
+        // Download images if enabled
+        if (options?.downloadImages !== false) {
+          console.log(`   [${i + 1}/${vweVehicles.length}] Downloading images for ${car.merk} ${car.model}...`);
+          const localImages = await syncVehicleImages(car);
+          car = { ...car, afbeeldingen: localImages };
+        }
+
+        // Upsert to database
+        const dbResult = upsertVehicle(car, 'vwe_xml');
+        
+        if (dbResult.action === 'inserted') {
+          result.added++;
+          console.log(`   ✅ Added: ${car.merk} ${car.model}`);
+        } else {
+          result.updated++;
+          console.log(`   📝 Updated: ${car.merk} ${car.model}`);
+        }
+        
+        processedIds.push(vweVehicle.id);
+      } catch (error) {
+        const errorMsg = `Failed to process vehicle ${vweVehicle.id}: ${error instanceof Error ? error.message : 'Unknown error'}`;
+        console.error(`   ❌ ${errorMsg}`);
+        errors.push(errorMsg);
+      }
+    }
+
+    // Remove vehicles not in VWE anymore
+    if (options?.removeDeleted !== false) {
+      console.log('🧹 Cleaning up removed vehicles...');
+      const removed = markVehiclesAsDeleted(processedIds);
+      result.removed = removed;
+      console.log(`   Removed ${removed} vehicles`);
+    }
+
+    result.success = errors.length === 0;
+    result.durationMs = Date.now() - startTime;
+    
+    console.log('✅ Sync completed!');
+    console.log(`   Added: ${result.added}`);
+    console.log(`   Updated: ${result.updated}`);
+    console.log(`   Removed: ${result.removed}`);
+    console.log(`   Errors: ${errors.length}`);
+    console.log(`   Duration: ${result.durationMs}ms`);
+
+    // Update sync log
+    updateSyncLog(logId, result.success ? 'completed' : 'failed', {
+      added: result.added,
+      updated: result.updated,
+      removed: result.removed,
+      errors,
+      durationMs: result.durationMs,
+    });
+
+    return result;
+
+  } catch (error) {
+    result.durationMs = Date.now() - startTime;
+    const errorMsg = error instanceof Error ? error.message : 'Unknown error';
+    errors.push(errorMsg);
+    
+    console.error('❌ Sync failed:', errorMsg);
+    
+    // Update sync log with failure
+    updateSyncLog(logId, 'failed', {
+      added: result.added,
+      updated: result.updated,
+      removed: result.removed,
+      errors,
+      durationMs: result.durationMs,
+    });
+
+    return result;
+  }
+}
+
+/**
+ * Get sync status
+ */
+export function getSyncStatus(): {
+  configured: boolean;
+  stats: ReturnType<typeof getSyncStats>;
+} {
+  return {
+    configured: isVWEXMLConfigured(),
+    stats: getSyncStats(),
+  };
+}
+
+/**
+ * Test VWE connection
+ */
+export async function testVWEConnection(): Promise<{ success: boolean; message: string }> {
+  return vweXMLClient.testConnection();
+}

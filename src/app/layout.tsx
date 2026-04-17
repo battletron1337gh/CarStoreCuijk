@@ -9,13 +9,41 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Car Store Cuijk | Occasions & Onderhoud",
-  description: "Vind uw droomoccasion bij Car Store Cuijk. Ruim aanbod occasions, professioneel onderhoud en vakkundige reparaties. 7 dagen per week open.",
-  keywords: "occasions, auto kopen, auto verkopen, onderhoud, APK, Cuijk, occasions Nederland",
+  title: "Car Store Cuijk | Occasions, Onderhoud & Reparaties",
+  description: "Car Store Cuijk - Uw specialist in occasions, onderhoud, reparaties, airco service en koplampen polijsten. 7 dagen per week open. BOVAG erkend.",
+  keywords: "Car Store Cuijk, occasions Cuijk, auto kopen, auto verkopen, auto onderhoud, auto reparatie, airco vullen, koplampen polijsten, BOVAG garage Cuijk",
+  authors: [{ name: "Car Store Cuijk" }],
+  creator: "Car Store Cuijk",
+  publisher: "Car Store Cuijk",
+  metadataBase: new URL("https://www.carstorecuijk.nl"),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "Car Store Cuijk | Occasions & Onderhoud",
-    description: "Vind uw droomoccasion bij Car Store Cuijk. Professioneel onderhoud en vakkundige reparaties.",
+    title: "Car Store Cuijk | Occasions, Onderhoud & Reparaties",
+    description: "Uw specialist in occasions, onderhoud en reparaties. BOVAG erkend. 7 dagen per week open.",
     type: "website",
+    locale: "nl_NL",
+    siteName: "Car Store Cuijk",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Car Store Cuijk | Occasions, Onderhoud & Reparaties",
+    description: "Uw specialist in occasions, onderhoud en reparaties. BOVAG erkend.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    google: "YOUR_GOOGLE_VERIFICATION_CODE",
   },
 };
 

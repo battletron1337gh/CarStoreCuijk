@@ -1,0 +1,41 @@
+#!/usr/bin/env ts-node
+/**
+ * Start the scheduled VWE sync service
+ * Run this script to start the background sync process
+ * 
+ * Usage: npx ts-node scripts/start-scheduled-sync.ts
+ */
+
+import { startCronScheduler } from '../src/lib/cron-scheduler';
+import { isVWEXMLConfigured } from '../src/lib/vwe-xml-config';
+
+console.log('🚗 Car Store Cuijk - VWE Scheduled Sync Service');
+console.log('=' .repeat(50));
+
+// Check configuration
+if (!isVWEXMLConfigured()) {
+  console.error('❌ VWE XML/SOAP not configured!');
+  console.error('   Please set VWE_API_ENDPOINT, VWE_USERNAME, and VWE_PASSWORD in .env.local');
+  process.exit(1);
+}
+
+console.log('✅ Configuration verified');
+console.log('⏰ Starting scheduler (sync every 15 minutes)...');
+console.log('   Press Ctrl+C to stop\n');
+
+// Start the scheduler
+startCronScheduler();
+
+// Keep the process running
+process.stdin.resume();
+
+// Handle graceful shutdown
+process.on('SIGINT', () => {
+  console.log('\n👋 Shutting down...');
+  process.exit(0);
+});
+
+process.on('SIGTERM', () => {
+  console.log('\n👋 Shutting down...');
+  process.exit(0);
+});

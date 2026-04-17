@@ -1,0 +1,182 @@
+// Image Downloader for VWE Vehicle Images
+// Downloads and stores vehicle images locally
+
+import fs from 'fs';
+import path from 'path';
+import { VWE_XML_CONFIG } from './vwe-xml-config';
+import { addVehicleImage, updateImageStatus } from './db/database';
+
+const IMAGE_DIR = path.join(process.cwd(), 'public', 'cars');
+
+/**
+ * Ensure image directory exists
+ */
+function ensureImageDir(): void {
+  if (!fs.existsSync(IMAGE_DIR)) {
+    fs.mkdirSync(IMAGE_DIR, { recursive: true });
+  }
+}
+
+/**
+ * Generate a safe filename from URL
+ */
+function generateFilename(vehicleId: string, url: string, index: number): string {
+  const urlObj = new URL(url);
+  const originalName = path.basename(urlObj.pathname);
+  const ext = path.extname(originalName) || '.jpg';
+  const safeId = vehicleId.replace(/[^a-zA-Z0-9]/g, '_');
+  return `${safeId}_${index}${ext}`;
+}
+
+/**
+ * Download a single image
+ */
+export async function downloadImage(
+  vehicleId: string, 
+  imageUrl: string, 
+  index: number
+): Promise<{ success: boolean; localPath: string | null; error?: string }> {
+  ensureImageDir();
+  
+  try {
+    // Validate URL
+    const url = new URL(imageUrl);
+    
+    // Fetch image
+    const response = await fetch(imageUrl, {
+      headers: {
+        'User-Agent': 'CarStoreCuijk-VWE-Sync/1.0',
+      },
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
+    // Check content type
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.startsWith('image/')) {
+      throw new Error(`Invalid content type: ${contentType}`);
+    }
+    
+    // Get image buffer
+    const buffer = Buffer.from(await response.arrayBuffer());
+    
+    // Skip if too small (likely an error image)
+    if (buffer.length < 1000) {
+      throw new Error('Image too small, likely an error placeholder');
+    }
+    
+    // Generate filename and save
+    const filename = generateFilename(vehicleId, imageUrl, index);
+    const localPath = path.join(IMAGE_DIR, filename);
+    
+    fs.writeFileSync(localPath, buffer);
+    
+    // Return relative path for web use
+    const webPath = `/cars/${filename}`;
+    
+    return { success: true, localPath: webPath };
+  } catch (error) {
+    return { 
+      success: false, 
+      localPath: null,
+      error: error instanceof Error ? error.message : 'Unknown error'
+    };
+  }
+}
+
+/**
+ * Download all images for a vehicle
+ */
+export async function downloadVehicleImages(
+  vehicleId: string, 
+  imageUrls: string[]
+): Promise<{ downloaded: string[]; failed: string[] }> {
+  const downloaded: string[] = [];
+  const failed: string[] = [];
+  
+  // Add image records to database
+  for (let i = 0; i < imageUrls.length; i++) {
+    addVehicleImage(vehicleId, imageUrls[i], i === 0);
+  }
+  
+  // Download images
+  for (let i = 0; i < imageUrls.length; i++) {
+    const url = imageUrls[i];
+    
+    // Skip if not a valid URL
+    if (!url.startsWith('http')) {
+      // Might already be a local path
+      if (url.startsWith('/cars/') || url.startsWith('/')) {
+        downloaded.push(url);
+      } else {
+        failed.push(url);
+      }
+      continue;
+    }
+    
+    const result = await downloadImage(vehicleId, url, i);
+    
+    if (result.success && result.localPath) {
+      downloaded.push(result.localPath);
+      updateImageStatus(vehicleId, url, result.localPath, 'downloaded');
+    } else {
+      failed.push(url);
+      updateImageStatus(vehicleId, url, null, 'failed');
+      console.warn(`Failed to download image for ${vehicleId}: ${result.error}`);
+    }
+    
+    // Small delay to be nice to the server
+    if (i < imageUrls.length - 1) {
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+  }
+  
+  return { downloaded, failed };
+}
+
+/**
+ * Clean up orphaned images (images not referenced in database)
+ */
+export function cleanupOrphanedImages(validPaths: string[]): number {
+  ensureImageDir();
+  
+  let removed = 0;
+  const files = fs.readdirSync(IMAGE_DIR);
+  
+  for (const file of files) {
+    const filePath = `/cars/${file}`;
+    if (!validPaths.includes(filePath)) {
+      const fullPath = path.join(IMAGE_DIR, file);
+      try {
+        fs.unlinkSync(fullPath);
+        removed++;
+      } catch (error) {
+        console.error(`Failed to remove orphaned image: ${fullPath}`, error);
+      }
+    }
+  }
+  
+  return removed;
+}
+
+/**
+ * Get image stats
+ */
+export function getImageStats(): { total: number; size: number } {
+  ensureImageDir();
+  
+  const files = fs.readdirSync(IMAGE_DIR);
+  let totalSize = 0;
+  
+  for (const file of files) {
+    const stats = fs.statSync(path.join(IMAGE_DIR, file));
+    totalSize += stats.size;
+  }
+  
+  return {
+    total: files.length,
+    size: totalSize,
+  };
+}
