@@ -1,3 +1,3 @@
-:HL["/CarStoreCuijk/_next/static/chunks/0w_6jam7zklcw.css","style"]
-:HL["/CarStoreCuijk/_next/static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"auto-verkopen","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"8tbDL-GkeWw7fSsHHn8S6"}
+:HL["/_next/static/chunks/12y0b9fy9r.ir.css","style"]
+:HL["/_next/static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"auto-verkopen","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"PikaoF-CGeAocx3y5TG-B"}
