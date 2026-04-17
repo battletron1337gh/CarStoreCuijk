@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X, Phone, MessageCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { trackWhatsAppClick, trackPhoneClick } from '@/lib/analytics';
 
 const navItems = [
   { href: '/', label: 'Home' },
@@ -24,6 +25,14 @@ export default function Header() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleWhatsAppClick = () => {
+    trackWhatsAppClick('header');
+  };
+
+  const handlePhoneClick = () => {
+    trackPhoneClick('header');
+  };
 
   return (
     <header
@@ -59,16 +68,18 @@ export default function Header() {
           {/* Desktop CTA Buttons */}
           <div className="hidden lg:flex items-center gap-4">
             <a
-              href="tel:0485451234"
+              href="tel:0687118768"
+              onClick={handlePhoneClick}
               className="flex items-center gap-2 text-white/60 hover:text-white transition-colors"
             >
               <Phone className="w-4 h-4" />
-              <span className="font-medium">0485 - 451 234</span>
+              <span className="font-medium">06 - 871 187 68</span>
             </a>
             <a
-              href="https://wa.me/31612345678"
+              href="https://wa.me/31687118768"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={handleWhatsAppClick}
               className="flex items-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:shadow-lg"
             >
               <MessageCircle className="w-4 h-4" />
@@ -113,16 +124,18 @@ export default function Header() {
               ))}
               <div className="flex flex-col gap-3 mt-4">
                 <a
-                  href="tel:0485451234"
+                  href="tel:0687118768"
+                  onClick={handlePhoneClick}
                   className="flex items-center justify-center gap-2 text-white/80 hover:text-white transition-colors py-2"
                 >
                   <Phone className="w-4 h-4" />
-                  <span className="font-medium">0485 - 451 234</span>
+                  <span className="font-medium">06 - 871 187 68</span>
                 </a>
                 <a
-                  href="https://wa.me/31612345678"
+                  href="https://wa.me/31687118768"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={handleWhatsAppClick}
                   className="flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-4 py-3 rounded-lg font-medium transition-all"
                 >
                   <MessageCircle className="w-4 h-4" />

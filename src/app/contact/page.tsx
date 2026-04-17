@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import ContactForm from '@/components/ContactForm';
 import { MapPin, Phone, Mail, MessageCircle, Clock } from 'lucide-react';
 import { contactInfo, openingHours } from '@/data/cars';
 
@@ -24,7 +25,7 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* Contact Info */}
+        {/* Contact Info & Form */}
         <section className="py-20 lg:py-32 bg-[#0d0d0d]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-3 gap-8">
@@ -108,6 +109,9 @@ export default function ContactPage() {
                     <span className="text-[#c8102e] font-medium">Let op:</span> Na 18:00 op afspraak mogelijk
                   </p>
                 </div>
+
+                {/* Contact Form */}
+                <ContactForm />
               </div>
 
               {/* Side Panel */}
@@ -168,7 +172,7 @@ export default function ContactPage() {
                 <div className="bg-[#1a1a1a] rounded-2xl p-8 text-center aspect-square flex flex-col items-center justify-center border border-white/5">
                   <MapPin className="w-12 h-12 text-[#c8102e] mb-4" />
                   <p className="text-white font-medium">Google Maps</p>
-                  <p className="text-white/40 text-sm mt-2">Veldweg 28, Cuijk</p>
+                  <p className="text-white/40 text-sm mt-2">{contactInfo.adres}, {contactInfo.plaats}</p>
                   <a
                     href={`https://maps.google.com/?q=${contactInfo.adres}, ${contactInfo.postcode} ${contactInfo.plaats}`}
                     target="_blank"

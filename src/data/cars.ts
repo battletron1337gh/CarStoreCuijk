@@ -397,12 +397,13 @@ export const services: Service[] = [
 ];
 
 export const contactInfo: ContactInfo = {
-  adres: 'Veldweg 28',
-  postcode: '5431 NS',
+  adres: 'Lange Beijerd 3d',
+  postcode: '5431 NR',
   plaats: 'Cuijk',
-  telefoon: '0485 - 451 234',
+  telefoon: '06 - 871 187 68',
   email: 'info@carstorecuijk.nl',
-  whatsapp: '06 - 123 456 78'
+  whatsapp: '06 - 871 187 68',
+  kvk: '83514597'
 };
 
 export const openingHours: OpeningHours[] = [

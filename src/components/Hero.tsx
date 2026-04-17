@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight, MessageCircle, Phone, ChevronDown } from 'lucide-react';
+import { contactInfo } from '@/data/cars';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -103,12 +104,12 @@ export default function Hero() {
           variants={itemVariants}
           className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-8 text-white/40"
         >
-          <a href="tel:0485451234" className="flex items-center gap-2 hover:text-white transition-colors">
+          <a href={`tel:${contactInfo.telefoon.replace(/\s|-/g, '')}`} className="flex items-center gap-2 hover:text-white transition-colors">
             <Phone className="w-5 h-5 text-[#c8102e]" />
-            <span>0485 - 451 234</span>
+            <span>{contactInfo.telefoon}</span>
           </a>
           <span className="hidden sm:block text-white/20">•</span>
-          <span>Veldweg 28, Cuijk</span>
+          <span>{contactInfo.adres}, {contactInfo.plaats}</span>
           <span className="hidden sm:block text-white/20">•</span>
           <span>7 dagen open</span>
         </motion.div>

@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import FinancingCalculator from '@/components/FinancingCalculator';
 import { Calculator, CheckCircle, Shield, Clock, Wallet, Percent } from 'lucide-react';
 import Link from 'next/link';
 
@@ -61,8 +62,70 @@ export default function FinancieringPage() {
           </div>
         </section>
 
-        {/* How It Works */}
+        {/* Calculator Section */}
         <section className="py-20 lg:py-32 bg-[#0a0a0a]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-12 items-start">
+              <div>
+                <span className="inline-flex items-center gap-2 bg-[#c8102e]/20 border border-[#c8102e]/40 text-white rounded-full px-4 py-2 mb-6">
+                  <Calculator className="w-4 h-4" />
+                  Bereken uw maandlasten
+                </span>
+                <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">
+                  Financieringscalculator
+                </h2>
+                <p className="text-white/60 mb-8 text-lg">
+                  Bereken eenvoudig wat uw maandlasten zullen zijn. Pas het aankoopbedrag, 
+                  de aanbetaling en de looptijd aan om een indicatie te krijgen van uw maandbedrag.
+                </p>
+                
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 bg-[#c8102e]/20 text-[#c8102e] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <CheckCircle className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-medium">Snelle indicatie</h4>
+                      <p className="text-white/50 text-sm">Binnen enkele seconden ziet u uw maandbedrag</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 bg-[#c8102e]/20 text-[#c8102e] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <CheckCircle className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-medium">Geen verplichtingen</h4>
+                      <p className="text-white/50 text-sm">De berekening is vrijblijvend en gratis</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 bg-[#c8102e]/20 text-[#c8102e] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <CheckCircle className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-medium">Persoonlijk advies</h4>
+                      <p className="text-white/50 text-sm">Neem contact op voor een offerte op maat</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-8">
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-8 py-4 rounded-xl font-semibold transition-all"
+                  >
+                    Vraag een offerte aan
+                  </Link>
+                </div>
+              </div>
+
+              <FinancingCalculator />
+            </div>
+          </div>
+        </section>
+
+        {/* How It Works */}
+        <section className="py-20 lg:py-32 bg-[#0d0d0d]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">

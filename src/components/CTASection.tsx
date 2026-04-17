@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight, MessageCircle, Phone } from 'lucide-react';
+import { contactInfo } from '@/data/cars';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -92,7 +93,7 @@ export default function CTASection() {
               
               <div className="space-y-4">
                 <a
-                  href="tel:0485451234"
+                  href={`tel:${contactInfo.telefoon.replace(/\s|-/g, '')}`}
                   className="flex items-center gap-4 text-white/80 hover:text-white transition-colors group"
                 >
                   <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition-colors">
@@ -100,12 +101,12 @@ export default function CTASection() {
                   </div>
                   <div>
                     <p className="text-sm text-white/60">Telefoon</p>
-                    <p className="font-semibold">0485 - 451 234</p>
+                    <p className="font-semibold">{contactInfo.telefoon}</p>
                   </div>
                 </a>
 
                 <a
-                  href="https://wa.me/31612345678"
+                  href={`https://wa.me/${contactInfo.whatsapp.replace(/\s|-/g, '')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 text-white/80 hover:text-white transition-colors group"
@@ -140,7 +141,7 @@ export default function CTASection() {
                   </div>
                   <div>
                     <p className="text-sm text-white/60">Adres</p>
-                    <p className="font-semibold">Veldweg 28, Cuijk</p>
+                    <p className="font-semibold">{contactInfo.adres}, {contactInfo.plaats}</p>
                   </div>
                 </div>
               </div>

@@ -11,7 +11,7 @@ import {
   CarFront,
   ArrowRight
 } from 'lucide-react';
-import { services } from '@/data/cars';
+import { services, contactInfo } from '@/data/cars';
 
 const iconMap: Record<string, React.ReactNode> = {
   ClipboardCheck: <ClipboardCheck className="w-8 h-8" />,
@@ -149,10 +149,10 @@ export default function Services() {
               Afspraak via WhatsApp
             </a>
             <a
-              href="tel:0485451234"
+              href={`tel:${contactInfo.telefoon.replace(/\s|-/g, '')}`}
               className="flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-6 py-3 rounded-xl font-semibold transition-all duration-300"
             >
-              Bel: 0485 - 451 234
+              Bel: {contactInfo.telefoon}
             </a>
           </div>
         </motion.div>
