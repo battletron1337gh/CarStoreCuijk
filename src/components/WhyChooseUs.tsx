@@ -7,7 +7,7 @@ const reasons = [
   {
     icon: <Shield className="w-8 h-8" />,
     title: 'Betrouwbaar',
-    description: 'Al onze occasions worden grondig gecontroleerd. U koopt met vertrouwen.'
+    description: 'Al onze tweedehands auto\'s worden grondig gecontroleerd. U koopt met vertrouwen.'
   },
   {
     icon: <Users className="w-8 h-8" />,
@@ -26,8 +26,8 @@ const reasons = [
   },
   {
     icon: <Wrench className="w-8 h-8" />,
-    title: 'Vakkundig',
-    description: 'Onze monteurs werken volgens fabrieksvoorschriften met moderne apparatuur.'
+    title: 'Alle Merken',
+    description: 'Wij onderhouden en repareren alle automerken. Van VW tot BMW, Audi tot Mercedes.'
   },
   {
     icon: <BadgeCheck className="w-8 h-8" />,
@@ -85,8 +85,8 @@ export default function WhyChooseUs() {
             Waarom Car Store Cuijk?
           </h2>
           <p className="text-lg text-white/50 max-w-2xl mx-auto">
-            Al jaren de vertrouwde partner voor occasions en onderhoud in Cuijk en omgeving.
-            Een echt familiebedrijf met passie voor auto's.
+            Al jaren de vertrouwde partner voor tweedehands auto's en onderhoud in Cuijk. 
+            Een echt familiebedrijf met passie voor auto's. 168 reviews, 5 sterren op Google reviews.
           </p>
         </motion.div>
 

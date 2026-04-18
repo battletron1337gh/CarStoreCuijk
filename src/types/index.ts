@@ -43,6 +43,7 @@ export interface ContactInfo {
   telefoon: string;
   email: string;
   whatsapp: string;
+  kvk?: string;
 }
 
 export interface Testimonial {

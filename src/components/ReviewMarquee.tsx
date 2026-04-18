@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { Star } from 'lucide-react';
+import { googleReviews, reviewStats } from '@/data/google-reviews';
 
 interface Review {
   id: string;
@@ -9,66 +10,18 @@ interface Review {
   beoordeling: string;
   sterren: number;
   bron: 'Google' | 'Trustpilot';
+  auto?: string;
 }
 
-const reviews: Review[] = [
-  {
-    id: '1',
-    naam: 'Peter van den Berg',
-    beoordeling: 'Geweldige service! Heb hier mijn tweede auto gekocht en ben weer heel tevreden.',
-    sterren: 5,
-    bron: 'Google'
-  },
-  {
-    id: '2',
-    naam: 'Maria Jansen',
-    beoordeling: 'Zeer vriendelijk geholpen. Ze nemen echt de tijd voor je en denken mee.',
-    sterren: 5,
-    bron: 'Google'
-  },
-  {
-    id: '3',
-    naam: 'Jan Willems',
-    beoordeling: 'Snelle APK keuring en eerlijke communicatie. Geen verborgen kosten!',
-    sterren: 5,
-    bron: 'Google'
-  },
-  {
-    id: '4',
-    naam: 'Lisa de Vries',
-    beoordeling: 'Top kwaliteit service bij de mannen van Car Store. Buiten gewoon goed.',
-    sterren: 5,
-    bron: 'Google'
-  },
-  {
-    id: '5',
-    naam: 'Jeroen Steinbruckner',
-    beoordeling: 'Hele goede service snel handelen en zeer klantvriendelijk AANRADER!',
-    sterren: 5,
-    bron: 'Trustpilot'
-  },
-  {
-    id: '6',
-    naam: 'Xaraiva Lopez',
-    beoordeling: 'Top kwaliteit service. Ze denken goed met je mee!',
-    sterren: 5,
-    bron: 'Google'
-  },
-  {
-    id: '7',
-    naam: 'John van Son',
-    beoordeling: 'Aardige gasten met verstand van auto\'s! Ze denken heel goed met je mee.',
-    sterren: 5,
-    bron: 'Google'
-  },
-  {
-    id: '8',
-    naam: 'Ronald B',
-    beoordeling: 'Wat een super bedrijf. Vlot en vriendelijk contact. Vaklui!',
-    sterren: 5,
-    bron: 'Google'
-  }
-];
+// Converteer google reviews naar het formaat voor de marquee
+const reviews: Review[] = googleReviews.map(review => ({
+  id: review.id,
+  naam: review.naam,
+  beoordeling: review.beoordeling,
+  sterren: review.sterren,
+  bron: 'Google',
+  auto: review.auto,
+}));
 
 function ReviewCard({ review }: { review: Review }) {
   return (
@@ -92,7 +45,39 @@ function ReviewCard({ review }: { review: Review }) {
 
       <div className="mt-auto">
         <p className="font-semibold text-white text-sm sm:text-base">{review.naam}</p>
+        {review.auto && (
+          <p className="text-[#c8102e] text-xs sm:text-sm">{review.auto}</p>
+        )}
         <p className="text-white/40 text-xs sm:text-sm">via {review.bron}</p>
+      </div>
+    </div>
+  );
+}
+
+// Stats Badge Component
+function StatsBadge() {
+  return (
+    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 mb-8 sm:mb-12">
+      <div className="flex items-center gap-3 bg-gradient-to-r from-[#1a1a1a] to-[#0d0d0d] border border-white/10 rounded-full px-6 py-3">
+        <div className="flex items-center gap-1">
+          <Star className="w-5 h-5 text-[#c8102e] fill-[#c8102e]" />
+          <span className="text-white font-bold text-lg">{reviewStats.gemiddelde.toFixed(1)}</span>
+        </div>
+        <div className="h-6 w-px bg-white/20" />
+        <div className="text-white/70 text-sm">
+          <span className="font-semibold text-white">{reviewStats.totaal}</span> Google reviews
+        </div>
+      </div>
+      
+      <div className="flex items-center gap-3 bg-gradient-to-r from-[#1a1a1a] to-[#0d0d0d] border border-white/10 rounded-full px-6 py-3">
+        <div className="flex items-center gap-1">
+          <Star className="w-5 h-5 text-[#c8102e] fill-[#c8102e]" />
+          <span className="text-white font-bold text-lg">4.7</span>
+        </div>
+        <div className="h-6 w-px bg-white/20" />
+        <div className="text-white/70 text-sm">
+          <span className="font-semibold text-white">25</span> Trustpilot reviews
+        </div>
       </div>
     </div>
   );
@@ -156,9 +141,13 @@ export default function ReviewMarquee() {
           <span className="inline-block text-[#c8102e] font-semibold text-xs sm:text-sm uppercase tracking-wider mb-2 sm:mb-4">
             Wat Klanten Zeggen
           </span>
-          <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-white">
+          <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-white mb-4">
             Reviews van Onze Klanten
           </h2>
+          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto mb-6">
+            Echte reviews van echte klanten. Wij zijn trots op onze uitstekende beoordelingen!
+          </p>
+          <StatsBadge />
         </div>
       </div>
 

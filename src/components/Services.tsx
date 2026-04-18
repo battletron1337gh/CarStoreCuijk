@@ -11,7 +11,7 @@ import {
   CarFront,
   ArrowRight
 } from 'lucide-react';
-import { services } from '@/data/cars';
+import { services, contactInfo } from '@/data/cars';
 
 const iconMap: Record<string, React.ReactNode> = {
   ClipboardCheck: <ClipboardCheck className="w-8 h-8" />,
@@ -61,10 +61,11 @@ export default function Services() {
             Onderhoud & Service
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
-            Onderhoud bij Car Store Cuijk
+            Auto Onderhoud & Reparatie Cuijk
           </h2>
           <p className="text-lg text-white/50 max-w-2xl mx-auto">
-            Van APK-keuring tot complete onderhoudsbeurten – wij zorgen ervoor dat uw auto in topconditie blijft.
+            Professioneel auto onderhoud voor alle merken. APK, kleine en grote beurt, 
+            distributieriem, koppeling, remblokken. 168 reviews, 5 sterren.
           </p>
         </motion.div>
 
@@ -136,8 +137,8 @@ export default function Services() {
             Direct een afspraak maken?
           </h3>
           <p className="text-white/50 mb-8 max-w-xl mx-auto">
-            Plan uw onderhoud, APK of reparatie eenvoudig via WhatsApp of telefoon. 
-            Wij zorgen voor een snelle service!
+            Plan uw auto onderhoud, APK of reparatie eenvoudig via WhatsApp of telefoon. 
+            Alle merken, vakkundige service. 168 reviews, 5 sterren!
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
@@ -149,10 +150,10 @@ export default function Services() {
               Afspraak via WhatsApp
             </a>
             <a
-              href="tel:0485451234"
+              href={`tel:${contactInfo.telefoon.replace(/\s|-/g, '')}`}
               className="flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-6 py-3 rounded-xl font-semibold transition-all duration-300"
             >
-              Bel: 0485 - 451 234
+              Bel: {contactInfo.telefoon}
             </a>
           </div>
         </motion.div>
