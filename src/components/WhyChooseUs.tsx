@@ -12,7 +12,7 @@ const reasons = [
   {
     icon: <Users className="w-8 h-8" />,
     title: 'Persoonlijk',
-    description: 'Wij denken met u mee en vinden de auto die bij u past. Geen standaard verhaal.'
+    description: 'Als familiebedrijf denken we met u mee en vinden de auto die bij u past. Geen standaard verhaal, maar persoonlijke aandacht.'
   },
   {
     icon: <Clock className="w-8 h-8" />,
