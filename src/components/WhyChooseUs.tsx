@@ -36,29 +36,6 @@ const reasons = [
   }
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.1,
-    }
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.4,
-      ease: "easeOut" as const
-    }
-  }
-};
-
 export default function WhyChooseUs() {
   return (
     <section className="py-20 lg:py-32 bg-[#0a0a0a] relative overflow-hidden">
@@ -74,7 +51,7 @@ export default function WhyChooseUs() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: false, amount: 0.2, margin: "-50px" }}
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
@@ -85,8 +62,8 @@ export default function WhyChooseUs() {
             Waarom Car Store Cuijk?
           </h2>
           <p className="text-lg text-white/50 max-w-2xl mx-auto">
-            Al jaren de vertrouwde partner voor tweedehands auto's en onderhoud in Cuijk. 
-            Een echt familiebedrijf met passie voor auto's. 168 reviews, 5 sterren op Google reviews.
+            Al jaren de vertrouwde partner voor tweedehands auto&apos;s en onderhoud in Cuijk. 
+            Een echt familiebedrijf met passie voor auto&apos;s. 168 reviews, 5 sterren op Google reviews.
           </p>
         </motion.div>
 
@@ -97,7 +74,7 @@ export default function WhyChooseUs() {
               key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
+              viewport={{ once: false, amount: 0.2, margin: "-50px" }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="group bg-[#1a1a1a] rounded-2xl p-8 border border-white/5 hover:border-[#c8102e]/30 transition-all duration-300"
             >

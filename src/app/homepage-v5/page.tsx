@@ -22,6 +22,41 @@ gsap.registerPlugin(ScrollTrigger);
 // ==================== SEO METADATA (in aparte file) ====================
 // Metadata wordt geëxporteerd uit layout.tsx of aparte metadata.ts
 
+// ==================== DNA BACKGROUND COMPONENT ====================
+function DNABackground() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    let animationId: number, time = 0;
+    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const centerX = canvas.width / 2, amplitude = 100, frequency = 0.003, speed = 0.02;
+      for (let y = 0; y < canvas.height; y += 5) {
+        const phase = y * frequency + time * speed;
+        const x1 = centerX + Math.sin(phase) * amplitude;
+        const x2 = centerX + Math.sin(phase + Math.PI) * amplitude;
+        if (y % 30 < 15) {
+          const opacity = 0.1 + Math.sin(phase) * 0.05;
+          ctx.beginPath(); ctx.moveTo(x1, y); ctx.lineTo(x2, y);
+          ctx.strokeStyle = `rgba(200, 16, 46, ${opacity})`; ctx.lineWidth = 1; ctx.stroke();
+        }
+        const pointOpacity = 0.3 + Math.sin(phase) * 0.2;
+        ctx.fillStyle = `rgba(200, 16, 46, ${pointOpacity})`;
+        ctx.beginPath(); ctx.arc(x1, y, 1.5, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(x2, y, 1.5, 0, Math.PI * 2); ctx.fill();
+      }
+      time++; animationId = requestAnimationFrame(draw);
+    };
+    resize(); window.addEventListener('resize', resize); draw();
+    return () => { window.removeEventListener('resize', resize); cancelAnimationFrame(animationId); };
+  }, []);
+  return <canvas ref={canvasRef} className="absolute inset-0" />;
+}
+
 // ==================== ORIGINELE HERO (exact zoals /page.tsx) ====================
 const heroContainerVariants = {
   hidden: { opacity: 0 },
@@ -49,8 +84,10 @@ const heroItemVariants = {
 function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-[#0a0a0a] overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-pattern opacity-30" />
+      {/* DNA Background Animation */}
+      <div className="absolute inset-0 opacity-20">
+        <DNABackground />
+      </div>
       
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-transparent to-[#0a0a0a]/90" />
@@ -184,12 +221,21 @@ function Hero() {
   );
 }
 
-// ==================== DNA SPIRAL SECTIE (van v3/v4, mobiel geoptimaliseerd) ====================
+// ==================== DNA SPIRAL SECTIE (Verbeterd met betere timing & easing) ====================
 const featuredCars = cars.filter(car => car.status === 'beschikbaar').sort((a, b) => b.bouwjaar - a.bouwjaar).slice(0, 3);
 
 function DNASpiralSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const carRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -198,24 +244,75 @@ function DNASpiralSection() {
         if (!carEl) return;
         const isLeft = index % 2 === 0;
         
-        // Mobile-optimized: smaller rotations
-        const isMobile = window.innerWidth < 768;
-        const rotateYStart = isLeft ? (isMobile ? -45 : -90) : (isMobile ? 45 : 90);
-        const rotateYEnd = isLeft ? (isMobile ? 15 : -15) : (isMobile ? -15 : 15);
-        const rotateYExit = isLeft ? (isMobile ? 45 : 90) : (isMobile ? -45 : -90);
-        const xOffset = isMobile ? (isLeft ? -20 : 20) : (isLeft ? -50 : 50);
+        // Verbeterde waarden voor dramatischer maar soepeler effect
+        const rotateYStart = isLeft ? (isMobile ? -60 : -85) : (isMobile ? 60 : 85);
+        const rotateYEnd = isLeft ? (isMobile ? 8 : -8) : (isMobile ? -8 : 8);
+        const rotateYExit = isLeft ? (isMobile ? 60 : 85) : (isMobile ? -60 : -85);
+        const xOffset = isMobile ? (isLeft ? -30 : 30) : (isLeft ? -80 : 80);
+        const zStart = isMobile ? -300 : -600;
+        const zExit = isMobile ? -300 : -600;
         
-        gsap.set(carEl, { opacity: 0, scale: 0.5, rotateY: rotateYStart, rotateX: isMobile ? 5 : 15, z: -500, x: xOffset });
+        // Initiële state - auto's starten ver weg en gedraaid
+        gsap.set(carEl, { 
+          opacity: 0, 
+          scale: isMobile ? 0.7 : 0.6, 
+          rotateY: rotateYStart, 
+          rotateX: isMobile ? 8 : 12, 
+          z: zStart, 
+          x: xOffset,
+          transformOrigin: isLeft ? 'right center' : 'left center'
+        });
         
-        gsap.timeline({ scrollTrigger: { trigger: carEl, start: "top 85%", end: "center center", scrub: 1 }})
-          .to(carEl, { opacity: 1, scale: 1, rotateY: rotateYEnd, rotateX: 0, z: 0, x: 0, duration: 1, ease: "power2.out" });
+        // ENTRY animation - auto draait naar voren met scale up
+        gsap.timeline({ 
+          scrollTrigger: { 
+            trigger: carEl, 
+            start: isMobile ? "top 90%" : "top 80%", 
+            end: isMobile ? "center 60%" : "center center", 
+            scrub: isMobile ? 0.8 : 1.2
+          }
+        })
+          .to(carEl, { 
+            opacity: 1, 
+            scale: isMobile ? 1.02 : 1.05, // Iets groter dan 1 voor "pop" effect
+            rotateY: rotateYEnd, 
+            rotateX: 0, 
+            z: isMobile ? 50 : 100, // Komt iets naar voren
+            x: isLeft ? (isMobile ? -5 : -10) : (isMobile ? 5 : 10), // Subtiele offset voor diepte
+            duration: 1, 
+            ease: "power3.out" // Soepelere easing
+          })
+          .to(carEl, {
+            scale: 1, // Terug naar normaal op het einde
+            x: 0,
+            z: 0,
+            duration: 0.3,
+            ease: "power2.out"
+          });
         
-        gsap.timeline({ scrollTrigger: { trigger: carEl, start: "center center", end: "bottom 10%", scrub: 1 }})
-          .to(carEl, { opacity: 0, scale: 0.5, rotateY: rotateYExit, rotateX: isMobile ? -5 : -15, z: -500, x: isMobile ? (isLeft ? 20 : -20) : (isLeft ? 50 : -50), duration: 1, ease: "power2.in" });
+        // EXIT animation - auto draait weg met scale down
+        gsap.timeline({ 
+          scrollTrigger: { 
+            trigger: carEl, 
+            start: isMobile ? "center 40%" : "center center", 
+            end: isMobile ? "bottom 20%" : "bottom 15%", 
+            scrub: isMobile ? 0.8 : 1.2
+          }
+        })
+          .to(carEl, { 
+            opacity: 0, 
+            scale: isMobile ? 0.75 : 0.65, 
+            rotateY: rotateYExit, 
+            rotateX: isMobile ? -8 : -12, 
+            z: zExit, 
+            x: isMobile ? (isLeft ? 30 : -30) : (isLeft ? 80 : -80), 
+            duration: 1, 
+            ease: "power3.in" // Soepelere exit easing
+          });
       });
     }, sectionRef);
     return () => ctx.revert();
-  }, []);
+  }, [isMobile]);
 
   const formatPrice = (price: number) => new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(price);
 
@@ -231,23 +328,23 @@ function DNASpiralSection() {
       <div className="absolute bottom-1/4 right-0 w-[400px] h-[400px] bg-[#c8102e]/5 rounded-full blur-[100px]" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-center mb-20 lg:mb-32">
-          <span className="inline-block text-[#c8102e] font-semibold text-sm uppercase tracking-wider mb-4">DNA Spiral Experience</span>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">Ontdek Onze Occasions</h2>
-          <p className="text-lg lg:text-xl text-white/50 max-w-2xl mx-auto">Scroll door onze collectie en zie de auto&apos;s in een unieke 3D spiraal. Elke auto draait naar je toe en weer verder.</p>
+        <motion.div initial={{ opacity: 0, y: 40, scale: 0.95 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }} className="text-center mb-20 lg:mb-32">
+          <motion.span initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }} className="inline-block text-[#c8102e] font-semibold text-sm uppercase tracking-wider mb-4">DNA Spiral Experience</motion.span>
+          <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }} className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">Ontdek Onze Occasions</motion.h2>
+          <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.4 }} className="text-lg lg:text-xl text-white/50 max-w-2xl mx-auto">Scroll door onze collectie en zie de auto&apos;s in een unieke 3D spiraal. Elke auto draait naar je toe en weer verder.</motion.p>
         </motion.div>
 
-        {/* Reduced spacing between cars */}
-        <div className="relative" style={{ transformStyle: 'preserve-3d', minHeight: `${featuredCars.length * 50}vh` }}>
+        {/* Verbeterde spacing voor betere scroll ervaring */}
+        <div className="relative" style={{ transformStyle: 'preserve-3d', minHeight: `${featuredCars.length * (isMobile ? 60 : 70)}vh` }}>
           {featuredCars.map((car, index) => {
             const isLeft = index % 2 === 0;
             return (
-              <div key={car.id} ref={(el) => { carRefs.current[index] = el; }} className={`sticky top-20 mb-8 md:mb-12 ${isLeft ? 'mr-auto' : 'ml-auto'}`} style={{ width: '100%', maxWidth: '600px', transformStyle: 'preserve-3d' }}>
+              <div key={car.id} ref={(el) => { carRefs.current[index] = el; }} className={`sticky top-24 md:top-32 mb-12 md:mb-20 ${isLeft ? 'mr-auto' : 'ml-auto'}`} style={{ width: '100%', maxWidth: isMobile ? '95%' : '600px', transformStyle: 'preserve-3d' }}>
                 <div className={`absolute top-1/2 ${isLeft ? 'right-full mr-8' : 'left-full ml-8'} w-32 h-px bg-gradient-to-r ${isLeft ? 'from-[#c8102e]/50 to-transparent' : 'from-transparent to-[#c8102e]/50'} hidden lg:block`} />
                 <Link href={`/occasions/${car.id}`} className="group block">
                   <div className="bg-[#1a1a1a]/90 backdrop-blur-sm rounded-3xl overflow-hidden border border-white/10 hover:border-[#c8102e]/50 transition-all duration-500 hover:shadow-2xl hover:shadow-[#c8102e]/10">
-                    <div className="relative aspect-[16/9] md:aspect-[16/10] overflow-hidden bg-[#0d0d0d]">
-                      <Image src={car.afbeeldingen[0] || '/cars/placeholder.svg'} alt={`${car.merk} ${car.model}`} fill className="object-cover group-hover:scale-105 transition-transform duration-700" sizes="(max-width: 768px) 100vw, 600px" priority={index < 2} />
+                    <div className="relative aspect-[16/9] md:aspect-[16/10] overflow-hidden bg-[#0d0d0d] will-change-transform">
+                      <Image src={car.afbeeldingen[0] || '/cars/placeholder.svg'} alt={`${car.merk} ${car.model}`} fill className="object-cover group-hover:scale-110 transition-transform duration-500 ease-out" sizes="(max-width: 768px) 100vw, 600px" priority={index < 2} />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-transparent to-transparent opacity-60" />
                       <div className="absolute top-4 left-4 bg-[#c8102e] text-white px-3 py-1 rounded-full text-sm font-semibold">{car.bouwjaar}</div>
                       <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm text-white/80 px-3 py-1 rounded-full text-xs font-mono">{String(index + 1).padStart(2, '0')} / {String(featuredCars.length).padStart(2, '0')}</div>
@@ -280,8 +377,7 @@ function DNASpiralSection() {
         </div>
 
         {/* Bekijk Alle Occasions Button */}
-        {/* Button closer to last car */}
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="text-center mt-8 md:mt-10">
+        <motion.div initial={{ opacity: 0, y: 30, scale: 0.95 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }} className="text-center mt-12 md:mt-16">
           <Link href="/occasions" className="group inline-flex items-center gap-3 bg-[#c8102e] hover:bg-[#a00d24] text-white px-10 py-5 rounded-2xl font-semibold text-lg transition-all duration-300 hover:shadow-2xl hover:shadow-[#c8102e]/25">
             Bekijk Alle Occasions<ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>

@@ -22,29 +22,6 @@ const iconMap: Record<string, React.ReactNode> = {
   CarFront: <CarFront className="w-8 h-8" />,
 };
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.1,
-    }
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.4,
-      ease: "easeOut" as const
-    }
-  }
-};
-
 export default function Services() {
   return (
     <section className="py-20 lg:py-32 bg-[#0d0d0d]">
@@ -53,7 +30,7 @@ export default function Services() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: false, amount: 0.2, margin: "-50px" }}
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
@@ -76,7 +53,7 @@ export default function Services() {
               key={service.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
+              viewport={{ once: false, amount: 0.2, margin: "-50px" }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="group bg-[#1a1a1a] rounded-2xl p-8 border border-white/5 hover:border-[#c8102e]/30 transition-all duration-300 hover:-translate-y-1"
             >
@@ -129,7 +106,7 @@ export default function Services() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.3 }}
+          viewport={{ once: false, amount: 0.2, margin: "-50px" }}
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mt-16 text-center bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 lg:p-12 border border-white/5"
         >
