@@ -74,7 +74,7 @@ export default function WhyChooseUs() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
@@ -97,7 +97,7 @@ export default function WhyChooseUs() {
               key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.2, margin: "-50px" }}
+              viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="group bg-[#1a1a1a] rounded-2xl p-8 border border-white/5 hover:border-[#c8102e]/30 transition-all duration-300"
             >

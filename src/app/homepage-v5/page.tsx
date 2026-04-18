@@ -19,6 +19,9 @@ import { reviewStats } from '@/data/google-reviews';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// ==================== SEO METADATA (in aparte file) ====================
+// Metadata wordt geëxporteerd uit layout.tsx of aparte metadata.ts
+
 // ==================== ORIGINELE HERO (exact zoals /page.tsx) ====================
 const heroContainerVariants = {
   hidden: { opacity: 0 },
@@ -234,11 +237,12 @@ function DNASpiralSection() {
           <p className="text-lg lg:text-xl text-white/50 max-w-2xl mx-auto">Scroll door onze collectie en zie de auto&apos;s in een unieke 3D spiraal. Elke auto draait naar je toe en weer verder.</p>
         </motion.div>
 
-        <div className="relative" style={{ transformStyle: 'preserve-3d', minHeight: `${featuredCars.length * 80}vh` }}>
+        {/* Reduced spacing between cars */}
+        <div className="relative" style={{ transformStyle: 'preserve-3d', minHeight: `${featuredCars.length * 50}vh` }}>
           {featuredCars.map((car, index) => {
             const isLeft = index % 2 === 0;
             return (
-              <div key={car.id} ref={(el) => { carRefs.current[index] = el; }} className={`sticky top-20 mb-16 md:mb-32 ${isLeft ? 'mr-auto' : 'ml-auto'}`} style={{ width: '100%', maxWidth: '600px', transformStyle: 'preserve-3d' }}>
+              <div key={car.id} ref={(el) => { carRefs.current[index] = el; }} className={`sticky top-20 mb-8 md:mb-12 ${isLeft ? 'mr-auto' : 'ml-auto'}`} style={{ width: '100%', maxWidth: '600px', transformStyle: 'preserve-3d' }}>
                 <div className={`absolute top-1/2 ${isLeft ? 'right-full mr-8' : 'left-full ml-8'} w-32 h-px bg-gradient-to-r ${isLeft ? 'from-[#c8102e]/50 to-transparent' : 'from-transparent to-[#c8102e]/50'} hidden lg:block`} />
                 <Link href={`/occasions/${car.id}`} className="group block">
                   <div className="bg-[#1a1a1a]/90 backdrop-blur-sm rounded-3xl overflow-hidden border border-white/10 hover:border-[#c8102e]/50 transition-all duration-500 hover:shadow-2xl hover:shadow-[#c8102e]/10">
@@ -276,7 +280,8 @@ function DNASpiralSection() {
         </div>
 
         {/* Bekijk Alle Occasions Button */}
-        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }} className="text-center mt-20 lg:mt-32">
+        {/* Button closer to last car */}
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="text-center mt-8 md:mt-10">
           <Link href="/occasions" className="group inline-flex items-center gap-3 bg-[#c8102e] hover:bg-[#a00d24] text-white px-10 py-5 rounded-2xl font-semibold text-lg transition-all duration-300 hover:shadow-2xl hover:shadow-[#c8102e]/25">
             Bekijk Alle Occasions<ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
