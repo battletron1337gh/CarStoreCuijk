@@ -22,7 +22,7 @@ const reasons = [
   {
     icon: <Award className="w-8 h-8" />,
     title: 'Erkend',
-    description: 'BOVAG en RDW erkend. U bent verzekerd van kwaliteit en zekerheid.'
+    description: 'RDW erkend. 168 reviews, 5 sterren op Google reviews.'
   },
   {
     icon: <Wrench className="w-8 h-8" />,
@@ -86,6 +86,7 @@ export default function WhyChooseUs() {
           </h2>
           <p className="text-lg text-white/50 max-w-2xl mx-auto">
             Al jaren de vertrouwde partner voor occasions en onderhoud in Cuijk en omgeving.
+            Een echt familiebedrijf met passie voor auto's.
           </p>
         </motion.div>
 
