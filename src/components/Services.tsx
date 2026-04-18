@@ -28,10 +28,11 @@ export default function Services() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0.01, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.2, margin: "-50px" }}
           transition={{ duration: 0.5 }}
+          style={{ willChange: 'transform, opacity', transform: 'translateZ(0)' }}
           className="text-center mb-16"
         >
           <span className="inline-block text-[#c8102e] font-semibold text-sm uppercase tracking-wider mb-4">
@@ -51,10 +52,11 @@ export default function Services() {
           {services.map((service, index) => (
             <motion.div
               key={service.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0.01, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.2, margin: "-50px" }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
+              style={{ willChange: 'transform, opacity', transform: 'translateZ(0)' }}
               className="group bg-[#1a1a1a] rounded-2xl p-8 border border-white/5 hover:border-[#c8102e]/30 transition-all duration-300 hover:-translate-y-1"
             >
               {/* Icon */}
@@ -104,10 +106,11 @@ export default function Services() {
 
         {/* CTA Section */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0.01, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.2, margin: "-50px" }}
           transition={{ duration: 0.5, delay: 0.2 }}
+          style={{ willChange: 'transform, opacity', transform: 'translateZ(0)' }}
           className="mt-16 text-center bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 lg:p-12 border border-white/5"
         >
           <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4">

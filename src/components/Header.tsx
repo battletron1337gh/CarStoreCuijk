@@ -11,6 +11,7 @@ const navItems = [
   { href: '/occasions', label: 'Occasions' },
   { href: '/onderhoud', label: 'Onderhoud' },
   { href: '/financiering', label: 'Financiering' },
+  { href: '/kennisbank', label: 'Tips & Advies' },
   { href: '/contact', label: 'Contact' },
 ];
 

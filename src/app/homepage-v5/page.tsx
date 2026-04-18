@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, MessageCircle, Phone, ChevronDown, Star } from 'lucide-react';
+import { ArrowRight, MessageCircle, Phone, ChevronDown, Star, FileText, Lightbulb, Shield } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import StatsSection from '@/components/StatsSection';
@@ -387,6 +387,141 @@ function DNASpiralSection() {
   );
 }
 
+// ==================== HANDIGE TIPS & ADVIES ====================
+const featuredTips = [
+  {
+    id: 1,
+    title: 'APK Keuring: Wat wordt er gecontroleerd?',
+    excerpt: 'Een complete checklist van alle onderdelen die tijdens de APK worden geïnspecteerd en hoe u uw auto kunt voorbereiden.',
+    icon: Shield,
+    href: '/kennisbank/apk-keuring-wat-wordt-er-gecontroleerd',
+  },
+  {
+    id: 2,
+    title: 'Occasion Kopen: De Ultieme Checklist',
+    excerpt: 'Waar moet u op letten bij het kopen van een tweedehands auto? Onze experts delen hun beste tips en valkuilen.',
+    icon: FileText,
+    href: '/kennisbank/occasion-kopen-checklist',
+  },
+  {
+    id: 3,
+    title: 'Airco Onderhoud: Waarom is dit belangrijk?',
+    excerpt: 'Leer waarom regelmatig airco onderhoud essentieel is voor comfort, gezondheid en de levensduur van uw systeem.',
+    icon: Lightbulb,
+    href: '/kennisbank/airco-onderhoud-belangrijk',
+  },
+];
+
+function TipsSection() {
+  return (
+    <section className="py-20 lg:py-32 bg-[#0a0a0a] relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-[#c8102e]/20 to-transparent" />
+        <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-[#c8102e]/10 to-transparent" />
+      </div>
+      
+      {/* Glow Effects */}
+      <div className="absolute top-1/2 left-0 w-[400px] h-[400px] bg-[#c8102e]/5 rounded-full blur-[100px] -translate-y-1/2" />
+      <div className="absolute top-1/2 right-0 w-[300px] h-[300px] bg-[#c8102e]/5 rounded-full blur-[100px] -translate-y-1/2" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="inline-flex items-center gap-2 text-[#c8102e] font-semibold text-sm uppercase tracking-wider mb-4"
+          >
+            <Lightbulb className="w-4 h-4" />
+            Kennisbank
+          </motion.span>
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6"
+          >
+            Handige Tips <span className="text-[#c8102e]">&</span> Advies
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="text-lg lg:text-xl text-white/50 max-w-2xl mx-auto"
+          >
+            Ontdek nuttige artikelen over auto onderhoud, aankoop tips en meer. 
+            Geschreven door onze ervaren monteurs.
+          </motion.p>
+        </motion.div>
+
+        {/* Tips Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12">
+          {featuredTips.map((tip, index) => (
+            <motion.div
+              key={tip.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 * index }}
+            >
+              <Link href={tip.href} className="group block h-full">
+                <div className="bg-[#1a1a1a]/80 backdrop-blur-sm rounded-2xl p-6 lg:p-8 border border-white/10 hover:border-[#c8102e]/50 transition-all duration-300 hover:shadow-2xl hover:shadow-[#c8102e]/10 h-full flex flex-col">
+                  {/* Icon */}
+                  <div className="w-14 h-14 bg-[#c8102e]/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-[#c8102e]/20 transition-colors">
+                    <tip.icon className="w-7 h-7 text-[#c8102e]" />
+                  </div>
+
+                  {/* Content */}
+                  <h3 className="text-xl lg:text-2xl font-bold text-white mb-3 group-hover:text-[#c8102e] transition-colors">
+                    {tip.title}
+                  </h3>
+                  <p className="text-white/50 leading-relaxed mb-6 flex-grow">
+                    {tip.excerpt}
+                  </p>
+
+                  {/* Read More Link */}
+                  <div className="flex items-center gap-2 text-[#c8102e] font-semibold group-hover:gap-3 transition-all">
+                    <span>Lees meer</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* View All Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="text-center"
+        >
+          <Link
+            href="/kennisbank"
+            className="group inline-flex items-center gap-3 bg-white/5 hover:bg-white/10 text-white border border-white/10 hover:border-[#c8102e]/50 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300"
+          >
+            Bekijk alle tips
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 // ==================== CAR MARQUEE (swipe bar) ====================
 function CarMarqueeSection() {
   const availableCars = cars.filter(car => car.status === 'beschikbaar');
@@ -526,6 +661,10 @@ export default function HomeV5() {
         {/* 5. Rest van originele home */}
         <WhyChooseUs />
         <Services />
+        
+        {/* Handige Tips & Advies Sectie */}
+        <TipsSection />
+        
         <ReviewMarquee />
         <CTASection />
       </main>

@@ -6,6 +6,7 @@ const quickLinks = [
   { href: '/occasions', label: 'Onze Occasions' },
   { href: '/onderhoud', label: 'Onderhoud' },
   { href: '/financiering', label: 'Financiering' },
+  { href: '/kennisbank', label: 'Tips & Advies' },
   { href: '/contact', label: 'Contact' },
   { href: '/algemene-voorwaarden', label: 'Algemene Voorwaarden' },
 ];

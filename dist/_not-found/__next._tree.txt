@@ -1,2 +1,2 @@
-:HL["/CarStoreCuijk/_next/static/chunks/0ugcnb7m-ffa4.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"anDAPV7EwupMoQ1BLSIMQ"}
+:HL["/CarStoreCuijk/_next/static/chunks/045-8~i5a7y3h.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"JYC_r_ymzeBs64hUf3HUr"}
