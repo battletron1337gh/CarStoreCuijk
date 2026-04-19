@@ -401,9 +401,9 @@ export const contactInfo: ContactInfo = {
   adres: 'Lange Beijerd 3d',
   postcode: '5431 NR',
   plaats: 'Cuijk',
-  telefoon: '06 - 871 187 68',
+  telefoon: '+31 6 87 11 87 68',
   email: 'info@carstorecuijk.nl',
-  whatsapp: '06 - 871 187 68',
+  whatsapp: '+31687118768',
   kvk: '83514597'
 };
 

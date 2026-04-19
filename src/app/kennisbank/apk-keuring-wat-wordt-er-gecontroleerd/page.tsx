@@ -186,7 +186,7 @@ export default function APKKeuringPage() {
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <Link href="/onderhoud" className="inline-flex items-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-6 py-3 rounded-xl font-semibold transition-colors">
                     <Phone className="w-5 h-5" />
-                    Bel: 0485 20 28 83
+                    Bel: +31 6 87 11 87 68
                   </Link>
                   <Link href="/occasions" className="inline-flex items-center gap-2 text-white/70 hover:text-[#c8102e] transition-colors">
                     Bekijk onze occasions
