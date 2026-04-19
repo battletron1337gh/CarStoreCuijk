@@ -401,18 +401,90 @@ const featuredTips = [
     title: 'Occasion Kopen: De Ultieme Checklist',
     excerpt: 'Waar moet u op letten bij het kopen van een tweedehands auto? Onze experts delen hun beste tips en valkuilen.',
     icon: FileText,
-    href: '/kennisbank/occasion-kopen-checklist',
+    href: '/kennisbank/waar-moet-je-op-letten-als-je-een-auto-koopt',
   },
   {
     id: 3,
-    title: 'Airco Onderhoud: Waarom is dit belangrijk?',
-    excerpt: 'Leer waarom regelmatig airco onderhoud essentieel is voor comfort, gezondheid en de levensduur van uw systeem.',
+    title: 'Auto Verkopen: Tips voor de Beste Prijs',
+    excerpt: 'Hoe bereidt u uw auto voor op verkoop? Tips over prijsbepaling, advertenties en papierwerk.',
     icon: Lightbulb,
-    href: '/kennisbank/airco-onderhoud-belangrijk',
+    href: '/kennisbank/waar-moet-je-op-letten-als-je-een-auto-verkoopt',
   },
 ];
 
+// Tip Card Component with animation
+function TipCard({ tip, index }: { tip: typeof featuredTips[0]; index: number }) {
+  const { ref, isInView } = useInView(0.15);
+  
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-600 ${
+        isInView 
+          ? 'opacity-100 translate-y-0 scale-100' 
+          : 'opacity-0 translate-y-10 scale-[0.95]'
+      }`}
+      style={{ 
+        transitionDelay: `${index * 100}ms`,
+        willChange: 'transform, opacity'
+      }}
+    >
+      <Link href={tip.href} className="group block h-full">
+        <div className="bg-[#1a1a1a]/80 backdrop-blur-sm rounded-2xl p-6 lg:p-8 border border-white/10 hover:border-[#c8102e]/50 transition-all duration-500 hover:shadow-2xl hover:shadow-[#c8102e]/10 hover:-translate-y-2 h-full flex flex-col">
+          {/* Icon with pulse effect */}
+          <div className={`w-14 h-14 bg-[#c8102e]/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-[#c8102e]/20 transition-all duration-500 ${isInView ? 'scale-100' : 'scale-90'}`}>
+            <tip.icon className="w-7 h-7 text-[#c8102e] group-hover:scale-110 transition-transform duration-300" />
+          </div>
+
+          {/* Content */}
+          <h3 className="text-xl lg:text-2xl font-bold text-white mb-3 group-hover:text-[#c8102e] transition-colors duration-300">
+            {tip.title}
+          </h3>
+          <p className="text-white/50 leading-relaxed mb-6 flex-grow">
+            {tip.excerpt}
+          </p>
+
+          {/* Read More Link with arrow animation */}
+          <div className="flex items-center gap-2 text-[#c8102e] font-semibold group-hover:gap-3 transition-all duration-300">
+            <span>Lees meer</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+          </div>
+        </div>
+      </Link>
+    </div>
+  );
+}
+
+// Hook for intersection observer
+function useInView(threshold = 0.15) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+        } else {
+          setIsInView(false);
+        }
+      },
+      { threshold, rootMargin: '-50px' }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [threshold]);
+
+  return { ref, isInView };
+}
+
 function TipsSection() {
+  const { ref: headerRef, isInView: headerInView } = useInView(0.2);
+
   return (
     <section className="py-20 lg:py-32 bg-[#0a0a0a] relative overflow-hidden">
       {/* Background Elements */}
@@ -427,96 +499,43 @@ function TipsSection() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+        <div
+          ref={headerRef}
+          className={`text-center mb-16 transition-all duration-700 ${
+            headerInView ? 'opacity-100 translate-y-0' : 'opacity-90 translate-y-8'
+          }`}
+          style={{ willChange: 'transform, opacity' }}
         >
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="inline-flex items-center gap-2 text-[#c8102e] font-semibold text-sm uppercase tracking-wider mb-4"
-          >
+          <span className="inline-flex items-center gap-2 text-[#c8102e] font-semibold text-sm uppercase tracking-wider mb-4">
             <Lightbulb className="w-4 h-4" />
             Kennisbank
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6"
-          >
+          </span>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
             Handige Tips <span className="text-[#c8102e]">&</span> Advies
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-lg lg:text-xl text-white/50 max-w-2xl mx-auto"
-          >
+          </h2>
+          <p className="text-lg lg:text-xl text-white/50 max-w-2xl mx-auto">
             Ontdek nuttige artikelen over auto onderhoud, aankoop tips en meer. 
             Geschreven door onze ervaren monteurs.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         {/* Tips Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12">
           {featuredTips.map((tip, index) => (
-            <motion.div
-              key={tip.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 * index }}
-            >
-              <Link href={tip.href} className="group block h-full">
-                <div className="bg-[#1a1a1a]/80 backdrop-blur-sm rounded-2xl p-6 lg:p-8 border border-white/10 hover:border-[#c8102e]/50 transition-all duration-300 hover:shadow-2xl hover:shadow-[#c8102e]/10 h-full flex flex-col">
-                  {/* Icon */}
-                  <div className="w-14 h-14 bg-[#c8102e]/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-[#c8102e]/20 transition-colors">
-                    <tip.icon className="w-7 h-7 text-[#c8102e]" />
-                  </div>
-
-                  {/* Content */}
-                  <h3 className="text-xl lg:text-2xl font-bold text-white mb-3 group-hover:text-[#c8102e] transition-colors">
-                    {tip.title}
-                  </h3>
-                  <p className="text-white/50 leading-relaxed mb-6 flex-grow">
-                    {tip.excerpt}
-                  </p>
-
-                  {/* Read More Link */}
-                  <div className="flex items-center gap-2 text-[#c8102e] font-semibold group-hover:gap-3 transition-all">
-                    <span>Lees meer</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
+            <TipCard key={tip.id} tip={tip} index={index} />
           ))}
         </div>
 
         {/* View All Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-center"
-        >
+        <div className="text-center">
           <Link
             href="/kennisbank"
-            className="group inline-flex items-center gap-3 bg-white/5 hover:bg-white/10 text-white border border-white/10 hover:border-[#c8102e]/50 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300"
+            className="group inline-flex items-center gap-3 bg-white/5 hover:bg-white/10 text-white border border-white/10 hover:border-[#c8102e]/50 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:shadow-lg hover:shadow-[#c8102e]/10"
           >
             Bekijk alle tips
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
