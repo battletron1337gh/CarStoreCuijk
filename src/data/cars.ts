@@ -403,7 +403,7 @@ export const contactInfo: ContactInfo = {
   plaats: 'Cuijk',
   telefoon: '+31 6 87 11 87 68',
   email: 'info@carstorecuijk.nl',
-  whatsapp: '+31687118768',
+  whatsapp: '+31 6 87 11 87 68',
   kvk: '83514597'
 };
 

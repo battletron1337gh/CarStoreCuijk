@@ -1,9 +1,9 @@
 1:"$Sreact.fragment"
 2:I[54257,["/CarStoreCuijk/_next/static/chunks/0p0w-8khck2m9.js","/CarStoreCuijk/_next/static/chunks/0h_g_33dbodhl.js"],"ClientPageRoot"]
-3:I[56775,["/CarStoreCuijk/_next/static/chunks/0p0w-8khck2m9.js","/CarStoreCuijk/_next/static/chunks/0h_g_33dbodhl.js","/CarStoreCuijk/_next/static/chunks/0~l4mhlbxicjy.js","/CarStoreCuijk/_next/static/chunks/0jbt7c6wj6zgo.js","/CarStoreCuijk/_next/static/chunks/0.ii11qld15up.js"],"default"]
+3:I[56775,["/CarStoreCuijk/_next/static/chunks/0p0w-8khck2m9.js","/CarStoreCuijk/_next/static/chunks/0h_g_33dbodhl.js","/CarStoreCuijk/_next/static/chunks/0xnbngowz3eqg.js","/CarStoreCuijk/_next/static/chunks/0jbt7c6wj6zgo.js","/CarStoreCuijk/_next/static/chunks/0.ii11qld15up.js"],"default"]
 6:I[60777,["/CarStoreCuijk/_next/static/chunks/0p0w-8khck2m9.js","/CarStoreCuijk/_next/static/chunks/0h_g_33dbodhl.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/CarStoreCuijk/_next/static/chunks/0~l4mhlbxicjy.js","async":true}],["$","script","script-1",{"src":"/CarStoreCuijk/_next/static/chunks/0jbt7c6wj6zgo.js","async":true}],["$","script","script-2",{"src":"/CarStoreCuijk/_next/static/chunks/0.ii11qld15up.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"g-5otC9opp5-dPrxtKej2"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/CarStoreCuijk/_next/static/chunks/0xnbngowz3eqg.js","async":true}],["$","script","script-1",{"src":"/CarStoreCuijk/_next/static/chunks/0jbt7c6wj6zgo.js","async":true}],["$","script","script-2",{"src":"/CarStoreCuijk/_next/static/chunks/0.ii11qld15up.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"9PHLldf-Un3n3orMx8hKB"}
 4:{}
 5:"$0:rsc:props:children:0:props:serverProvidedParams:params"
 8:null
