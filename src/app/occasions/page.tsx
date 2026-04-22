@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Script from 'next/script';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -16,6 +17,45 @@ export const metadata: Metadata = {
 export default function OccasionsPage() {
   return (
     <>
+      {/* VWE Voorraadlijst Script */}
+      <Script
+        src="//svl.autodealers.nl/jsVoorraadPlugin.ashx?did=27445&wid=96245"
+        strategy="afterInteractive"
+      />
+      <Script id="vwe-loader" strategy="afterInteractive">
+        {`
+          // Verberg loading state wanneer VWE voorraadlijst geladen is
+          (function() {
+            const checkVWE = function() {
+              const vweContainer = document.getElementById('vwe-voorraad-container');
+              const loadingEl = document.getElementById('vwe-loading');
+              
+              // Check of VWE content is geïnjecteerd
+              if (vweContainer && vweContainer.children.length > 1) {
+                if (loadingEl) loadingEl.style.display = 'none';
+                return true;
+              }
+              return false;
+            };
+            
+            // Check elke 500ms voor 10 seconden
+            let attempts = 0;
+            const interval = setInterval(function() {
+              attempts++;
+              if (checkVWE() || attempts > 20) {
+                clearInterval(interval);
+              }
+            }, 500);
+            
+            // Fallback: verberg loading na 5 seconden
+            setTimeout(function() {
+              const loadingEl = document.getElementById('vwe-loading');
+              if (loadingEl) loadingEl.style.display = 'none';
+            }, 5000);
+          })();
+        `}
+      </Script>
+      
       <Header />
       <main className="min-h-screen pt-24 lg:pt-28 bg-[#0a0a0a]">
         {/* Page Header */}
@@ -31,19 +71,17 @@ export default function OccasionsPage() {
         {/* VWE Voorraadlijst Container */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="bg-[#1a1a1a] rounded-2xl p-8 border border-white/5">
-            <div id="vwe-voorraad" className="min-h-[600px] flex items-center justify-center">
-              {/* VWE iframe wordt hier geïnjecteerd */}
-              <div className="text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-[#c8102e]/20 rounded-full mb-4">
+            {/* VWE Plugin injecteert hier de voorraadlijst */}
+            <div id="vwe-voorraad-container" className="min-h-[400px]">
+              {/* Loading state - wordt vervangen door VWE script */}
+              <div className="text-center py-16" id="vwe-loading">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-[#c8102e]/20 rounded-full mb-4 animate-pulse">
                   <svg className="w-8 h-8 text-[#c8102e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                   </svg>
                 </div>
                 <h2 className="text-xl font-semibold text-white mb-2">Voorraad wordt geladen</h2>
                 <p className="text-white/50">Onze occasions worden opgehaald uit ons systeem...</p>
-                <p className="text-white/30 text-sm mt-4">
-                  Werkt het niet? <a href="https://www.carstorecuijk.nl" className="text-[#c8102e] hover:underline">Bekijk hier onze voorraad</a>
-                </p>
               </div>
             </div>
           </div>
