@@ -1,0 +1,27 @@
+{
+  "vehicles": [
+    {
+      "id": "TEST01",
+      "kenteken": "TEST01",
+      "merk": "Test",
+      "model": "Auto",
+      "bouwjaar": "",
+      "prijs": "",
+      "kmStand": "",
+      "brandstof": "",
+      "transmissie": "",
+      "kleur": "",
+      "fotoUrls": [],
+      "actie": "add",
+      "timestamp": "2026-04-30T20:42:22.201Z",
+      "raw": {
+        "actie": "add",
+        "voertuignr_hexon": "12345",
+        "kenteken": "TEST01",
+        "merk": "Test",
+        "model": "Auto",
+        "vraagprijs": "15000"
+      }
+    }
+  ]
+}
