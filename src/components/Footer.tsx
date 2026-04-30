@@ -4,6 +4,7 @@ import { contactInfo, openingHours } from '@/data/cars';
 
 const quickLinks = [
   { href: '/occasions', label: 'Onze Occasions' },
+  { href: '/auto-verkopen', label: 'Auto Verkopen' },
   { href: '/onderhoud', label: 'Onderhoud' },
   { href: '/financiering', label: 'Financiering' },
   { href: '/kennisbank', label: 'Tips & Advies' },

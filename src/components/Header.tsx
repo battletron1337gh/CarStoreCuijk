@@ -9,6 +9,7 @@ import { trackWhatsAppClick, trackPhoneClick } from '@/lib/analytics';
 const navItems = [
   { href: '/', label: 'Home' },
   { href: '/occasions', label: 'Occasions' },
+  { href: '/auto-verkopen', label: 'Auto Verkopen' },
   { href: '/onderhoud', label: 'Onderhoud' },
   { href: '/financiering', label: 'Financiering' },
   { href: '/kennisbank', label: 'Tips & Advies' },
