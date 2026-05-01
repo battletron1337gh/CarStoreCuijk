@@ -1,9 +1,5 @@
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import CarDetailClient from './CarDetailClient';
-import vehiclesData from '../../../../data/vehicles.json';
-import type { Metadata } from 'next';
-import type { Car } from '@/types';
+import { Car } from '@/types';
+import vehiclesData from '../../data/vehicles.json';
 
 // Helper functie om VWE data om te zetten naar Car formaat
 function convertVweToCar(vweVehicle: any): Car | null {
@@ -56,14 +52,18 @@ function convertVweToCar(vweVehicle: any): Car | null {
   // Haal kleur op
   const kleur = raw.basiskleur || raw.kleur_nederlands || '';
   
-  // Bouw ID op basis van kenteken
-  const id = (vweVehicle.kenteken || vweVehicle.id || '').toLowerCase();
+  // Bouw ID op basis van kenteken of voertuignr
+  const id = vweVehicle.kenteken || vweVehicle.id || `vwe-${raw.voertuignr}`;
   
-  // Haal foto URLs op uit VWE afbeeldingen
+  // Haal foto URLs op uit VWE afbeeldingen (gebruik lokale paden)
   const fotoUrls: string[] = [];
+  const kenteken = vweVehicle.kenteken || '';
   if (raw.afbeeldingen?.afbeelding && Array.isArray(raw.afbeeldingen.afbeelding)) {
     raw.afbeeldingen.afbeelding.forEach((img: any) => {
-      if (img.url) fotoUrls.push(img.url);
+      if (img.bestandsnaam && kenteken) {
+        // Gebruik lokale pad naar gedownloade afbeelding
+        fotoUrls.push(`/vwe-fotos/${kenteken}/${img.bestandsnaam}`);
+      }
     });
   }
   // Fallback: gebruik placeholder als er geen foto's zijn
@@ -82,7 +82,7 @@ function convertVweToCar(vweVehicle: any): Car | null {
   const apkTot = raw.apk?.tot || '';
   
   return {
-    id,
+    id: id.toLowerCase(),
     merk: vweVehicle.merk || 'Onbekend',
     model: vweVehicle.model || '',
     variant: type,
@@ -105,50 +105,10 @@ function convertVweToCar(vweVehicle: any): Car | null {
   } as Car;
 }
 
-// Get all cars
-function getAllCars(): Car[] {
-  return vehiclesData.vehicles
-    .map(convertVweToCar)
-    .filter((car): car is Car => car !== null)
-    .sort((a, b) => a.prijs - b.prijs);
-}
+// Converteer alle VWE voertuigen
+export const vweCars: Car[] = vehiclesData.vehicles
+  .map(convertVweToCar)
+  .filter((car): car is Car => car !== null)
+  .sort((a, b) => a.prijs - b.prijs);
 
-// Generate static params for all VWE cars
-export function generateStaticParams() {
-  const cars = getAllCars();
-  return cars.map((car) => ({
-    id: car.id,
-  }));
-}
-
-// Generate metadata for each car
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
-  const { id } = await params;
-  const cars = getAllCars();
-  const car = cars.find(c => c.id === id?.toLowerCase());
-  
-  if (!car) {
-    return {
-      title: 'Auto niet gevonden | Car Store Cuijk',
-    };
-  }
-  
-  return {
-    title: `${car.merk} ${car.model} ${car.bouwjaar} | €${car.prijs.toLocaleString('nl-NL')} | Car Store Cuijk`,
-    description: `${car.merk} ${car.model} ${car.bouwjaar} - ${car.kilometerstand.toLocaleString('nl-NL')} km - ${car.brandstof} - ${car.transmissie}. Bekijk deze occasion nu bij Car Store Cuijk!`,
-  };
-}
-
-export default async function CarDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const cars = getAllCars();
-  const car = cars.find(c => c.id === id?.toLowerCase());
-  
-  return (
-    <>
-      <Header />
-      <CarDetailClient car={car} />
-      <Footer />
-    </>
-  );
-}
+console.log(`[VWE] ${vweCars.length} voertuigen geladen`);

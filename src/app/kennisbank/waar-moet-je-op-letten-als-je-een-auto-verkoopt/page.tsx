@@ -198,7 +198,7 @@ export default function AutoVerkopenPage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-[#c8102e] mt-1">•</span>
-                  <span><strong>Keuringsrapporten:</strong> NAP, BOVAG of andere</span>
+                  <span><strong>Keuringsrapporten:</strong> NAP, RDW of andere</span>
                 </li>
               </ul>
 

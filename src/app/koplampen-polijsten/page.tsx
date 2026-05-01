@@ -247,7 +247,7 @@ export default function KoplampenPage() {
               met UV-bestendige coating.
             </p>
             <p className="text-white/60 mb-4">
-              Wij zijn BOVAG erkend met 168 reviews en 5 sterren op Google reviews. Ons polijstproces bestaat 
+              Wij zijn RDW erkend met 168 reviews en 5 sterren op Google reviews. Ons polijstproces bestaat 
               uit meerdere stappen. Eerst reinigen wij de koplampen grondig. Vervolgens schuren wij het oppervlak 
               in vijf stappen om alle verkleuring te verwijderen. Daarna polijsten wij de koplampen tot een helder 
               resultaat. Tot slot brengen wij een UV-bestendige coating aan die de koplampen beschermt tegen 

@@ -68,7 +68,7 @@ function Hero() {
             Bekijk Occasions
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
-          <a href="https://wa.me/31612345678" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300">
+          <a href="https://wa.me/31687118768" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300">
             <MessageCircle className="w-5 h-5" />WhatsApp Ons
           </a>
         </motion.div>
@@ -258,7 +258,7 @@ const reasons = [
   { icon: Shield, title: 'Betrouwbaar', description: 'Al onze occasions worden grondig gecontroleerd. U koopt met vertrouwen.' },
   { icon: Users, title: 'Persoonlijk', description: 'Wij denken met u mee en vinden de auto die bij u past. Geen standaard verhaal.' },
   { icon: Clock, title: '7 Dagen Open', description: "Wij zijn 7 dagen per week open. Ook 's avonds op afspraak mogelijk." },
-  { icon: Award, title: 'Erkend', description: 'BOVAG en RDW erkend. U bent verzekerd van kwaliteit en zekerheid.' },
+  { icon: Award, title: 'Erkend', description: 'RDW erkend. U bent verzekerd van kwaliteit en zekerheid.' },
   { icon: Wrench, title: 'Vakkundig', description: 'Onze monteurs werken volgens fabrieksvoorschriften met moderne apparatuur.' },
   { icon: BadgeCheck, title: 'Transparant', description: 'Duidelijke prijzen zonder verborgen kosten. U weet precies waar u aan toe bent.' },
 ];
@@ -373,7 +373,7 @@ function CTASection() {
             <p className="text-lg text-white/80 mb-8 leading-relaxed">Bekijk ons complete aanbod occasions of neem contact met ons op. Wij helpen u graag bij het vinden van de perfecte auto die bij u past.</p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/occasions" className="group inline-flex items-center justify-center gap-2 bg-white text-[#c8102e] px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:shadow-xl">Bekijk Occasions<ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" /></Link>
-              <a href="https://wa.me/31612345678" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-black/20 hover:bg-black/30 text-white border border-white/20 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300"><MessageCircle className="w-5 h-5" />WhatsApp</a>
+              <a href="https://wa.me/31687118768" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-black/20 hover:bg-black/30 text-white border border-white/20 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300"><MessageCircle className="w-5 h-5" />WhatsApp</a>
             </div>
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }} className="lg:pl-12">

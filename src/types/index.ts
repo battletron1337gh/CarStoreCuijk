@@ -19,6 +19,8 @@ export interface Car {
   co2?: string;
   kenteken?: string; // VWE koppeling
   vweId?: string; // VWE uniek ID
+  kleur?: string;
+  vweData?: any; // Raw VWE data for detail page
 }
 
 export interface Service {

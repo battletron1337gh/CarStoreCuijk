@@ -176,7 +176,7 @@ export default function AutoInkoopPage() {
               Heeft u een eerste eigenaar auto? Neem contact op voor een vrijblijvende taxatie.
             </p>
             <p className="text-white/60 mb-4">
-              Wij zijn BOVAG erkend met 168 reviews en 5 sterren op Google reviews. Het verkopen van uw auto via 
+              Wij zijn RDW erkend met 168 reviews en 5 sterren op Google reviews. Het verkopen van uw auto via 
               Car Store Cuijk heeft veel voordelen ten opzichte van particuliere verkoop. U hoeft niet te wachten 
               op geïnteresseerde kopers, geen gedoe met proefritten, en geen risico op niet-betalende kopers. 
               Wij geven u een eerlijke prijs gebaseerd op de actuele marktwaarde, met name voor 1e eigenaar autos.

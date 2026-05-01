@@ -8,7 +8,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Auto Onderhoud Cuijk | Garage Open tot 22:00 - Spoed Service',
   description: 'Professioneel auto onderhoud in Cuijk voor alle merken. Garage open tot 22:00, bereikbaar voor spoed reparatie. Specialist in 1ste eigenaar autos. APK, kleine en grote beurt. Altijd bereikbaar voor spoed, ook na sluitingstijd. 168 reviews, 5 sterren.',
-  keywords: 'auto onderhoud Cuijk, garage open tot 22:00, 22:00 bereikbaar, spoed reparatie, reparatie na sluitingstijd, altijd bereikbaar voor spoed, 1ste eigenaar autos onderhoud, auto onderhoud, alle merken, APK keuring, kleine beurt, grote beurt, garage Cuijk, BOVAG garage',
+  keywords: 'auto onderhoud Cuijk, garage open tot 22:00, 22:00 bereikbaar, spoed reparatie, reparatie na sluitingstijd, altijd bereikbaar voor spoed, 1ste eigenaar autos onderhoud, auto onderhoud, alle merken, APK keuring, kleine beurt, grote beurt, garage Cuijk, RDW garage',
   openGraph: {
     title: 'Auto Onderhoud Cuijk | Garage Alle Merken',
     description: 'Professioneel auto onderhoud voor alle merken. APK, kleine en grote beurt. 168 reviews, 5 sterren.',
@@ -58,7 +58,7 @@ export default function OnderhoudPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
-                { icon: <CheckCircle className="w-8 h-8" />, title: 'BOVAG Erkend', desc: 'Wij zijn BOVAG erkend, wat staat voor kwaliteit en betrouwbaarheid.' },
+                { icon: <CheckCircle className="w-8 h-8" />, title: 'RDW Erkend', desc: 'Wij zijn RDW erkend, wat staat voor kwaliteit en betrouwbaarheid.' },
                 { icon: <Shield className="w-8 h-8" />, title: 'Garantie', desc: 'Garantie op alle uitgevoerde werkzaamheden en onderdelen.' },
                 { icon: <Wrench className="w-8 h-8" />, title: 'Alle Merken', desc: 'Wij onderhouden alle automerken - van VW tot BMW, Audi tot Mercedes.' },
                 { icon: <Clock className="w-8 h-8" />, title: 'Snelle Service', desc: 'Efficiënte planning zodat u snel weer de weg op kunt.' },

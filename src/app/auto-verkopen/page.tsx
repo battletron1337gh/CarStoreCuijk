@@ -211,7 +211,7 @@ export default function AutoVerkopenPage() {
               Onze ervaring in de autobranche garandeert u een professionele behandeling.
             </p>
             <p className="text-white/60 mb-4">
-              Wij zijn BOVAG erkend met 168 reviews en 5 sterren op Google reviews. Consignatie is ideaal als 
+              Wij zijn RDW erkend met 168 reviews en 5 sterren op Google reviews. Consignatie is ideaal als 
               u de tijd heeft en de maximale opbrengst wilt realiseren. Wij verkopen voornamelijk 1e eigenaar autos 
               en nemen het volledige verkooptraject uit handen: van advertentie tot garantieafhandeling. 
               Bij directe inkoop krijgt u direct geld en bent u binnen een dag van uw auto af. De keuze is aan u.

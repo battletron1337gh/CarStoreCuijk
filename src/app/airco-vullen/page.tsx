@@ -183,7 +183,7 @@ export default function AircoPage() {
               Wij vullen uw airco met het juiste koelmiddel: R134a voor oudere auto's en R1234yf voor nieuwere modellen.
             </p>
             <p className="text-white/60 mb-4">
-              Wij zijn BOVAG erkend met 168 reviews en 5 sterren op Google reviews. Naast airco vullen bieden wij 
+              Wij zijn RDW erkend met 168 reviews en 5 sterren op Google reviews. Naast airco vullen bieden wij 
               ook complete airco service aan. Dit omvat lekdetectie, vervanging van de aircofilter, 
               reiniging van het systeem en controle van alle componenten. Zo voorkomt u storingen en houdt u 
               het systeem in topconditie.

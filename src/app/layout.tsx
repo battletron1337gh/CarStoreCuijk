@@ -12,7 +12,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Car Store Cuijk | Tweedehands Auto's & Garage",
   description: "Car Store Cuijk - Uw specialist in tweedehands auto's, gebruikte auto's van alle merken. Auto inkoop, onderhoud, reparatie, airco vullen. 168 reviews, 5 sterren Google reviews. 7 dagen open.",
-  keywords: "Car Store Cuijk, tweedehands auto's, gebruikte auto's, alle merken, auto inkoop, auto onderhoud, auto reparatie, airco vullen, koplampen polijsten, BOVAG garage Cuijk, occasions Cuijk",
+  keywords: "Car Store Cuijk, tweedehands auto's, gebruikte auto's, alle merken, auto inkoop, auto onderhoud, auto reparatie, airco vullen, koplampen polijsten, RDW garage Cuijk, occasions Cuijk",
   authors: [{ name: "Car Store Cuijk" }],
   creator: "Car Store Cuijk",
   publisher: "Car Store Cuijk",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Car Store Cuijk | Tweedehands Auto's & Garage",
-    description: "Uw specialist in tweedehands auto's en gebruikte auto's van alle merken. Auto inkoop, onderhoud, reparatie. 168 reviews, 5 sterren. BOVAG erkend. 7 dagen open.",
+    description: "Uw specialist in tweedehands auto's en gebruikte auto's van alle merken. Auto inkoop, onderhoud, reparatie. 168 reviews, 5 sterren. RDW erkend. 7 dagen open.",
     type: "website",
     locale: "nl_NL",
     siteName: "Car Store Cuijk",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Car Store Cuijk | Tweedehands Auto's & Garage",
-    description: "Uw specialist in tweedehands auto's en gebruikte auto's. 168 reviews, 5 sterren. BOVAG erkend.",
+    description: "Uw specialist in tweedehands auto's en gebruikte auto's. 168 reviews, 5 sterren. RDW erkend.",
   },
   robots: {
     index: true,
@@ -59,7 +59,7 @@ const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "AutoDealer",
   "name": "Car Store Cuijk",
-  "description": "Uw specialist in tweedehands auto's, gebruikte auto's van alle merken. Auto inkoop, onderhoud, reparatie, airco vullen. 168 reviews, 5 sterren Google reviews. BOVAG erkend.",
+  "description": "Uw specialist in tweedehands auto's, gebruikte auto's van alle merken. Auto inkoop, onderhoud, reparatie, airco vullen. 168 reviews, 5 sterren Google reviews. RDW erkend.",
   "url": "https://www.carstorecuijk.nl",
   "telephone": "+31687118768",
   "email": "info@carstorecuijk.nl",

@@ -6,8 +6,8 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Auto Reparatie Cuijk | 22:00 Bereikbaar - Spoed Reparatie Service',
-  description: 'Vakkundige auto reparatie in Cuijk. Garage open tot 22:00, bereikbaar voor spoed reparatie. Specialist in 1ste eigenaar autos. Distributieriem, ketting, koppeling, remblokken. Altijd bereikbaar voor spoed, ook na sluitingstijd. Alle merken, BOVAG erkend. 168 reviews, 5 sterren.',
-  keywords: 'auto reparatie Cuijk, spoed reparatie, garage open tot 22:00, 22:00 bereikbaar, reparatie na sluitingstijd, altijd bereikbaar voor spoed, 1ste eigenaar auto onderhoud, distributieriem vervangen, ketting vervangen, koppeling vervangen, remblokken vervangen, auto reparatie, alle merken, BOVAG werkplaats',
+  description: 'Vakkundige auto reparatie in Cuijk. Garage open tot 22:00, bereikbaar voor spoed reparatie. Specialist in 1ste eigenaar autos. Distributieriem, ketting, koppeling, remblokken. Altijd bereikbaar voor spoed, ook na sluitingstijd. Alle merken, RDW erkend. 168 reviews, 5 sterren.',
+  keywords: 'auto reparatie Cuijk, spoed reparatie, garage open tot 22:00, 22:00 bereikbaar, reparatie na sluitingstijd, altijd bereikbaar voor spoed, 1ste eigenaar auto onderhoud, distributieriem vervangen, ketting vervangen, koppeling vervangen, remblokken vervangen, auto reparatie, alle merken, RDW werkplaats',
   openGraph: {
     title: 'Auto Reparatie Cuijk | Distributieriem, Koppeling, Remmen',
     description: 'Vakkundige auto reparatie. Distributieriem, ketting, koppeling, remblokken. 168 reviews, 5 sterren.',
@@ -87,7 +87,7 @@ export default function ReparatiesPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
-                { icon: <CheckCircle className="w-8 h-8" />, title: 'BOVAG Erkend', desc: 'Garantie op reparaties' },
+                { icon: <CheckCircle className="w-8 h-8" />, title: 'RDW Erkend', desc: 'Garantie op reparaties' },
                 { icon: <Car className="w-8 h-8" />, title: 'Alle Merken', desc: 'Ongeacht het automerk' },
                 { icon: <Clock className="w-8 h-8" />, title: 'Snelle Service', desc: 'Efficiënte planning' },
                 { icon: <Shield className="w-8 h-8" />, title: 'Transparant', desc: 'Duidelijke prijzen' },
@@ -149,7 +149,7 @@ export default function ReparatiesPage() {
               monteurs volgen regelmatig bijscholing.
             </p>
             <p className="text-white/60 mb-4">
-              Wij zijn BOVAG erkend met 168 reviews en 5 sterren op Google reviews. Of het nu gaat om een kleine reparatie 
+              Wij zijn RDW erkend met 168 reviews en 5 sterren op Google reviews. Of het nu gaat om een kleine reparatie 
               of een grote onderhoudsbeurt, wij staan voor u klaar. Wij werken met originele onderdelen of A-merk 
               alternatieven van hoge kwaliteit. Alle reparaties worden uitgevoerd volgens fabrieksvoorschriften.
             </p>

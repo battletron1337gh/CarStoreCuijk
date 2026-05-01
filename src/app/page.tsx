@@ -13,6 +13,7 @@ import ReviewMarquee from '@/components/ReviewMarquee';
 import CTASection from '@/components/CTASection';
 import Image from 'next/image';
 import { cars, contactInfo } from '@/data/cars';
+import { vweCars } from '@/data/vwe-cars';
 import { reviewStats } from '@/data/google-reviews';
 
 // ==================== SEO METADATA (in aparte file) ====================
@@ -183,7 +184,7 @@ function Hero() {
 
 // ==================== CAR MARQUEE (swipe bar) ====================
 function CarMarqueeSection() {
-  const availableCars = cars.filter(car => car.status === 'beschikbaar');
+  const availableCars = vweCars.filter(car => car.status === 'beschikbaar' && car.afbeeldingen.length > 0).slice(0, 8);
   const carsMulti = [...availableCars, ...availableCars, ...availableCars, ...availableCars, ...availableCars, ...availableCars];
   
   const containerRef = useRef<HTMLDivElement>(null);
