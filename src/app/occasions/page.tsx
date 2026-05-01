@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import AutoInruilForm from '@/components/AutoInruilForm';
 import { vweCars } from '@/data/vwe-cars';
 import Link from 'next/link';
 import type { Metadata } from 'next';
@@ -122,6 +123,21 @@ export default function OccasionsPage() {
                   van particulieren en bedrijven in heel Nederland. Direct geld en snelle afhandeling.
                 </p>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Inruil Formulier Sectie */}
+        <section className="py-20 lg:py-32 bg-[#0a0a0a] border-t border-white/5">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">Uw auto inruilen?</h2>
+              <p className="text-lg text-white/50 max-w-2xl mx-auto">
+                Wilt u uw huidige auto inruilen? Vul het formulier in en wij nemen contact met u op.
+              </p>
+            </div>
+            <div className="max-w-2xl mx-auto">
+              <AutoInruilForm defaultType="Auto inruilen" />
             </div>
           </div>
         </section>

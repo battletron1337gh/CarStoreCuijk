@@ -1,5 +1,7 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import AutoInruilForm from '@/components/AutoInruilForm';
+import Link from 'next/link';
 import { Car, Phone, MessageCircle, CheckCircle, Shield, FileCheck, Clock } from 'lucide-react';
 import { contactInfo } from '@/data/cars';
 import type { Metadata } from 'next';
@@ -22,18 +24,22 @@ export default function AutoVerkopenPage() {
       desc: 'Wij verkopen uw auto in consignatie. U krijgt een hogere prijs dan bij directe inkoop.',
       voordeel: 'Meer opbrengst',
       tijd: '2-4 weken',
+      action: 'scroll',
     },
     {
       title: 'Directe Inkoop',
       desc: 'Wij kopen uw auto direct in. Direct geld op uw rekening, geen wachttijd.',
       voordeel: 'Direct geld',
       tijd: 'Direct',
+      action: 'link',
+      href: '/auto-inkoop',
     },
     {
       title: 'Inruil',
       desc: 'Ruilt u uw auto in bij aankoop van een andere auto? Wij geven een eerlijke inruilprijs.',
       voordeel: 'Gemakkelijk',
       tijd: 'Direct',
+      action: 'scroll',
     },
   ];
 
@@ -93,6 +99,24 @@ export default function AutoVerkopenPage() {
                       <span className="text-white/40">Tijd:</span>
                       <span className="text-white font-semibold">{optie.tijd}</span>
                     </div>
+                  </div>
+                  
+                  <div className="mt-6 pt-4">
+                    {optie.action === 'link' ? (
+                      <Link
+                        href={optie.href!}
+                        className="w-full flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white py-3 rounded-xl font-semibold transition-all"
+                      >
+                        Meer info
+                      </Link>
+                    ) : (
+                      <a
+                        href="#formulier"
+                        className="w-full flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 py-3 rounded-xl font-semibold transition-all"
+                      >
+                        Aanmelden
+                      </a>
+                    )}
                   </div>
                 </div>
               ))}
@@ -195,6 +219,22 @@ export default function AutoVerkopenPage() {
                   {contactInfo.telefoon}
                 </a>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Formulier Sectie */}
+        <section id="formulier" className="py-20 lg:py-32 bg-[#0d0d0d]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">Auto aanbieden</h2>
+              <p className="text-lg text-white/50 max-w-2xl mx-auto">
+                Vul het formulier in om uw auto aan te bieden voor consignatie of inruil. 
+                Wij nemen zo snel mogelijk contact met u op.
+              </p>
+            </div>
+            <div className="max-w-2xl mx-auto">
+              <AutoInruilForm />
             </div>
           </div>
         </section>

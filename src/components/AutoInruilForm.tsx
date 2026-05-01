@@ -6,6 +6,7 @@ import emailjs from '@emailjs/browser';
 import { EMAILJS_CONFIG } from '@/lib/emailjs';
 
 interface FormData {
+  typeAanvraag: string;
   naam: string;
   email: string;
   telefoon: string;
@@ -20,6 +21,7 @@ interface FormData {
 }
 
 interface FormErrors {
+  typeAanvraag?: string;
   naam?: string;
   email?: string;
   telefoon?: string;
@@ -33,11 +35,13 @@ interface FormErrors {
 
 interface AutoInruilFormProps {
   onSuccess?: () => void;
+  defaultType?: string;
 }
 
-export default function AutoInruilForm({ onSuccess }: AutoInruilFormProps) {
+export default function AutoInruilForm({ onSuccess, defaultType = '' }: AutoInruilFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState<FormData>({
+    typeAanvraag: defaultType,
     naam: '',
     email: '',
     telefoon: '',
@@ -57,6 +61,10 @@ export default function AutoInruilForm({ onSuccess }: AutoInruilFormProps) {
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
+
+    if (!formData.typeAanvraag.trim()) {
+      newErrors.typeAanvraag = 'Type aanvraag is verplicht';
+    }
 
     if (!formData.naam.trim()) {
       newErrors.naam = 'Naam is verplicht';
@@ -110,7 +118,7 @@ export default function AutoInruilForm({ onSuccess }: AutoInruilFormProps) {
 
     if (!validateForm()) return;
 
-    if (!EMAILJS_CONFIG.SERVICE_ID || !EMAILJS_CONFIG.TEMPLATE_ID || !EMAILJS_CONFIG.PUBLIC_KEY) {
+    if (!EMAILJS_CONFIG.SERVICE_ID || !EMAILJS_CONFIG.TEMPLATE_ID_INKOOP || !EMAILJS_CONFIG.PUBLIC_KEY) {
       setSubmitError('EmailJS is niet correct geconfigureerd. Neem contact op met de beheerder.');
       return;
     }
@@ -119,6 +127,7 @@ export default function AutoInruilForm({ onSuccess }: AutoInruilFormProps) {
 
     try {
       const templateParams = {
+        type_aanvraag: formData.typeAanvraag,
         naam: formData.naam,
         email: formData.email,
         telefoon: formData.telefoon,
@@ -136,7 +145,7 @@ export default function AutoInruilForm({ onSuccess }: AutoInruilFormProps) {
 
       await emailjs.send(
         EMAILJS_CONFIG.SERVICE_ID,
-        EMAILJS_CONFIG.TEMPLATE_ID,
+        EMAILJS_CONFIG.TEMPLATE_ID_INKOOP,
         templateParams,
         EMAILJS_CONFIG.PUBLIC_KEY
       );
@@ -176,6 +185,7 @@ export default function AutoInruilForm({ onSuccess }: AutoInruilFormProps) {
           onClick={() => {
             setIsSubmitted(false);
             setFormData({
+              typeAanvraag: defaultType,
               naam: '',
               email: '',
               telefoon: '',
@@ -199,9 +209,9 @@ export default function AutoInruilForm({ onSuccess }: AutoInruilFormProps) {
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="bg-[#1a1a1a] rounded-2xl p-8 border border-white/5">
+    <form ref={formRef} onSubmit={handleSubmit} className="bg-[#1a1a1a] rounded-2xl p-8 border border-white/5" id="formulier">
       <h3 className="text-xl font-bold text-white mb-2">Auto aanbieden</h3>
-      <p className="text-white/50 mb-6">Bied uw auto aan voor inruil of verkoop</p>
+      <p className="text-white/50 mb-6">Bied uw auto aan voor inruil, verkoop of consignatie</p>
       
       {submitError && (
         <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-start gap-3">
@@ -211,6 +221,33 @@ export default function AutoInruilForm({ onSuccess }: AutoInruilFormProps) {
       )}
 
       <div className="space-y-5">
+        {/* Type Aanvraag */}
+        <div>
+          <label htmlFor="typeAanvraag" className="block text-sm font-medium text-white/70 mb-2">
+            Type aanvraag *
+          </label>
+          <div className="relative">
+            <Car className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
+            <select
+              id="typeAanvraag"
+              name="typeAanvraag"
+              value={formData.typeAanvraag}
+              onChange={handleChange}
+              className={`w-full bg-[#0d0d0d] border rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-[#c8102e]/50 transition-all appearance-none cursor-pointer ${
+                errors.typeAanvraag ? 'border-red-500' : 'border-white/10 focus:border-[#c8102e]'
+              }`}
+            >
+              <option value="">Kies type aanvraag</option>
+              <option value="Auto verkopen (directe inkoop)">Auto verkopen (directe inkoop)</option>
+              <option value="Auto inruilen">Auto inruilen</option>
+              <option value="Consignatie (verkopen via ons)">Consignatie (verkopen via ons)</option>
+            </select>
+          </div>
+          {errors.typeAanvraag && (
+            <p className="text-red-500 text-sm mt-1">{errors.typeAanvraag}</p>
+          )}
+        </div>
+
         {/* Name */}
         <div>
           <label htmlFor="naam" className="block text-sm font-medium text-white/70 mb-2">
