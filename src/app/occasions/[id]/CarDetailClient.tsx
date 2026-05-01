@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import InteresseForm from '@/components/InteresseForm';
 import { 
   ArrowLeft, 
   Calendar, 
@@ -487,49 +488,15 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
 
               {/* Contact Form */}
               {showContactForm && (
-                <div className="bg-[#1a1a1a] rounded-2xl p-6 border border-white/5">
-                  <h3 className="font-bold text-white mb-4">Stuur een bericht</h3>
-                  <form className="space-y-4">
-                    <div>
-                      <label className="block text-sm text-white/50 mb-1">Naam</label>
-                      <input 
-                        type="text" 
-                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-lg px-4 py-2 text-white focus:border-[#c8102e] focus:outline-none"
-                        placeholder="Uw naam"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm text-white/50 mb-1">Telefoon</label>
-                      <input 
-                        type="tel" 
-                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-lg px-4 py-2 text-white focus:border-[#c8102e] focus:outline-none"
-                        placeholder="06-12345678"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm text-white/50 mb-1">E-mail</label>
-                      <input 
-                        type="email" 
-                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-lg px-4 py-2 text-white focus:border-[#c8102e] focus:outline-none"
-                        placeholder="uw@email.nl"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm text-white/50 mb-1">Bericht</label>
-                      <textarea 
-                        rows={3}
-                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-lg px-4 py-2 text-white focus:border-[#c8102e] focus:outline-none resize-none"
-                        placeholder={`Ik ben geïnteresseerd in de ${car.merk} ${car.model}...`}
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      className="w-full bg-[#c8102e] hover:bg-[#a00d24] text-white py-3 rounded-xl font-semibold transition-all duration-300"
-                    >
-                      Verstuur
-                    </button>
-                  </form>
-                </div>
+                <InteresseForm 
+                  auto={{
+                    merk: car.merk,
+                    model: car.model,
+                    kenteken: car.kenteken,
+                    id: car.id
+                  }}
+                  onSuccess={() => setTimeout(() => setShowContactForm(false), 3000)}
+                />
               )}
 
               {/* Dealer Info */}
@@ -547,6 +514,49 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
                   <div className="flex items-center gap-2">
                     <Shield className="w-5 h-5 text-[#c8102e]" />
                     <span className="text-sm text-white/70">3 maanden huisgarantie</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Interesse Formulier Sectie */}
+        <div className="mt-16">
+          <div className="grid lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <InteresseForm 
+                auto={{
+                  merk: car.merk,
+                  model: car.model,
+                  kenteken: car.kenteken,
+                  id: car.id
+                }}
+              />
+            </div>
+            <div className="lg:col-span-1">
+              <div className="bg-[#1a1a1a] rounded-2xl p-8 border border-white/5">
+                <h3 className="text-xl font-bold text-white mb-4">Waarom Car Store Cuijk?</h3>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-[#c8102e] flex-shrink-0 mt-0.5" />
+                    <p className="text-white/60">168+ reviews, 5 sterren rating</p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-[#c8102e] flex-shrink-0 mt-0.5" />
+                    <p className="text-white/60">3 maanden huisgarantie op alle auto's</p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-[#c8102e] flex-shrink-0 mt-0.5" />
+                    <p className="text-white/60">RDW erkend</p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-[#c8102e] flex-shrink-0 mt-0.5" />
+                    <p className="text-white/60">Open tot 22:00, ook voor spoed</p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-[#c8102e] flex-shrink-0 mt-0.5" />
+                    <p className="text-white/60">NAP gecertificeerd</p>
                   </div>
                 </div>
               </div>

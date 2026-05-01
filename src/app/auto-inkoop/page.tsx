@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import AutoInruilForm from '@/components/AutoInruilForm';
 import { Car, Phone, MessageCircle, CheckCircle, DollarSign, Clock, Shield } from 'lucide-react';
 import { contactInfo } from '@/data/cars';
 import type { Metadata } from 'next';
@@ -131,35 +132,65 @@ export default function AutoInkoopPage() {
           </div>
         </section>
 
-        {/* CTA */}
+        {/* Auto Inruil Formulier */}
         <section className="py-20 lg:py-32 bg-[#0d0d0d]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-[#1a1a1a] rounded-3xl p-8 lg:p-12 border border-white/5 text-center">
-              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-                Direct een prijsindicatie?
-              </h2>
-              <p className="text-white/50 mb-8 text-lg max-w-2xl mx-auto">
-                Bel of app ons met het kenteken en kilometerstand van uw auto. 
-                Wij geven u binnen enkele minuten een vrijblijvende prijsindicatie.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
-                  href={`https://wa.me/${contactInfo.whatsapp.replace(/\s|-/g, '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all"
-                >
-                  <MessageCircle className="w-5 h-5" />
-                  Prijs via WhatsApp
-                </a>
-                <a
-                  href={`tel:${contactInfo.telefoon.replace(/\s|-/g, '')}`}
-                  className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-xl font-semibold text-lg transition-all"
-                >
-                  <Phone className="w-5 h-5" />
-                  {contactInfo.telefoon}
-                </a>
+            <div className="grid lg:grid-cols-2 gap-12">
+              {/* Left: Info */}
+              <div>
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
+                  Auto aanbieden
+                </h2>
+                <p className="text-white/50 mb-8 text-lg">
+                  Vul het formulier in om uw auto aan te bieden voor inruil of verkoop. 
+                  Wij geven u een eerlijke prijs en snelle afhandeling.
+                </p>
+
+                <div className="bg-[#1a1a1a] rounded-2xl p-8 border border-white/5 mb-8">
+                  <h3 className="text-xl font-bold text-white mb-4">Wat gebeurt er na uw aanmelding?</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-[#c8102e]/20 text-[#c8102e] rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</div>
+                      <p className="text-white/60">Wij beoordelen uw aanvraag binnen 24 uur</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-[#c8102e]/20 text-[#c8102e] rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</div>
+                      <p className="text-white/60">U ontvangt een vrijblijvende prijsindicatie</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-[#c8102e]/20 text-[#c8102e] rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</div>
+                      <p className="text-white/60">Bij akkoord maken we een afspraak voor inspectie</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-[#c8102e]/20 text-[#c8102e] rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">4</div>
+                      <p className="text-white/60">Direct geld op uw rekening na akkoord</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <a
+                    href={`https://wa.me/${contactInfo.whatsapp.replace(/\s|-/g, '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-xl font-semibold text-lg transition-all"
+                  >
+                    <MessageCircle className="w-5 h-5" />
+                    Of via WhatsApp
+                  </a>
+                  <a
+                    href={`tel:${contactInfo.telefoon.replace(/\s|-/g, '')}`}
+                    className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-xl font-semibold text-lg transition-all"
+                  >
+                    <Phone className="w-5 h-5" />
+                    {contactInfo.telefoon}
+                  </a>
+                </div>
+              </div>
+
+              {/* Right: Form */}
+              <div>
+                <AutoInruilForm />
               </div>
             </div>
           </div>

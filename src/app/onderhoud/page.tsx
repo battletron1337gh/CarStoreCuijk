@@ -1,7 +1,8 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Services from '@/components/Services';
-import { Wrench, Phone, MessageCircle, Clock, CheckCircle, Shield } from 'lucide-react';
+import OnderhoudOfferteForm from '@/components/OnderhoudOfferteForm';
+import { Wrench, Phone, MessageCircle, Clock, CheckCircle, Shield, FileText } from 'lucide-react';
 import { openingHours, contactInfo } from '@/data/cars';
 import type { Metadata } from 'next';
 
@@ -77,41 +78,21 @@ export default function OnderhoudPage() {
           </div>
         </section>
 
-        {/* Contact CTA */}
+        {/* Offerte Formulier */}
         <section className="py-20 lg:py-32 bg-[#0d0d0d]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-[#1a1a1a] rounded-3xl p-8 lg:p-12 border border-white/5">
-              <div className="grid lg:grid-cols-2 gap-12 items-center">
-                <div>
-                  <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-                    Maak direct een afspraak
-                  </h2>
-                  <p className="text-white/50 mb-8 text-lg">
-                    Plan uw onderhoud, APK of reparatie eenvoudig via WhatsApp of telefoon. 
-                    Garage open tot 22:00, ook bereikbaar voor spoed na sluitingstijd. Wij zorgen voor een snelle en vakkundige service.
-                  </p>
-                  
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <a
-                      href={`https://wa.me/${contactInfo.whatsapp.replace(/\s|-/g, '')}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all"
-                    >
-                      <MessageCircle className="w-5 h-5" />
-                      Afspraak via WhatsApp
-                    </a>
-                    <a
-                      href={`tel:${contactInfo.telefoon.replace(/\s|-/g, '')}`}
-                      className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-xl font-semibold text-lg transition-all"
-                    >
-                      <Phone className="w-5 h-5" />
-                      {contactInfo.telefoon}
-                    </a>
-                  </div>
-                </div>
+            <div className="grid lg:grid-cols-2 gap-12">
+              {/* Left: Info */}
+              <div>
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
+                  Vraag een offerte aan
+                </h2>
+                <p className="text-white/50 mb-8 text-lg">
+                  Vul het formulier in voor een vrijblijvende offerte voor onderhoud, APK of reparatie. 
+                  Wij nemen zo snel mogelijk contact met u op.
+                </p>
 
-                <div className="bg-[#0a0a0a] rounded-2xl p-8 border border-white/5">
+                <div className="bg-[#1a1a1a] rounded-2xl p-8 border border-white/5 mb-8">
                   <h3 className="text-xl font-bold text-white mb-6">Openingstijden</h3>
                   <div className="space-y-3">
                     {openingHours.map((hours) => (
@@ -125,6 +106,30 @@ export default function OnderhoudPage() {
                     Garage open tot 22:00 - Altijd bereikbaar voor spoed!
                   </p>
                 </div>
+
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <a
+                    href={`https://wa.me/${contactInfo.whatsapp.replace(/\s|-/g, '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-xl font-semibold text-lg transition-all"
+                  >
+                    <MessageCircle className="w-5 h-5" />
+                    Of via WhatsApp
+                  </a>
+                  <a
+                    href={`tel:${contactInfo.telefoon.replace(/\s|-/g, '')}`}
+                    className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-xl font-semibold text-lg transition-all"
+                  >
+                    <Phone className="w-5 h-5" />
+                    {contactInfo.telefoon}
+                  </a>
+                </div>
+              </div>
+
+              {/* Right: Form */}
+              <div>
+                <OnderhoudOfferteForm />
               </div>
             </div>
           </div>
