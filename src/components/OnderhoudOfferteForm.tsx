@@ -120,7 +120,7 @@ export default function OnderhoudOfferteForm({ onSuccess }: OnderhoudOfferteForm
 
       await emailjs.send(
         EMAILJS_CONFIG.SERVICE_ID,
-        EMAILJS_CONFIG.TEMPLATE_ID,
+        EMAILJS_CONFIG.TEMPLATE_ID_ONDERHOUD,
         templateParams,
         EMAILJS_CONFIG.PUBLIC_KEY
       );
