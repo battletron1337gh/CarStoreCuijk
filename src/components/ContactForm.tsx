@@ -1,8 +1,10 @@
 'use client';
 
-import { useState } from 'react';
-import { Send, CheckCircle, Loader2, User, Mail, Phone, MessageSquare, FileText } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { Send, CheckCircle, Loader2, User, Mail, Phone, MessageSquare, FileText, AlertCircle } from 'lucide-react';
 import { trackContactFormSubmit } from '@/lib/analytics';
+import emailjs from '@emailjs/browser';
+import { EMAILJS_CONFIG } from '@/lib/emailjs';
 
 interface FormData {
   naam: string;
@@ -21,6 +23,7 @@ interface FormErrors {
 }
 
 export default function ContactForm() {
+  const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState<FormData>({
     naam: '',
     email: '',
@@ -31,6 +34,7 @@ export default function ContactForm() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -69,19 +73,45 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError(null);
 
     if (!validateForm()) return;
 
+    // Check if EmailJS is configured
+    if (!EMAILJS_CONFIG.SERVICE_ID || !EMAILJS_CONFIG.TEMPLATE_ID || !EMAILJS_CONFIG.PUBLIC_KEY) {
+      setSubmitError('EmailJS is niet correct geconfigureerd. Neem contact op met de beheerder.');
+      return;
+    }
+
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      const templateParams = {
+        naam: formData.naam,
+        email: formData.email,
+        telefoon: formData.telefoon,
+        onderwerp: formData.onderwerp,
+        bericht: formData.bericht,
+        to_email: 'info@carstorecuijk.nl',
+      };
 
-    // Track the form submission
-    trackContactFormSubmit(formData.onderwerp);
+      await emailjs.send(
+        EMAILJS_CONFIG.SERVICE_ID,
+        EMAILJS_CONFIG.TEMPLATE_ID,
+        templateParams,
+        EMAILJS_CONFIG.PUBLIC_KEY
+      );
 
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+      // Track the form submission
+      trackContactFormSubmit(formData.onderwerp);
+
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error('EmailJS error:', error);
+      setIsSubmitting(false);
+      setSubmitError('Er is iets misgegaan bij het versturen van uw bericht. Probeer het later opnieuw of neem telefonisch contact op.');
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -90,6 +120,10 @@ export default function ContactForm() {
     // Clear error when user starts typing
     if (errors[name as keyof FormErrors]) {
       setErrors(prev => ({ ...prev, [name]: undefined }));
+    }
+    // Clear submit error when user makes changes
+    if (submitError) {
+      setSubmitError(null);
     }
   };
 
@@ -113,6 +147,7 @@ export default function ContactForm() {
               onderwerp: '',
               bericht: '',
             });
+            setSubmitError(null);
           }}
           className="text-[#c8102e] hover:underline font-medium"
         >
@@ -123,9 +158,16 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-[#1a1a1a] rounded-2xl p-8 border border-white/5">
+    <form ref={formRef} onSubmit={handleSubmit} className="bg-[#1a1a1a] rounded-2xl p-8 border border-white/5">
       <h3 className="text-xl font-bold text-white mb-6">Stuur ons een bericht</h3>
       
+      {submitError && (
+        <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-start gap-3">
+          <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+          <p className="text-red-400 text-sm">{submitError}</p>
+        </div>
+      )}
+
       <div className="space-y-5">
         {/* Name */}
         <div>
