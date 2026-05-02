@@ -61,17 +61,25 @@ function convertVweToCar(vweVehicle: any): Car | null {
   // Bouw ID op basis van kenteken of voertuignr
   const id = vweVehicle.kenteken || vweVehicle.id || `vwe-${raw.voertuignr}`;
   
-  // Haal foto URLs op uit VWE afbeeldingen (gebruik lokale paden)
+  // Haal foto URLs op - eerst uit vweVehicle.fotoUrls (server parsed), dan uit raw
   const fotoUrls: string[] = [];
   const kenteken = vweVehicle.kenteken || '';
-  if (raw.afbeeldingen?.afbeelding && Array.isArray(raw.afbeeldingen.afbeelding)) {
+  
+  // Gebruik fotoUrls uit vweVehicle (van server)
+  if (vweVehicle.fotoUrls && Array.isArray(vweVehicle.fotoUrls) && vweVehicle.fotoUrls.length > 0) {
+    fotoUrls.push(...vweVehicle.fotoUrls);
+  }
+  // Fallback naar raw.afbeeldingen
+  else if (raw.afbeeldingen?.afbeelding && Array.isArray(raw.afbeeldingen.afbeelding)) {
     raw.afbeeldingen.afbeelding.forEach((img: any) => {
       if (img.bestandsnaam && kenteken) {
-        // Gebruik lokale pad naar gedownloade afbeelding
         fotoUrls.push(`/vwe-fotos/${kenteken}/${img.bestandsnaam}`);
+      } else if (img.url) {
+        fotoUrls.push(img.url);
       }
     });
   }
+  
   // Fallback: gebruik placeholder als er geen foto's zijn
   if (fotoUrls.length === 0) {
     fotoUrls.push('/cars/placeholder.svg');
