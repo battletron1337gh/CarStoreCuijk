@@ -1,3 +1,51 @@
 {
-  "vehicles": []
+  "vehicles": [
+    {
+      "id": "TEST01A",
+      "kenteken": "TEST01A",
+      "merk": "Volkswagen",
+      "model": "Golf",
+      "bouwjaar": "2020",
+      "prijs": "18950",
+      "kmStand": "85000",
+      "brandstof": "B",
+      "transmissie": "H",
+      "kleur": "zwart",
+      "fotoUrls": [
+        "https://via.placeholder.com/800x600/333/fff?text=Test+Auto"
+      ],
+      "actie": "add",
+      "timestamp": "2026-05-02T08:56:04.253Z",
+      "raw": {
+        "actie": "add",
+        "kenteken": "TEST01A",
+        "merk": "Volkswagen",
+        "model": "Golf",
+        "bouwjaar": "2020",
+        "brandstof": "B",
+        "transmissie": "H",
+        "basiskleur": "zwart",
+        "tellerstand": {
+          "_": "85000",
+          "eenheid": "K"
+        },
+        "verkoopprijs_particulier": {
+          "prijzen": {
+            "land": "nl",
+            "prijs": {
+              "nr": "1",
+              "bedrag": "18950",
+              "munteenheid": "EUR"
+            }
+          }
+        },
+        "afbeeldingen": {
+          "afbeelding": {
+            "url": "https://via.placeholder.com/800x600/333/fff?text=Test+Auto",
+            "bestandsnaam": "1.jpg"
+          }
+        }
+      }
+    }
+  ]
 }
