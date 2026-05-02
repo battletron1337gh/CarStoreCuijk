@@ -42,7 +42,7 @@ export default function OccasionsPage() {
         <section className="py-12 lg:py-20 bg-[#0a0a0a]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-              {vweCars.filter(car => car.status === 'beschikbaar').map((car) => (
+              {vweCars.map((car) => (
                 <Link
                   key={car.id}
                   href={`/occasions/${car.id}`}
