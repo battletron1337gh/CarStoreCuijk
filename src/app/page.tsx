@@ -184,7 +184,7 @@ function Hero() {
 
 // ==================== CAR MARQUEE (swipe bar) ====================
 function CarMarqueeSection() {
-  const availableCars = vweCars.filter(car => car.status === 'beschikbaar' && car.afbeeldingen.length > 0).slice(0, 8);
+  const availableCars = vweCars.filter(car => car.afbeeldingen.length > 0).slice(0, 8);
   const carsMulti = [...availableCars, ...availableCars, ...availableCars, ...availableCars, ...availableCars, ...availableCars];
   
   const containerRef = useRef<HTMLDivElement>(null);
