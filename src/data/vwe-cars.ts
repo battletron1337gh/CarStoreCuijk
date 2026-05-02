@@ -5,13 +5,17 @@ import vehiclesData from '../../data/vehicles.json';
 function convertVweToCar(vweVehicle: any): Car | null {
   const raw = vweVehicle.raw || {};
   
-  // Haal prijs op uit raw data
+  // Haal prijs op - eerst uit vweVehicle.prijs (server parsed), dan uit raw data
   let prijs = 0;
-  const prijsData = raw.verkoopprijs_particulier?.prijzen;
-  if (prijsData && typeof prijsData === 'object') {
-    const prijsObj = prijsData.prijs;
-    if (prijsObj && typeof prijsObj === 'object') {
-      prijs = parseInt(prijsObj.bedrag || '0', 10);
+  if (vweVehicle.prijs) {
+    prijs = parseInt(vweVehicle.prijs, 10);
+  } else {
+    const prijsData = raw.verkoopprijs_particulier?.prijzen;
+    if (prijsData && typeof prijsData === 'object') {
+      const prijsObj = prijsData.prijs;
+      if (prijsObj && typeof prijsObj === 'object') {
+        prijs = parseInt(prijsObj.bedrag || '0', 10);
+      }
     }
   }
   
@@ -20,9 +24,11 @@ function convertVweToCar(vweVehicle: any): Car | null {
     return null;
   }
   
-  // Haal KM stand op
+  // Haal KM stand op - eerst uit vweVehicle.kmStand, dan uit raw
   let kmStand = 0;
-  if (raw.tellerstand && typeof raw.tellerstand === 'object') {
+  if (vweVehicle.kmStand) {
+    kmStand = parseInt(vweVehicle.kmStand, 10);
+  } else if (raw.tellerstand && typeof raw.tellerstand === 'object') {
     kmStand = parseInt(raw.tellerstand._ || '0', 10);
   }
   
