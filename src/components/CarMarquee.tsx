@@ -3,10 +3,10 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { cars } from '@/data/cars';
+import { vweCars } from '@/data/vwe-cars';
 
 export default function CarMarquee() {
-  const availableCars = cars.filter(car => car.status === 'beschikbaar');
+  const availableCars = vweCars;
   const carsMulti = [...availableCars, ...availableCars, ...availableCars, ...availableCars, ...availableCars, ...availableCars];
   
   const containerRef = useRef<HTMLDivElement>(null);

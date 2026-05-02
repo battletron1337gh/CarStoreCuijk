@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import CarCard from '@/components/CarCard';
-import { cars } from '@/data/cars';
+import { vweCars } from '@/data/vwe-cars';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -19,8 +19,7 @@ const containerVariants = {
 
 export default function FeaturedCars() {
   // Get only available cars, sorted by newest (highest year), show only 3
-  const featuredCars = cars
-    .filter(car => car.status === 'beschikbaar')
+  const featuredCars = vweCars
     .sort((a, b) => b.bouwjaar - a.bouwjaar)
     .slice(0, 3);
 
