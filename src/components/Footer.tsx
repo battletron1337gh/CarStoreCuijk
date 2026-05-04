@@ -34,9 +34,9 @@ export default function Footer() {
               <Image
                 src="/images/logo.png"
                 alt="Car Store Cuijk"
-                width={200}
-                height={60}
-                className="object-contain"
+                width={800}
+                height={240}
+                className="object-contain w-auto h-24"
               />
             </Link>
             <p className="text-white/50 mb-6 leading-relaxed">
