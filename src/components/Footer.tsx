@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Phone, Mail, MapPin, MessageCircle, Clock } from 'lucide-react';
 import { contactInfo, openingHours } from '@/data/cars';
 
@@ -30,9 +31,13 @@ export default function Footer() {
           {/* Company Info */}
           <div className="lg:col-span-1">
             <Link href="/" className="inline-block mb-6">
-              <span className="text-2xl font-bold">
-                Car Store <span className="text-[#c8102e]">Cuijk</span>
-              </span>
+              <Image
+                src="/images/logo.png"
+                alt="Car Store Cuijk"
+                width={200}
+                height={60}
+                className="object-contain"
+              />
             </Link>
             <p className="text-white/50 mb-6 leading-relaxed">
               Uw betrouwbare partner voor occasions en onderhoud in Cuijk en omgeving.
