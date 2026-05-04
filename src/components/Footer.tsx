@@ -30,13 +30,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Company Info */}
           <div className="lg:col-span-1">
-            <Link href="/" className="block mb-6">
+            <Link href="/" className="block mb-4 -ml-2">
               <Image
                 src="/images/logo.png"
                 alt="Car Store Cuijk"
-                width={800}
-                height={240}
-                className="object-contain w-full h-auto max-w-[280px]"
+                width={280}
+                height={84}
+                className="object-contain w-auto h-20"
               />
             </Link>
             <p className="text-white/50 mb-6 leading-relaxed">
