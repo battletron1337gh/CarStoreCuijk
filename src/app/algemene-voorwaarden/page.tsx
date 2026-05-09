@@ -2,23 +2,6 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Shield, FileText, Truck, CreditCard, Lock, MessageSquare, RotateCcw } from 'lucide-react';
 import { contactInfo } from '@/data/cars';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Algemene Voorwaarden | Car Store Cuijk - 1ste Eigenaar Auto\'s',
-  description: 'Bekijk de algemene voorwaarden van Car Store Cuijk. Specialist in 1ste eigenaar autos. Garantievoorwaarden, leveringsvoorwaarden, betalingsvoorwaarden en klachtenprocedure.',
-  keywords: 'Car Store Cuijk algemene voorwaarden, 1ste eigenaar autos garantie, garantie auto, leveringsvoorwaarden auto, retourvoorwaarden auto, klachtenprocedure autobedrijf',
-  alternates: {
-    canonical: '/algemene-voorwaarden',
-  },
-  openGraph: {
-    title: 'Algemene Voorwaarden | Car Store Cuijk',
-    description: 'Bekijk de algemene voorwaarden, garantie-, leverings- en retourvoorwaarden van Car Store Cuijk.',
-    type: 'website',
-    locale: 'nl_NL',
-    siteName: 'Car Store Cuijk',
-  },
-};
 
 const voorwaardenSections = [
   {

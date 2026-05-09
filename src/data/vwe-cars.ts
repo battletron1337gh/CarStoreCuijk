@@ -107,7 +107,7 @@ function convertVweToCar(vweVehicle: any): Car | null {
     kilometerstand: kmStand,
     prijs: prijs,
     afbeeldingen: fotoUrls,
-    status: 'beschikbaar',
+    status: (raw.verkocht === 'j' || raw.verkocht === true) ? 'verkocht' : 'beschikbaar',
     apk: apkTot,
     features: features,
     beschrijving: type,

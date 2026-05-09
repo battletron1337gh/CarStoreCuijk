@@ -2,18 +2,6 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Wrench, Phone, MessageCircle, CheckCircle, Clock, Shield, Car } from 'lucide-react';
 import { contactInfo } from '@/data/cars';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Auto Reparatie Cuijk | 22:00 Bereikbaar - Spoed Reparatie Service',
-  description: 'Vakkundige auto reparatie in Cuijk. Garage open tot 22:00, bereikbaar voor spoed reparatie. Specialist in 1ste eigenaar autos. Distributieriem, ketting, koppeling, remblokken. Altijd bereikbaar voor spoed, ook na sluitingstijd. Alle merken, RDW erkend. 168 reviews, 5 sterren.',
-  keywords: 'auto reparatie Cuijk, spoed reparatie, garage open tot 22:00, 22:00 bereikbaar, reparatie na sluitingstijd, altijd bereikbaar voor spoed, 1ste eigenaar auto onderhoud, distributieriem vervangen, ketting vervangen, koppeling vervangen, remblokken vervangen, auto reparatie, alle merken, RDW werkplaats',
-  openGraph: {
-    title: 'Auto Reparatie Cuijk | Distributieriem, Koppeling, Remmen',
-    description: 'Vakkundige auto reparatie. Distributieriem, ketting, koppeling, remblokken. 168 reviews, 5 sterren.',
-    type: 'website',
-  },
-};
 
 export default function ReparatiesPage() {
   const reparaties = [

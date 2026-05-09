@@ -1,0 +1,139 @@
+import { Car } from '@/types';
+
+const VWE_API_URL = 'https://carstorecuijk-vwe-server.onrender.com';
+
+// Helper functie om VWE data om te zetten naar Car formaat
+function convertVweToCar(vweVehicle: any): Car | null {
+  const raw = vweVehicle.raw || {};
+  
+  // Haal prijs op uit raw data
+  let prijs = 0;
+  const prijsData = raw.verkoopprijs_particulier?.prijzen;
+  if (prijsData && typeof prijsData === 'object') {
+    const prijsObj = prijsData.prijs;
+    if (prijsObj && typeof prijsObj === 'object') {
+      prijs = parseInt(prijsObj.bedrag || '0', 10);
+    }
+  }
+  
+  // Skip voertuigen zonder prijs
+  if (!prijs || prijs === 0) {
+    return null;
+  }
+  
+  // Haal KM stand op
+  let kmStand = 0;
+  if (raw.tellerstand && typeof raw.tellerstand === 'object') {
+    kmStand = parseInt(raw.tellerstand._ || '0', 10);
+  }
+  
+  // Converteer brandstof code
+  const brandstofMap: Record<string, string> = {
+    'B': 'Benzine',
+    'D': 'Diesel',
+    'E': 'Elektrisch',
+    'H': 'Hybride',
+    'L': 'LPG',
+    'N': 'CNG'
+  };
+  const brandstof = brandstofMap[vweVehicle.brandstof] || 'Benzine';
+  
+  // Converteer transmissie code
+  const transmissieMap: Record<string, string> = {
+    'A': 'Automaat',
+    'H': 'Handmatig',
+    'M': 'Handmatig',
+    'C': 'CVT'
+  };
+  const transmissie = transmissieMap[vweVehicle.transmissie] || 'Handmatig';
+  
+  // Haal carrosserie op
+  const carrosserie = raw.carrosserie || raw.carrosserie_orig || 'Hatchback';
+  
+  // Haal vermogen op
+  let vermogen = 0;
+  if (raw.vermogen && typeof raw.vermogen === 'object') {
+    vermogen = parseInt(raw.vermogen._ || '0', 10);
+  }
+  
+  // Haal kleur op
+  const kleur = raw.basiskleur || raw.kleur || 'Onbekend';
+  
+  // Haal aantal deuren op
+  const deuren = parseInt(raw.aantal_deuren || '5', 10);
+  
+  // Haal foto's op
+  const fotoUrls: string[] = [];
+  if (vweVehicle.fotoUrls && Array.isArray(vweVehicle.fotoUrls)) {
+    fotoUrls.push(...vweVehicle.fotoUrls);
+  }
+  
+  // Als er geen foto's zijn, gebruik VWE fotos uit public folder
+  const kenteken = vweVehicle.kenteken || '';
+  const vweFotoPath = kenteken ? `/vwe-fotos/${kenteken}/1.jpg` : '';
+  
+  return {
+    id: vweVehicle.id || vweVehicle.kenteken || '',
+    merk: vweVehicle.merk || raw.merk || 'Onbekend',
+    model: vweVehicle.model || raw.model || 'Onbekend',
+    prijs,
+    bouwjaar: parseInt(vweVehicle.bouwjaar || raw.bouwjaar || '2020', 10),
+    kilometerstand: kmStand,
+    brandstof,
+    transmissie,
+    carrosserie,
+    vermogen: vermogen.toString(),
+    kleur,
+
+    kenteken,
+    afbeeldingen: fotoUrls.length > 0 ? fotoUrls : [vweFotoPath || '/images/placeholder-car.jpg'],
+    beschrijving: raw.beschrijving || `${vweVehicle.merk} ${vweVehicle.model} ${vweVehicle.bouwjaar}`,
+    features: [],
+    status: (raw.verkocht === 'j' || raw.verkocht === true) ? 'verkocht' : 'beschikbaar',
+    apk: raw.apk || '',
+    variant: raw.variant || `${vweVehicle.merk} ${vweVehicle.model}`
+  };
+}
+
+// Haal alle voertuigen op van de VWE webhook server
+export async function fetchVweCars(): Promise<Car[]> {
+  try {
+    const response = await fetch(`${VWE_API_URL}/vehicles`, {
+      next: { revalidate: 60 } // Cache voor 60 seconden
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    
+    if (!data.vehicles || !Array.isArray(data.vehicles)) {
+      console.log('Geen voertuigen gevonden in API response');
+      return [];
+    }
+    
+    const cars: Car[] = data.vehicles
+      .map(convertVweToCar)
+      .filter((car: Car | null): car is Car => car !== null)
+      .filter((car: Car) => car.status !== 'verkocht'); // Filter verkochte auto's
+    
+    console.log(`${cars.length} voertuigen opgehaald van VWE API`);
+    return cars;
+    
+  } catch (error) {
+    console.error('Fout bij ophalen VWE voertuigen:', error);
+    return [];
+  }
+}
+
+// Haal een specifiek voertuig op
+export async function fetchVweCarById(id: string): Promise<Car | null> {
+  try {
+    const cars = await fetchVweCars();
+    return cars.find(car => car.id === id || car.kenteken === id) || null;
+  } catch (error) {
+    console.error('Fout bij ophalen specifiek voertuig:', error);
+    return null;
+  }
+}

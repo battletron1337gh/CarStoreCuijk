@@ -1,18 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { vweCars } from '@/data/vwe-cars';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Verkochte Auto\'s | Car Store Cuijk',
-  description: 'Bekijk onze recent verkochte auto\'s. Car Store Cuijk heeft al honderden tevreden klanten. RDW erkend met 168 reviews, 5 sterren.',
-  keywords: 'verkochte auto\'s, recent verkocht, auto verkocht Cuijk, tevreden klanten, social proof',
-  openGraph: {
-    title: 'Verkochte Auto\'s | Car Store Cuijk',
-    description: 'Bekijk onze recent verkochte auto\'s. Al honderden tevreden klanten.',
-    type: 'website',
-  },
-};
 
 export default function VerkochteAutosPage() {
   const verkochteAutos = vweCars.filter(car => car.status === 'verkocht');
@@ -75,7 +63,7 @@ export default function VerkochteAutosPage() {
                     <div className="relative aspect-[16/10] overflow-hidden">
                       <img
                         src={car.afbeeldingen[0] || '/cars/placeholder.svg'}
-                        alt={`${car.merk} ${car.model}`}
+                        alt={`${car.merk} ${car.model} - Verkochte occasion bij Car Store Cuijk`}
                         className="w-full h-full object-cover grayscale"
                       />
                       {/* Grijze overlay */}

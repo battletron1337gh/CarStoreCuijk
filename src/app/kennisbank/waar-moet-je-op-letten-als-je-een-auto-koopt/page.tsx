@@ -1,24 +1,7 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Clock, ArrowLeft, ArrowRight, CheckCircle, Car, FileText, Wrench, Phone } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'Waar moet je op letten als je een auto koopt? | Car Store Cuijk',
-  description: 'Een auto kopen? Ontdek waar je op moet letten bij de aankoop van een tweedehands auto. Tips over onderhoudshistorie, proefrit, prijs en documenten van Car Store Cuijk.',
-  keywords: 'auto kopen tips, tweedehands auto kopen, waar op letten auto kopen, auto aankoop checklist, occasion kopen advies, auto kopen wat checken',
-  openGraph: {
-    title: 'Waar moet je op letten als je een auto koopt? | Car Store Cuijk',
-    description: 'Ontdek waar je op moet letten bij de aankoop van een tweedehands auto. Tips over onderhoudshistorie, proefrit, prijs en documenten.',
-    type: 'article',
-    locale: 'nl_NL',
-    siteName: 'Car Store Cuijk',
-    publishedTime: '2024-01-15T08:00:00+01:00',
-    modifiedTime: '2024-01-15T08:00:00+01:00',
-    authors: ['Car Store Cuijk'],
-  },
-};
 
 // Schema.org Article structured data
 const articleSchema = {

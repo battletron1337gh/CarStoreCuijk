@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import CookieConsent from "@/components/CookieConsent";
+import LoadingScreen from "@/components/LoadingScreen";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -19,6 +20,9 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.carstorecuijk.nl"),
   alternates: {
     canonical: "/",
+    languages: {
+      'nl-NL': '/',
+    },
   },
   openGraph: {
     title: "Car Store Cuijk | Tweedehands Auto's & Garage",
@@ -26,11 +30,21 @@ export const metadata: Metadata = {
     type: "website",
     locale: "nl_NL",
     siteName: "Car Store Cuijk",
+    url: "https://www.carstorecuijk.nl",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Car Store Cuijk - Tweedehands Auto's & Garage",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Car Store Cuijk | Tweedehands Auto's & Garage",
     description: "Uw specialist in tweedehands auto's en gebruikte auto's. 168 reviews, 5 sterren. RDW erkend.",
+    images: ["/og-image.jpg"],
   },
   robots: {
     index: true,
@@ -43,6 +57,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  verification: {
+    google: "your-google-verification-code",
+  },
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
@@ -54,22 +71,34 @@ export const metadata: Metadata = {
   },
 };
 
-// Schema.org LocalBusiness structured data
-const localBusinessSchema = {
+// Schema.org LocalBusiness structured data - AutoDealer
+const autoDealerSchema = {
   "@context": "https://schema.org",
   "@type": "AutoDealer",
+  "@id": "https://www.carstorecuijk.nl/#autodealer",
   "name": "Car Store Cuijk",
   "description": "Uw specialist in tweedehands auto's, gebruikte auto's van alle merken. Auto inkoop, onderhoud, reparatie, airco vullen. 168 reviews, 5 sterren Google reviews. RDW erkend.",
   "url": "https://www.carstorecuijk.nl",
   "telephone": "+31687118768",
   "email": "info@carstorecuijk.nl",
   "priceRange": "€€",
-  "image": "https://www.carstorecuijk.nl/logo.png",
-  "logo": "https://www.carstorecuijk.nl/logo.png",
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://www.carstorecuijk.nl/logo.png",
+    "width": 512,
+    "height": 512
+  },
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://www.carstorecuijk.nl/logo.png",
+    "width": 512,
+    "height": 512
+  },
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Lange Beijerd 3d",
     "addressLocality": "Cuijk",
+    "addressRegion": "Noord-Brabant",
     "postalCode": "5431 NR",
     "addressCountry": "NL"
   },
@@ -186,6 +215,78 @@ const localBusinessSchema = {
     "reviewCount": "168",
     "bestRating": "5",
     "worstRating": "1"
+  },
+  "areaServed": {
+    "@type": "City",
+    "name": "Cuijk",
+    "containedInPlace": {
+      "@type": "State",
+      "name": "Noord-Brabant"
+    }
+  },
+  "currenciesAccepted": "EUR",
+  "paymentAccepted": "Cash, Credit Card, Bank Transfer"
+};
+
+// BreadcrumbList Schema
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.carstorecuijk.nl"
+    }
+  ]
+};
+
+// WebSite Schema
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://www.carstorecuijk.nl/#website",
+  "url": "https://www.carstorecuijk.nl",
+  "name": "Car Store Cuijk",
+  "description": "Uw specialist in tweedehands auto's en gebruikte auto's van alle merken",
+  "publisher": {
+    "@id": "https://www.carstorecuijk.nl/#autodealer"
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://www.carstorecuijk.nl/occasions?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  },
+  "inLanguage": "nl-NL"
+};
+
+// Organization Schema
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://www.carstorecuijk.nl/#organization",
+  "name": "Car Store Cuijk",
+  "url": "https://www.carstorecuijk.nl",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://www.carstorecuijk.nl/logo.png",
+    "width": 512,
+    "height": 512
+  },
+  "sameAs": [
+    "https://www.facebook.com/carstorecuijk",
+    "https://www.instagram.com/carstorecuijk"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+31687118768",
+    "contactType": "customer service",
+    "availableLanguage": "Dutch",
+    "areaServed": "NL"
   }
 };
 
@@ -198,12 +299,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="nl" className={inter.variable}>
+    <html lang="nl-NL" className={inter.variable}>
       <head>
+        {/* Hreflang tags */}
+        <link rel="alternate" hrefLang="nl-NL" href="https://www.carstorecuijk.nl" />
+        <link rel="alternate" hrefLang="x-default" href="https://www.carstorecuijk.nl" />
+        
         {/* Schema.org JSON-LD */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(autoDealerSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
         
         {/* Google Analytics 4 */}
@@ -235,7 +352,9 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        {children}
+        <LoadingScreen>
+          {children}
+        </LoadingScreen>
         <CookieConsent />
       </body>
     </html>

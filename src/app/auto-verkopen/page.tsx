@@ -4,18 +4,6 @@ import AutoInruilForm from '@/components/AutoInruilForm';
 import Link from 'next/link';
 import { Car, Phone, MessageCircle, CheckCircle, Shield, FileCheck, Clock } from 'lucide-react';
 import { contactInfo } from '@/data/cars';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Auto Verkopen Cuijk | 1ste Eigenaar Auto\'s Te Koop',
-  description: 'Auto verkopen via Car Store Cuijk. Consignatie, inruil of directe inkoop. Wij verkopen voornamelijk 1ste eigenaar autos. Gratis waardebepaling. 168 reviews, 5 sterren.',
-  keywords: 'auto verkopen Cuijk, 1ste eigenaar autos te koop, 1e eigenaar, eerste eigenaar, occasion verkopen, auto inruilen, consumentenverkoop, waardebepaling auto',
-  openGraph: {
-    title: 'Auto Verkopen Cuijk | Consignatie & Inruil',
-    description: 'Consumentenverkoop, inruil of directe inkoop. 168 reviews, 5 sterren.',
-    type: 'website',
-  },
-};
 
 export default function AutoVerkopenPage() {
   const opties = [

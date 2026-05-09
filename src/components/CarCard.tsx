@@ -54,7 +54,7 @@ export default function CarCard({ car, index = 0, compact = false }: CarCardProp
             {getStatusBadge()}
             <Image
               src={car.afbeeldingen[0] || '/cars/placeholder.svg'}
-              alt={`${car.merk} ${car.model} ${car.variant}`}
+              alt={`${car.merk} ${car.model} ${car.variant} - Tweedehands occasion te koop bij Car Store Cuijk`}
               fill
               className="object-cover group-hover:scale-110 transition-transform duration-500"
               sizes="280px"
@@ -92,7 +92,7 @@ export default function CarCard({ car, index = 0, compact = false }: CarCardProp
             {getStatusBadge()}
             <Image
               src={car.afbeeldingen[0] || '/cars/placeholder.svg'}
-              alt={`${car.merk} ${car.model} ${car.variant}`}
+              alt={`${car.merk} ${car.model} ${car.variant} - Tweedehands occasion te koop bij Car Store Cuijk`}
               fill
               className="object-cover group-hover:scale-110 transition-transform duration-500"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

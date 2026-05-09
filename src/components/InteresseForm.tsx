@@ -2,8 +2,9 @@
 
 import { useState, useRef } from 'react';
 import { Send, CheckCircle, Loader2, User, Mail, Phone, MessageSquare, Calendar, Car, AlertCircle } from 'lucide-react';
-import emailjs from '@emailjs/browser';
-import { EMAILJS_CONFIG } from '@/lib/emailjs';
+// import emailjs from '@emailjs/browser'; // EMAILJS UITGESCHAKELD - Gebruik SMTP
+// import { EMAILJS_CONFIG } from '@/lib/emailjs'; // EMAILJS UITGESCHAKELD
+import { sendEmail } from '@/lib/email'; // SMTP EMAIL SERVICE
 
 interface Auto {
   merk: string;
@@ -76,15 +77,11 @@ export default function InteresseForm({ auto, onSuccess }: InteresseFormProps) {
 
     if (!validateForm()) return;
 
-    if (!EMAILJS_CONFIG.SERVICE_ID || !EMAILJS_CONFIG.TEMPLATE_ID || !EMAILJS_CONFIG.PUBLIC_KEY) {
-      setSubmitError('EmailJS is niet correct geconfigureerd. Neem contact op met de beheerder.');
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
-      const templateParams = {
+      // SMTP EMAIL SERVICE (nieuwe methode)
+      await sendEmail({
         naam: formData.naam,
         email: formData.email,
         telefoon: formData.telefoon,
@@ -95,20 +92,30 @@ export default function InteresseForm({ auto, onSuccess }: InteresseFormProps) {
         opmerkingen: formData.opmerkingen || 'Geen opmerkingen',
         onderwerp: 'Interesse in occasion',
         to_email: 'info@carstorecuijk.nl',
-      };
+      });
 
+      /* 
+      // EMAILJS ALTERNATIEF (uitgeschakeld)
+      // Uncomment deze code om EmailJS te gebruiken in plaats van SMTP:
+      
+      if (!EMAILJS_CONFIG.SERVICE_ID || !EMAILJS_CONFIG.PUBLIC_KEY) {
+        setSubmitError('EmailJS is niet correct geconfigureerd.');
+        return;
+      }
+      
       await emailjs.send(
         EMAILJS_CONFIG.SERVICE_ID,
-        EMAILJS_CONFIG.TEMPLATE_ID,
+        'template_rk0kuiv',
         templateParams,
         EMAILJS_CONFIG.PUBLIC_KEY
       );
+      */
 
       setIsSubmitting(false);
       setIsSubmitted(true);
       onSuccess?.();
     } catch (error) {
-      console.error('EmailJS error:', error);
+      console.error('Email error:', error);
       setIsSubmitting(false);
       setSubmitError('Er is iets misgegaan bij het versturen van uw bericht. Probeer het later opnieuw of neem telefonisch contact op.');
     }
@@ -127,12 +134,12 @@ export default function InteresseForm({ auto, onSuccess }: InteresseFormProps) {
 
   if (isSubmitted) {
     return (
-      <div className="bg-[#1a1a1a] rounded-2xl p-8 border border-white/5 text-center">
-        <div className="w-16 h-16 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-          <CheckCircle className="w-8 h-8" />
+      <div className="bg-[#1a1a1a] rounded-xl lg:rounded-2xl p-3 sm:p-4 lg:p-8 border border-white/5 text-center">
+        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+          <CheckCircle className="w-6 h-6 sm:w-8 sm:h-8" />
         </div>
-        <h3 className="text-2xl font-bold text-white mb-2">Bedankt voor uw interesse!</h3>
-        <p className="text-white/60 mb-6">
+        <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Bedankt voor uw interesse!</h3>
+        <p className="text-white/60 mb-4 sm:mb-6 text-sm sm:text-base">
           We hebben uw verzoek ontvangen en nemen zo snel mogelijk contact met u op over de {auto.merk} {auto.model}.
         </p>
         <button
@@ -147,7 +154,7 @@ export default function InteresseForm({ auto, onSuccess }: InteresseFormProps) {
             });
             setSubmitError(null);
           }}
-          className="text-[#c8102e] hover:underline font-medium"
+          className="text-[#c8102e] hover:underline font-medium text-sm sm:text-base"
         >
           Nieuw bericht versturen
         </button>
@@ -156,38 +163,38 @@ export default function InteresseForm({ auto, onSuccess }: InteresseFormProps) {
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="bg-[#1a1a1a] rounded-2xl p-8 border border-white/5">
-      <h3 className="text-xl font-bold text-white mb-2">Interesse in deze auto?</h3>
-      <p className="text-white/50 mb-6">
+    <form ref={formRef} onSubmit={handleSubmit} className="bg-[#1a1a1a] rounded-xl lg:rounded-2xl p-3 sm:p-4 lg:p-8 border border-white/5">
+      <h3 className="text-lg sm:text-xl font-bold text-white mb-2">Interesse in deze auto?</h3>
+      <p className="text-white/50 mb-4 sm:mb-6 text-sm sm:text-base">
         Laat uw gegevens achter en we nemen contact met u op over de {auto.merk} {auto.model}
       </p>
       
       {/* Auto info display */}
-      <div className="mb-6 p-4 bg-[#0d0d0d] rounded-xl border border-white/5">
-        <div className="flex items-center gap-3 mb-2">
-          <Car className="w-5 h-5 text-[#c8102e]" />
-          <span className="font-semibold text-white">{auto.merk} {auto.model}</span>
+      <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-[#0d0d0d] rounded-lg sm:rounded-xl border border-white/5">
+        <div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
+          <Car className="w-4 h-4 sm:w-5 sm:h-5 text-[#c8102e]" />
+          <span className="font-semibold text-white text-sm sm:text-base">{auto.merk} {auto.model}</span>
         </div>
         {auto.kenteken && (
-          <p className="text-white/50 text-sm ml-8">Kenteken: {auto.kenteken}</p>
+          <p className="text-white/50 text-xs sm:text-sm ml-6 sm:ml-8">Kenteken: {auto.kenteken}</p>
         )}
       </div>
       
       {submitError && (
-        <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-start gap-3">
-          <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-          <p className="text-red-400 text-sm">{submitError}</p>
+        <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-red-500/10 border border-red-500/20 rounded-lg sm:rounded-xl flex items-start gap-2 sm:gap-3">
+          <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 text-red-500 flex-shrink-0 mt-0.5" />
+          <p className="text-red-400 text-xs sm:text-sm">{submitError}</p>
         </div>
       )}
 
-      <div className="space-y-5">
+      <div className="space-y-3 sm:space-y-5">
         {/* Name */}
         <div>
-          <label htmlFor="naam" className="block text-sm font-medium text-white/70 mb-2">
+          <label htmlFor="naam" className="block text-xs sm:text-sm font-medium text-white/70 mb-1.5 sm:mb-2">
             Naam *
           </label>
           <div className="relative">
-            <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
+            <User className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-white/30" />
             <input
               type="text"
               id="naam"
@@ -195,24 +202,24 @@ export default function InteresseForm({ auto, onSuccess }: InteresseFormProps) {
               value={formData.naam}
               onChange={handleChange}
               placeholder="Uw naam"
-              className={`w-full bg-[#0d0d0d] border rounded-xl py-3 pl-12 pr-4 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#c8102e]/50 transition-all ${
+              className={`w-full bg-[#0d0d0d] border rounded-lg sm:rounded-xl py-2.5 sm:py-3 pl-10 sm:pl-12 pr-3 sm:pr-4 text-sm sm:text-base text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#c8102e]/50 transition-all ${
                 errors.naam ? 'border-red-500' : 'border-white/10 focus:border-[#c8102e]'
               }`}
             />
           </div>
           {errors.naam && (
-            <p className="text-red-500 text-sm mt-1">{errors.naam}</p>
+            <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.naam}</p>
           )}
         </div>
 
         {/* Email & Phone */}
-        <div className="grid sm:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-white/70 mb-2">
+            <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-white/70 mb-1.5 sm:mb-2">
               E-mail *
             </label>
             <div className="relative">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
+              <Mail className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-white/30" />
               <input
                 type="email"
                 id="email"
@@ -220,22 +227,22 @@ export default function InteresseForm({ auto, onSuccess }: InteresseFormProps) {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="uw@email.nl"
-                className={`w-full bg-[#0d0d0d] border rounded-xl py-3 pl-12 pr-4 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#c8102e]/50 transition-all ${
+                className={`w-full bg-[#0d0d0d] border rounded-lg sm:rounded-xl py-2.5 sm:py-3 pl-10 sm:pl-12 pr-3 sm:pr-4 text-sm sm:text-base text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#c8102e]/50 transition-all ${
                   errors.email ? 'border-red-500' : 'border-white/10 focus:border-[#c8102e]'
                 }`}
               />
             </div>
             {errors.email && (
-              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+              <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.email}</p>
             )}
           </div>
 
           <div>
-            <label htmlFor="telefoon" className="block text-sm font-medium text-white/70 mb-2">
+            <label htmlFor="telefoon" className="block text-xs sm:text-sm font-medium text-white/70 mb-1.5 sm:mb-2">
               Telefoon *
             </label>
             <div className="relative">
-              <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
+              <Phone className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-white/30" />
               <input
                 type="tel"
                 id="telefoon"
@@ -243,50 +250,50 @@ export default function InteresseForm({ auto, onSuccess }: InteresseFormProps) {
                 value={formData.telefoon}
                 onChange={handleChange}
                 placeholder="06 - 123 456 78"
-                className={`w-full bg-[#0d0d0d] border rounded-xl py-3 pl-12 pr-4 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#c8102e]/50 transition-all ${
+                className={`w-full bg-[#0d0d0d] border rounded-lg sm:rounded-xl py-2.5 sm:py-3 pl-10 sm:pl-12 pr-3 sm:pr-4 text-sm sm:text-base text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#c8102e]/50 transition-all ${
                   errors.telefoon ? 'border-red-500' : 'border-white/10 focus:border-[#c8102e]'
                 }`}
               />
             </div>
             {errors.telefoon && (
-              <p className="text-red-500 text-sm mt-1">{errors.telefoon}</p>
+              <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.telefoon}</p>
             )}
           </div>
         </div>
 
         {/* Gewenste bezichtiging datum */}
         <div>
-          <label htmlFor="gewensteDatum" className="block text-sm font-medium text-white/70 mb-2">
+          <label htmlFor="gewensteDatum" className="block text-xs sm:text-sm font-medium text-white/70 mb-1.5 sm:mb-2">
             Gewenste bezichtiging datum (optioneel)
           </label>
           <div className="relative">
-            <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
+            <Calendar className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-white/30" />
             <input
               type="date"
               id="gewensteDatum"
               name="gewensteDatum"
               value={formData.gewensteDatum}
               onChange={handleChange}
-              className="w-full bg-[#0d0d0d] border border-white/10 focus:border-[#c8102e] rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-[#c8102e]/50 transition-all"
+              className="w-full bg-[#0d0d0d] border border-white/10 focus:border-[#c8102e] rounded-lg sm:rounded-xl py-2.5 sm:py-3 pl-10 sm:pl-12 pr-3 sm:pr-4 text-sm sm:text-base text-white focus:outline-none focus:ring-2 focus:ring-[#c8102e]/50 transition-all"
             />
           </div>
         </div>
 
         {/* Opmerkingen */}
         <div>
-          <label htmlFor="opmerkingen" className="block text-sm font-medium text-white/70 mb-2">
+          <label htmlFor="opmerkingen" className="block text-xs sm:text-sm font-medium text-white/70 mb-1.5 sm:mb-2">
             Opmerkingen (optioneel)
           </label>
           <div className="relative">
-            <MessageSquare className="absolute left-4 top-4 w-5 h-5 text-white/30" />
+            <MessageSquare className="absolute left-3 sm:left-4 top-3 sm:top-4 w-4 h-4 sm:w-5 sm:h-5 text-white/30" />
             <textarea
               id="opmerkingen"
               name="opmerkingen"
               value={formData.opmerkingen}
               onChange={handleChange}
               placeholder="Eventuele vragen of opmerkingen..."
-              rows={4}
-              className="w-full bg-[#0d0d0d] border border-white/10 focus:border-[#c8102e] rounded-xl py-3 pl-12 pr-4 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#c8102e]/50 transition-all resize-none"
+              rows={3}
+              className="w-full bg-[#0d0d0d] border border-white/10 focus:border-[#c8102e] rounded-lg sm:rounded-xl py-2.5 sm:py-3 pl-10 sm:pl-12 pr-3 sm:pr-4 text-sm sm:text-base text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#c8102e]/50 transition-all resize-none"
             />
           </div>
         </div>
@@ -295,22 +302,22 @@ export default function InteresseForm({ auto, onSuccess }: InteresseFormProps) {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] disabled:bg-[#c8102e]/50 text-white py-4 rounded-xl font-semibold transition-all disabled:cursor-not-allowed"
+          className="w-full flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] disabled:bg-[#c8102e]/50 text-white py-3 sm:py-4 rounded-lg sm:rounded-xl font-semibold transition-all disabled:cursor-not-allowed text-sm sm:text-base"
         >
           {isSubmitting ? (
             <>
-              <Loader2 className="w-5 h-5 animate-spin" />
+              <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
               Verzenden...
             </>
           ) : (
             <>
-              <Send className="w-5 h-5" />
+              <Send className="w-4 h-4 sm:w-5 sm:h-5" />
               Verstuur bericht
             </>
           )}
         </button>
 
-        <p className="text-white/40 text-sm text-center">
+        <p className="text-white/40 text-xs sm:text-sm text-center">
           Door het versturen gaat u akkoord met onze{' '}
           <a href="/privacy" className="text-[#c8102e] hover:underline">
             privacyverklaring

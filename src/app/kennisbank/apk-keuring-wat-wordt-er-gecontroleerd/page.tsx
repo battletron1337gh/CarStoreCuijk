@@ -1,21 +1,7 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Clock, ArrowLeft, ArrowRight, CheckCircle, ClipboardCheck, AlertTriangle, Phone } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'APK Keuring: Wat wordt er gecontroleerd? | Car Store Cuijk',
-  description: 'Wat wordt er gecontroleerd tijdens een APK keuring? Lees alles over de APK eisen, kosten, termijnen en hoe je je auto kunt voorbereiden.',
-  keywords: 'APK keuring wat wordt gecontroleerd, APK eisen, APK kosten, APK termijn, auto keuring',
-  openGraph: {
-    title: 'APK Keuring: Wat wordt er gecontroleerd? | Car Store Cuijk',
-    description: 'Wat wordt er gecontroleerd tijdens een APK keuring? Lees alles over de APK eisen, kosten en termijnen.',
-    type: 'article',
-    locale: 'nl_NL',
-    siteName: 'Car Store Cuijk',
-  },
-};
 
 export default function APKKeuringPage() {
   return (

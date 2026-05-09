@@ -4,18 +4,6 @@ import Services from '@/components/Services';
 import OnderhoudOfferteForm from '@/components/OnderhoudOfferteForm';
 import { Wrench, Phone, MessageCircle, Clock, CheckCircle, Shield, FileText } from 'lucide-react';
 import { openingHours, contactInfo } from '@/data/cars';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Auto Onderhoud Cuijk | Garage Open tot 22:00 - Spoed Service',
-  description: 'Professioneel auto onderhoud in Cuijk voor alle merken. Garage open tot 22:00, bereikbaar voor spoed reparatie. Specialist in 1ste eigenaar autos. APK, kleine en grote beurt. Altijd bereikbaar voor spoed, ook na sluitingstijd. 168 reviews, 5 sterren.',
-  keywords: 'auto onderhoud Cuijk, garage open tot 22:00, 22:00 bereikbaar, spoed reparatie, reparatie na sluitingstijd, altijd bereikbaar voor spoed, 1ste eigenaar autos onderhoud, auto onderhoud, alle merken, APK keuring, kleine beurt, grote beurt, garage Cuijk, RDW garage',
-  openGraph: {
-    title: 'Auto Onderhoud Cuijk | Garage Alle Merken',
-    description: 'Professioneel auto onderhoud voor alle merken. APK, kleine en grote beurt. 168 reviews, 5 sterren.',
-    type: 'website',
-  },
-};
 
 export default function OnderhoudPage() {
   return (
@@ -79,7 +67,7 @@ export default function OnderhoudPage() {
         </section>
 
         {/* Offerte Formulier */}
-        <section className="py-20 lg:py-32 bg-[#0d0d0d]">
+        <section id="offerte" className="py-20 lg:py-32 bg-[#0d0d0d]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12">
               {/* Left: Info */}

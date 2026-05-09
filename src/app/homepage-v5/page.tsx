@@ -344,7 +344,7 @@ function DNASpiralSection() {
                 <Link href={`/occasions/${car.id}`} className="group block">
                   <div className="bg-[#1a1a1a]/90 backdrop-blur-sm rounded-3xl overflow-hidden border border-white/10 hover:border-[#c8102e]/50 transition-all duration-500 hover:shadow-2xl hover:shadow-[#c8102e]/10">
                     <div className="relative aspect-[16/9] md:aspect-[16/10] overflow-hidden bg-[#0d0d0d] will-change-transform">
-                      <Image src={car.afbeeldingen[0] || '/cars/placeholder.svg'} alt={`${car.merk} ${car.model}`} fill className="object-cover group-hover:scale-110 transition-transform duration-500 ease-out" sizes="(max-width: 768px) 100vw, 600px" priority={index < 2} />
+                      <Image src={car.afbeeldingen[0] || '/cars/placeholder.svg'} alt={`${car.merk} ${car.model} - Occasion te koop bij Car Store Cuijk`} fill className="object-cover group-hover:scale-110 transition-transform duration-500 ease-out" sizes="(max-width: 768px) 100vw, 600px" priority={index < 2} />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-transparent to-transparent opacity-60" />
                       <div className="absolute top-4 left-4 bg-[#c8102e] text-white px-3 py-1 rounded-full text-sm font-semibold">{car.bouwjaar}</div>
                       <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm text-white/80 px-3 py-1 rounded-full text-xs font-mono">{String(index + 1).padStart(2, '0')} / {String(featuredCars.length).padStart(2, '0')}</div>
@@ -624,7 +624,7 @@ function CarMarqueeSection() {
                 <div className="relative aspect-[4/3] overflow-hidden bg-[#0d0d0d]">
                   <Image
                     src={car.afbeeldingen[0] || '/cars/placeholder.svg'}
-                    alt={`${car.merk} ${car.model}`}
+                    alt={`${car.merk} ${car.model} - Occasion te koop bij Car Store Cuijk`}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                     sizes="(max-width: 640px) 200px, (max-width: 1024px) 240px, 280px"

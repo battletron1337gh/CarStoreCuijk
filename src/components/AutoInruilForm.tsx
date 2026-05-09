@@ -2,8 +2,9 @@
 
 import { useState, useRef } from 'react';
 import { Send, CheckCircle, Loader2, User, Mail, Phone, MessageSquare, Car, Calendar, Gauge, Fuel, Settings2, Euro, AlertCircle } from 'lucide-react';
-import emailjs from '@emailjs/browser';
-import { EMAILJS_CONFIG } from '@/lib/emailjs';
+// import emailjs from '@emailjs/browser'; // EMAILJS UITGESCHAKELD - Gebruik SMTP
+// import { EMAILJS_CONFIG } from '@/lib/emailjs'; // EMAILJS UITGESCHAKELD
+import { sendEmail } from '@/lib/email'; // SMTP EMAIL SERVICE
 
 interface FormData {
   typeAanvraag: string;
@@ -118,14 +119,64 @@ export default function AutoInruilForm({ onSuccess, defaultType = '' }: AutoInru
 
     if (!validateForm()) return;
 
-    if (!EMAILJS_CONFIG.SERVICE_ID || !EMAILJS_CONFIG.TEMPLATE_ID_INKOOP || !EMAILJS_CONFIG.PUBLIC_KEY) {
-      setSubmitError('EmailJS is niet correct geconfigureerd. Neem contact op met de beheerder.');
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
+      // SMTP EMAIL SERVICE (nieuwe methode)
+      // Bepaal het onderwerp op basis van type aanvraag
+      const getOnderwerp = (type: string) => {
+        switch (type) {
+          case 'Auto verkopen (directe inkoop)':
+            return 'Auto verkoop aanbod';
+          case 'Auto inruilen':
+            return 'Auto inruil aanbod';
+          case 'Consignatie (verkopen via ons)':
+            return 'Auto consignatie aanbod';
+          default:
+            return 'Auto aanbod';
+        }
+      };
+
+      await sendEmail({
+        type_aanvraag: formData.typeAanvraag,
+        naam: formData.naam,
+        email: formData.email,
+        telefoon: formData.telefoon,
+        kenteken: formData.kenteken,
+        merk_model: formData.merkModel,
+        bouwjaar: formData.bouwjaar,
+        kilometerstand: formData.kilometerstand,
+        brandstof: formData.brandstof,
+        transmissie: formData.transmissie,
+        gewenste_prijs: formData.gewenstePrijs || 'Niet opgegeven',
+        opmerkingen: formData.opmerkingen || 'Geen opmerkingen',
+        onderwerp: getOnderwerp(formData.typeAanvraag),
+        to_email: 'info@carstorecuijk.nl',
+      });
+
+      /* 
+      // EMAILJS ALTERNATIEF (uitgeschakeld)
+      // Uncomment deze code om EmailJS te gebruiken in plaats van SMTP:
+      
+      if (!EMAILJS_CONFIG.SERVICE_ID || !EMAILJS_CONFIG.TEMPLATE_ID_INKOOP || !EMAILJS_CONFIG.PUBLIC_KEY) {
+        setSubmitError('EmailJS is niet correct geconfigureerd. Neem contact op met de beheerder.');
+        return;
+      }
+      
+      // Bepaal het onderwerp op basis van type aanvraag
+      const getOnderwerp = (type: string) => {
+        switch (type) {
+          case 'Auto verkopen (directe inkoop)':
+            return 'Auto verkoop aanbod';
+          case 'Auto inruilen':
+            return 'Auto inruil aanbod';
+          case 'Consignatie (verkopen via ons)':
+            return 'Auto consignatie aanbod';
+          default:
+            return 'Auto aanbod';
+        }
+      };
+      
       const templateParams = {
         type_aanvraag: formData.typeAanvraag,
         naam: formData.naam,
@@ -139,7 +190,7 @@ export default function AutoInruilForm({ onSuccess, defaultType = '' }: AutoInru
         transmissie: formData.transmissie,
         gewenste_prijs: formData.gewenstePrijs || 'Niet opgegeven',
         opmerkingen: formData.opmerkingen || 'Geen opmerkingen',
-        onderwerp: 'Auto inruil aanbod',
+        onderwerp: getOnderwerp(formData.typeAanvraag),
         to_email: 'info@carstorecuijk.nl',
       };
 
@@ -149,12 +200,13 @@ export default function AutoInruilForm({ onSuccess, defaultType = '' }: AutoInru
         templateParams,
         EMAILJS_CONFIG.PUBLIC_KEY
       );
+      */
 
       setIsSubmitting(false);
       setIsSubmitted(true);
       onSuccess?.();
     } catch (error) {
-      console.error('EmailJS error:', error);
+      console.error('Email error:', error);
       setIsSubmitting(false);
       setSubmitError('Er is iets misgegaan bij het versturen van uw aanbod. Probeer het later opnieuw of neem telefonisch contact op.');
     }
@@ -172,14 +224,42 @@ export default function AutoInruilForm({ onSuccess, defaultType = '' }: AutoInru
   };
 
   if (isSubmitted) {
+    // Bepaal het succes bericht op basis van type aanvraag
+    const getSuccessMessage = () => {
+      switch (formData.typeAanvraag) {
+        case 'Auto verkopen (directe inkoop)':
+          return {
+            title: 'Bedankt voor uw verkoopaanvraag!',
+            message: 'We hebben uw aanvraag om uw auto te verkopen ontvangen en nemen zo snel mogelijk contact met u op.'
+          };
+        case 'Auto inruilen':
+          return {
+            title: 'Bedankt voor uw inruilaanbod!',
+            message: 'We hebben uw auto-inruil aanbod ontvangen en nemen zo snel mogelijk contact met u op.'
+          };
+        case 'Consignatie (verkopen via ons)':
+          return {
+            title: 'Bedankt voor uw consignatieaanvraag!',
+            message: 'We hebben uw aanvraag voor consignatie ontvangen en nemen zo snel mogelijk contact met u op.'
+          };
+        default:
+          return {
+            title: 'Bedankt voor uw aanbod!',
+            message: 'We hebben uw aanvraag ontvangen en nemen zo snel mogelijk contact met u op.'
+          };
+      }
+    };
+    
+    const successMessage = getSuccessMessage();
+    
     return (
       <div className="bg-[#1a1a1a] rounded-2xl p-8 border border-white/5 text-center">
         <div className="w-16 h-16 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
           <CheckCircle className="w-8 h-8" />
         </div>
-        <h3 className="text-2xl font-bold text-white mb-2">Bedankt voor uw aanbod!</h3>
+        <h3 className="text-2xl font-bold text-white mb-2">{successMessage.title}</h3>
         <p className="text-white/60 mb-6">
-          We hebben uw auto-inruil aanbod ontvangen en nemen zo snel mogelijk contact met u op.
+          {successMessage.message}
         </p>
         <button
           onClick={() => {
@@ -210,8 +290,28 @@ export default function AutoInruilForm({ onSuccess, defaultType = '' }: AutoInru
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="bg-[#1a1a1a] rounded-2xl p-8 border border-white/5" id="formulier">
-      <h3 className="text-xl font-bold text-white mb-2">Auto aanbieden</h3>
-      <p className="text-white/50 mb-6">Bied uw auto aan voor inruil, verkoop of consignatie</p>
+      {/* Dynamische titel op basis van type aanvraag */}
+      {(() => {
+        const getTitle = () => {
+          switch (formData.typeAanvraag) {
+            case 'Auto verkopen (directe inkoop)':
+              return { title: 'Auto verkopen', subtitle: 'Verkoop uw auto direct aan ons voor een eerlijke prijs' };
+            case 'Auto inruilen':
+              return { title: 'Auto inruilen', subtitle: 'Ruil uw auto in voor een nieuwe occasion' };
+            case 'Consignatie (verkopen via ons)':
+              return { title: 'Auto in consignatie', subtitle: 'Laat ons uw auto verkopen via ons platform' };
+            default:
+              return { title: 'Auto aanbieden', subtitle: 'Bied uw auto aan voor inruil, verkoop of consignatie' };
+          }
+        };
+        const { title, subtitle } = getTitle();
+        return (
+          <>
+            <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
+            <p className="text-white/50 mb-6">{subtitle}</p>
+          </>
+        );
+      })()}
       
       {submitError && (
         <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-start gap-3">

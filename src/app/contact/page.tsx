@@ -3,18 +3,6 @@ import Footer from '@/components/Footer';
 import ContactForm from '@/components/ContactForm';
 import { MapPin, Phone, Mail, MessageCircle, Clock } from 'lucide-react';
 import { contactInfo, openingHours } from '@/data/cars';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Contact Car Store Cuijk | Garage Open tot 22:00 - Altijd Bereikbaar',
-  description: 'Neem contact op met Car Store Cuijk. Garage open tot 22:00, altijd bereikbaar voor spoed reparatie. Specialist in 1ste eigenaar autos. Bel of WhatsApp ons, ook na sluitingstijd. 168 reviews, 5 sterren.',
-  keywords: 'contact Car Store Cuijk, garage open tot 22:00, 22:00 bereikbaar, spoed reparatie, reparatie na sluitingstijd, altijd bereikbaar voor spoed, 1ste eigenaar autos, auto inkoop Cuijk, auto verkopen Cuijk, garage Cuijk',
-  openGraph: {
-    title: 'Contact Car Store Cuijk | 1ste Eigenaar Auto\'s',
-    description: 'Neem contact op met Car Store Cuijk. Specialist in 1ste eigenaar autos.',
-    type: 'website',
-  },
-};
 
 export default function ContactPage() {
   return (

@@ -1,21 +1,7 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Clock, ArrowRight, BookOpen } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'Kennisbank - Tips & Advies over Auto\'s | Car Store Cuijk',
-  description: 'Handige tips en advies over auto kopen, auto verkopen, APK keuring en meer. Lees onze kennisbank artikelen voor betrouwbaar advies van Car Store Cuijk.',
-  keywords: 'auto kopen tips, auto verkopen tips, APK keuring, tweedehands auto advies, auto onderhoud tips, Car Store Cuijk kennisbank',
-  openGraph: {
-    title: 'Kennisbank - Tips & Advies over Auto\'s | Car Store Cuijk',
-    description: 'Handige tips en advies over auto kopen, auto verkopen, APK keuring en meer. Betrouwbaar advies van Car Store Cuijk.',
-    type: 'website',
-    locale: 'nl_NL',
-    siteName: 'Car Store Cuijk',
-  },
-};
 
 // Schema.org Article structured data for the knowledge base
 const knowledgeBaseSchema = {

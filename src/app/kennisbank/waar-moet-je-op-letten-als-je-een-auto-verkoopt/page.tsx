@@ -1,24 +1,7 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Clock, ArrowLeft, ArrowRight, CheckCircle, Tag, FileText, Camera, Phone } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'Waar moet je op letten als je een auto verkoopt? | Car Store Cuijk',
-  description: 'Je auto verkopen? Ontdek waar je op moet letten voor een veilige en succesvolle verkoop. Tips over prijsbepaling, documenten, advertentie en overdracht van Car Store Cuijk.',
-  keywords: 'auto verkopen tips, auto verkopen particulier, waar op letten auto verkopen, auto verkoop checklist, auto verkopen documenten, auto verkopen prijs bepalen',
-  openGraph: {
-    title: 'Waar moet je op letten als je een auto verkoopt? | Car Store Cuijk',
-    description: 'Ontdek waar je op moet letten voor een veilige en succesvolle autoverkoop. Tips over prijsbepaling, documenten, advertentie en overdracht.',
-    type: 'article',
-    locale: 'nl_NL',
-    siteName: 'Car Store Cuijk',
-    publishedTime: '2024-01-15T08:00:00+01:00',
-    modifiedTime: '2024-01-15T08:00:00+01:00',
-    authors: ['Car Store Cuijk'],
-  },
-};
 
 // Schema.org Article structured data
 const articleSchema = {

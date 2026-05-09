@@ -104,7 +104,7 @@ export default function CarMarquee() {
                 <div className="relative aspect-[4/3] overflow-hidden bg-[#0d0d0d]">
                   <Image
                     src={car.afbeeldingen[0] || '/cars/placeholder.svg'}
-                    alt={`${car.merk} ${car.model}`}
+                    alt={`${car.merk} ${car.model} - Occasion te koop bij Car Store Cuijk`}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                     sizes="(max-width: 640px) 200px, (max-width: 1024px) 240px, 280px"

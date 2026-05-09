@@ -3,8 +3,9 @@
 import { useState, useRef } from 'react';
 import { Send, CheckCircle, Loader2, User, Mail, Phone, MessageSquare, FileText, AlertCircle } from 'lucide-react';
 import { trackContactFormSubmit } from '@/lib/analytics';
-import emailjs from '@emailjs/browser';
-import { EMAILJS_CONFIG } from '@/lib/emailjs';
+// import emailjs from '@emailjs/browser'; // EMAILJS UITGESCHAKELD - Gebruik SMTP
+// import { EMAILJS_CONFIG } from '@/lib/emailjs'; // EMAILJS UITGESCHAKELD
+import { sendEmail } from '@/lib/email'; // SMTP EMAIL SERVICE
 
 interface FormData {
   naam: string;
@@ -77,15 +78,28 @@ export default function ContactForm() {
 
     if (!validateForm()) return;
 
-    // Check if EmailJS is configured
-    if (!EMAILJS_CONFIG.SERVICE_ID || !EMAILJS_CONFIG.TEMPLATE_ID || !EMAILJS_CONFIG.PUBLIC_KEY) {
-      setSubmitError('EmailJS is niet correct geconfigureerd. Neem contact op met de beheerder.');
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
+      // SMTP EMAIL SERVICE (nieuwe methode)
+      await sendEmail({
+        naam: formData.naam,
+        email: formData.email,
+        telefoon: formData.telefoon,
+        onderwerp: formData.onderwerp,
+        bericht: formData.bericht,
+        to_email: 'info@carstorecuijk.nl',
+      });
+
+      /* 
+      // EMAILJS ALTERNATIEF (uitgeschakeld)
+      // Uncomment deze code om EmailJS te gebruiken in plaats van SMTP:
+      
+      if (!EMAILJS_CONFIG.SERVICE_ID || !EMAILJS_CONFIG.TEMPLATE_ID || !EMAILJS_CONFIG.PUBLIC_KEY) {
+        setSubmitError('EmailJS is niet correct geconfigureerd. Neem contact op met de beheerder.');
+        return;
+      }
+      
       const templateParams = {
         naam: formData.naam,
         email: formData.email,
@@ -101,6 +115,7 @@ export default function ContactForm() {
         templateParams,
         EMAILJS_CONFIG.PUBLIC_KEY
       );
+      */
 
       // Track the form submission
       trackContactFormSubmit(formData.onderwerp);
@@ -108,7 +123,7 @@ export default function ContactForm() {
       setIsSubmitting(false);
       setIsSubmitted(true);
     } catch (error) {
-      console.error('EmailJS error:', error);
+      console.error('Email error:', error);
       setIsSubmitting(false);
       setSubmitError('Er is iets misgegaan bij het versturen van uw bericht. Probeer het later opnieuw of neem telefonisch contact op.');
     }

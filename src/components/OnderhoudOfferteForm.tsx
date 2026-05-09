@@ -2,8 +2,9 @@
 
 import { useState, useRef } from 'react';
 import { Send, CheckCircle, Loader2, User, Mail, Phone, MessageSquare, Car, Wrench, Calendar, Gauge, AlertCircle } from 'lucide-react';
-import emailjs from '@emailjs/browser';
-import { EMAILJS_CONFIG } from '@/lib/emailjs';
+// import emailjs from '@emailjs/browser'; // EMAILJS UITGESCHAKELD - Gebruik SMTP
+// import { EMAILJS_CONFIG } from '@/lib/emailjs'; // EMAILJS UITGESCHAKELD
+import { sendEmail } from '@/lib/email'; // SMTP EMAIL SERVICE
 
 interface FormData {
   naam: string;
@@ -96,14 +97,33 @@ export default function OnderhoudOfferteForm({ onSuccess }: OnderhoudOfferteForm
 
     if (!validateForm()) return;
 
-    if (!EMAILJS_CONFIG.SERVICE_ID || !EMAILJS_CONFIG.TEMPLATE_ID || !EMAILJS_CONFIG.PUBLIC_KEY) {
-      setSubmitError('EmailJS is niet correct geconfigureerd. Neem contact op met de beheerder.');
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
+      // SMTP EMAIL SERVICE (nieuwe methode)
+      await sendEmail({
+        naam: formData.naam,
+        email: formData.email,
+        telefoon: formData.telefoon,
+        kenteken: formData.kenteken,
+        merk_model: formData.merkModel,
+        kilometerstand: formData.kilometerstand,
+        type_werkzaamheden: formData.typeWerkzaamheden,
+        gewenste_datum: formData.gewensteDatum || 'Niet opgegeven',
+        opmerkingen: formData.opmerkingen || 'Geen opmerkingen',
+        onderwerp: 'Onderhoud offerte aanvraag',
+        to_email: 'info@carstorecuijk.nl',
+      });
+
+      /* 
+      // EMAILJS ALTERNATIEF (uitgeschakeld)
+      // Uncomment deze code om EmailJS te gebruiken in plaats van SMTP:
+      
+      if (!EMAILJS_CONFIG.SERVICE_ID || !EMAILJS_CONFIG.TEMPLATE_ID_ONDERHOUD || !EMAILJS_CONFIG.PUBLIC_KEY) {
+        setSubmitError('EmailJS is niet correct geconfigureerd. Neem contact op met de beheerder.');
+        return;
+      }
+      
       const templateParams = {
         naam: formData.naam,
         email: formData.email,
@@ -124,12 +144,13 @@ export default function OnderhoudOfferteForm({ onSuccess }: OnderhoudOfferteForm
         templateParams,
         EMAILJS_CONFIG.PUBLIC_KEY
       );
+      */
 
       setIsSubmitting(false);
       setIsSubmitted(true);
       onSuccess?.();
     } catch (error) {
-      console.error('EmailJS error:', error);
+      console.error('Email error:', error);
       setIsSubmitting(false);
       setSubmitError('Er is iets misgegaan bij het versturen van uw aanvraag. Probeer het later opnieuw of neem telefonisch contact op.');
     }
@@ -181,7 +202,7 @@ export default function OnderhoudOfferteForm({ onSuccess }: OnderhoudOfferteForm
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="bg-[#1a1a1a] rounded-2xl p-8 border border-white/5">
+    <form id="offerte-form" ref={formRef} onSubmit={handleSubmit} className="bg-[#1a1a1a] rounded-2xl p-8 border border-white/5">
       <h3 className="text-xl font-bold text-white mb-2">Offerte aanvragen</h3>
       <p className="text-white/50 mb-6">Vraag een vrijblijvende offerte aan voor onderhoud of reparatie</p>
       

@@ -116,16 +116,17 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
   };
 
   return (
-    <main className="min-h-screen pt-24 lg:pt-28 bg-[#0a0a0a]">
+    <main className="min-h-screen pt-20 lg:pt-28 bg-[#0a0a0a]">
       {/* Breadcrumb & Actions */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-3 lg:py-4">
         <div className="flex items-center justify-between">
           <Link 
             href="/occasions" 
-            className="inline-flex items-center gap-2 text-white/50 hover:text-white transition-colors"
+            className="inline-flex items-center gap-1.5 lg:gap-2 text-white/50 hover:text-white transition-colors text-sm lg:text-base"
           >
             <ArrowLeft className="w-4 h-4" />
-            Terug naar occasions
+            <span className="hidden sm:inline">Terug naar occasions</span>
+            <span className="sm:hidden">Terug</span>
           </Link>
           <div className="flex gap-2">
             <button 
@@ -141,17 +142,17 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-        <div className="grid lg:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 pb-6 sm:pb-8 lg:pb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-8">
           {/* Left Column - Images & Details */}
           <div className="lg:col-span-2 space-y-6">
             {/* Main Image Gallery */}
-            <div className="bg-[#1a1a1a] rounded-2xl overflow-hidden border border-white/5">
-              <div className="relative aspect-[16/10] bg-[#0d0d0d]">
+            <div className="bg-[#1a1a1a] rounded-xl lg:rounded-2xl overflow-hidden border border-white/5">
+              <div className="relative aspect-[4/3] sm:aspect-[16/10] bg-[#0d0d0d]">
                 {fotos.length > 0 ? (
                   <Image
                     src={fotos[selectedImage]?.url || car.afbeeldingen[0] || '/cars/placeholder.svg'}
-                    alt={`${car.merk} ${car.model}`}
+                    alt={`${car.merk} ${car.model} - Tweedehands occasion te koop bij Car Store Cuijk`}
                     fill
                     className="object-cover"
                     priority
@@ -159,7 +160,7 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
                 ) : (
                   <Image
                     src={car.afbeeldingen[0] || '/cars/placeholder.svg'}
-                    alt={`${car.merk} ${car.model}`}
+                    alt={`${car.merk} ${car.model} - Tweedehands occasion te koop bij Car Store Cuijk`}
                     fill
                     className="object-cover"
                     priority
@@ -200,19 +201,19 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
 
               {/* Thumbnail Strip */}
               {fotos.length > 1 && (
-                <div className="p-4 border-t border-white/5">
-                  <div className="flex gap-2 overflow-x-auto pb-2">
+                <div className="p-2 sm:p-4 border-t border-white/5">
+                  <div className="flex gap-1.5 sm:gap-2 overflow-x-auto pb-2 scrollbar-hide">
                     {fotos.slice(0, 10).map((foto: any, idx: number) => (
                       <button
                         key={idx}
                         onClick={() => setSelectedImage(idx)}
-                        className={`relative w-20 h-14 flex-shrink-0 rounded-lg overflow-hidden border-2 transition-colors ${
+                        className={`relative w-16 h-12 sm:w-20 sm:h-14 flex-shrink-0 rounded-lg overflow-hidden border-2 transition-colors ${
                           selectedImage === idx ? 'border-[#c8102e]' : 'border-transparent hover:border-white/30'
                         }`}
                       >
                         <Image
                           src={foto.url}
-                          alt={`${car.merk} ${car.model} foto ${idx + 1}`}
+                          alt={`${car.merk} ${car.model} foto ${idx + 1} - Occasion te koop bij Car Store Cuijk`}
                           fill
                           className="object-cover"
                         />
@@ -224,130 +225,130 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
             </div>
 
             {/* Key Specifications */}
-            <div className="bg-[#1a1a1a] rounded-2xl p-6 border border-white/5">
-              <h2 className="text-xl font-bold text-white mb-6">Specificaties</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="flex items-center gap-3 p-4 bg-[#0a0a0a] rounded-xl border border-white/5">
-                  <Calendar className="w-5 h-5 text-[#c8102e]" />
-                  <div>
-                    <p className="text-sm text-white/50">Bouwjaar</p>
-                    <p className="font-semibold text-white">{car.bouwjaar}</p>
+            <div className="bg-[#1a1a1a] rounded-xl lg:rounded-2xl p-4 sm:p-6 border border-white/5">
+              <h2 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Specificaties</h2>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
+                <div className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-4 bg-[#0a0a0a] rounded-lg sm:rounded-xl border border-white/5">
+                  <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-[#c8102e] flex-shrink-0" />
+                  <div className="min-w-0">
+                    <p className="text-xs sm:text-sm text-white/50">Bouwjaar</p>
+                    <p className="font-semibold text-white text-sm sm:text-base">{car.bouwjaar}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 p-4 bg-[#0a0a0a] rounded-xl border border-white/5">
-                  <Gauge className="w-5 h-5 text-[#c8102e]" />
-                  <div>
-                    <p className="text-sm text-white/50">Kilometerstand</p>
-                    <p className="font-semibold text-white">{formatKilometers(car.kilometerstand)} km</p>
+                <div className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-4 bg-[#0a0a0a] rounded-lg sm:rounded-xl border border-white/5">
+                  <Gauge className="w-4 h-4 sm:w-5 sm:h-5 text-[#c8102e] flex-shrink-0" />
+                  <div className="min-w-0">
+                    <p className="text-xs sm:text-sm text-white/50">KM-stand</p>
+                    <p className="font-semibold text-white text-sm sm:text-base">{formatKilometers(car.kilometerstand)}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 p-4 bg-[#0a0a0a] rounded-xl border border-white/5">
-                  <Fuel className="w-5 h-5 text-[#c8102e]" />
-                  <div>
-                    <p className="text-sm text-white/50">Brandstof</p>
-                    <p className="font-semibold text-white">{car.brandstof}</p>
+                <div className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-4 bg-[#0a0a0a] rounded-lg sm:rounded-xl border border-white/5">
+                  <Fuel className="w-4 h-4 sm:w-5 sm:h-5 text-[#c8102e] flex-shrink-0" />
+                  <div className="min-w-0">
+                    <p className="text-xs sm:text-sm text-white/50">Brandstof</p>
+                    <p className="font-semibold text-white text-sm sm:text-base">{car.brandstof}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 p-4 bg-[#0a0a0a] rounded-xl border border-white/5">
-                  <Settings2 className="w-5 h-5 text-[#c8102e]" />
-                  <div>
-                    <p className="text-sm text-white/50">Transmissie</p>
-                    <p className="font-semibold text-white">{car.transmissie}</p>
+                <div className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-4 bg-[#0a0a0a] rounded-lg sm:rounded-xl border border-white/5">
+                  <Settings2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#c8102e] flex-shrink-0" />
+                  <div className="min-w-0">
+                    <p className="text-xs sm:text-sm text-white/50">Transmissie</p>
+                    <p className="font-semibold text-white text-sm sm:text-base">{car.transmissie}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 p-4 bg-[#0a0a0a] rounded-xl border border-white/5">
-                  <CarIcon className="w-5 h-5 text-[#c8102e]" />
-                  <div>
-                    <p className="text-sm text-white/50">Carrosserie</p>
-                    <p className="font-semibold text-white">{car.carrosserie}</p>
+                <div className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-4 bg-[#0a0a0a] rounded-lg sm:rounded-xl border border-white/5">
+                  <CarIcon className="w-4 h-4 sm:w-5 sm:h-5 text-[#c8102e] flex-shrink-0" />
+                  <div className="min-w-0">
+                    <p className="text-xs sm:text-sm text-white/50">Carrosserie</p>
+                    <p className="font-semibold text-white text-sm sm:text-base">{car.carrosserie}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 p-4 bg-[#0a0a0a] rounded-xl border border-white/5">
-                  <Palette className="w-5 h-5 text-[#c8102e]" />
-                  <div>
-                    <p className="text-sm text-white/50">Kleur</p>
-                    <p className="font-semibold text-white">{vweData?.basiskleur || car.kleur || 'Onbekend'}</p>
+                <div className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-4 bg-[#0a0a0a] rounded-lg sm:rounded-xl border border-white/5">
+                  <Palette className="w-4 h-4 sm:w-5 sm:h-5 text-[#c8102e] flex-shrink-0" />
+                  <div className="min-w-0">
+                    <p className="text-xs sm:text-sm text-white/50">Kleur</p>
+                    <p className="font-semibold text-white text-sm sm:text-base truncate">{vweData?.basiskleur || car.kleur || 'Onbekend'}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 p-4 bg-[#0a0a0a] rounded-xl border border-white/5">
-                  <Clock className="w-5 h-5 text-[#c8102e]" />
-                  <div>
-                    <p className="text-sm text-white/50">APK tot</p>
-                    <p className="font-semibold text-white">{apkTot || 'Onbekend'}</p>
+                <div className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-4 bg-[#0a0a0a] rounded-lg sm:rounded-xl border border-white/5">
+                  <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-[#c8102e] flex-shrink-0" />
+                  <div className="min-w-0">
+                    <p className="text-xs sm:text-sm text-white/50">APK tot</p>
+                    <p className="font-semibold text-white text-sm sm:text-base">{apkTot || 'Onbekend'}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 p-4 bg-[#0a0a0a] rounded-xl border border-white/5">
-                  <FileCheck className="w-5 h-5 text-[#c8102e]" />
-                  <div>
-                    <p className="text-sm text-white/50">NAP</p>
-                    <p className="font-semibold text-white">{napWeblabel ? 'Gecertificeerd' : 'Onbekend'}</p>
+                <div className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-4 bg-[#0a0a0a] rounded-lg sm:rounded-xl border border-white/5">
+                  <FileCheck className="w-4 h-4 sm:w-5 sm:h-5 text-[#c8102e] flex-shrink-0" />
+                  <div className="min-w-0">
+                    <p className="text-xs sm:text-sm text-white/50">NAP</p>
+                    <p className="font-semibold text-white text-sm sm:text-base">{napWeblabel ? 'Gecertificeerd' : 'Onbekend'}</p>
                   </div>
                 </div>
               </div>
 
               {/* Extra Technical Details */}
               {(vermogenPk || verbruik || co2 || topsnelheid) && (
-                <div className="mt-6 pt-6 border-t border-white/5">
-                  <h3 className="text-lg font-semibold text-white mb-4">Technische gegevens</h3>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-white/5">
+                  <h3 className="text-base sm:text-lg font-semibold text-white mb-3 sm:mb-4">Technische gegevens</h3>
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
                     {vermogenPk && (
-                      <div className="p-3 bg-[#0a0a0a] rounded-lg">
-                        <p className="text-sm text-white/50">Vermogen</p>
-                        <p className="font-semibold text-white">{vermogenPk} pk ({vermogenKw} kW)</p>
+                      <div className="p-2 sm:p-3 bg-[#0a0a0a] rounded-lg">
+                        <p className="text-xs sm:text-sm text-white/50">Vermogen</p>
+                        <p className="font-semibold text-white text-sm sm:text-base">{vermogenPk} pk</p>
                       </div>
                     )}
                     {cilinders && inhoud && (
-                      <div className="p-3 bg-[#0a0a0a] rounded-lg">
-                        <p className="text-sm text-white/50">Motor</p>
-                        <p className="font-semibold text-white">{cilinders} cil. / {inhoud} cc</p>
+                      <div className="p-2 sm:p-3 bg-[#0a0a0a] rounded-lg">
+                        <p className="text-xs sm:text-sm text-white/50">Motor</p>
+                        <p className="font-semibold text-white text-sm sm:text-base">{cilinders} cil.</p>
                       </div>
                     )}
                     {verbruik && (
-                      <div className="p-3 bg-[#0a0a0a] rounded-lg">
-                        <p className="text-sm text-white/50">Verbruik</p>
-                        <p className="font-semibold text-white">{verbruik} l/100km</p>
+                      <div className="p-2 sm:p-3 bg-[#0a0a0a] rounded-lg">
+                        <p className="text-xs sm:text-sm text-white/50">Verbruik</p>
+                        <p className="font-semibold text-white text-sm sm:text-base">{verbruik} l/100km</p>
                       </div>
                     )}
                     {co2 && (
-                      <div className="p-3 bg-[#0a0a0a] rounded-lg">
-                        <p className="text-sm text-white/50">CO₂ uitstoot</p>
-                        <p className="font-semibold text-white">{co2} g/km</p>
+                      <div className="p-2 sm:p-3 bg-[#0a0a0a] rounded-lg">
+                        <p className="text-xs sm:text-sm text-white/50">CO₂</p>
+                        <p className="font-semibold text-white text-sm sm:text-base">{co2} g/km</p>
                       </div>
                     )}
                     {topsnelheid && (
-                      <div className="p-3 bg-[#0a0a0a] rounded-lg">
-                        <p className="text-sm text-white/50">Topsnelheid</p>
-                        <p className="font-semibold text-white">{topsnelheid} km/h</p>
+                      <div className="p-2 sm:p-3 bg-[#0a0a0a] rounded-lg">
+                        <p className="text-xs sm:text-sm text-white/50">Topsnelheid</p>
+                        <p className="font-semibold text-white text-sm sm:text-base">{topsnelheid} km/h</p>
                       </div>
                     )}
                     {acceleratie && (
-                      <div className="p-3 bg-[#0a0a0a] rounded-lg">
-                        <p className="text-sm text-white/50">0-100 km/h</p>
-                        <p className="font-semibold text-white">{acceleratie} sec</p>
+                      <div className="p-2 sm:p-3 bg-[#0a0a0a] rounded-lg">
+                        <p className="text-xs sm:text-sm text-white/50">0-100 km/h</p>
+                        <p className="font-semibold text-white text-sm sm:text-base">{acceleratie} sec</p>
                       </div>
                     )}
                     {aantalDeuren && (
-                      <div className="p-3 bg-[#0a0a0a] rounded-lg">
-                        <p className="text-sm text-white/50">Deuren</p>
-                        <p className="font-semibold text-white">{aantalDeuren}</p>
+                      <div className="p-2 sm:p-3 bg-[#0a0a0a] rounded-lg">
+                        <p className="text-xs sm:text-sm text-white/50">Deuren</p>
+                        <p className="font-semibold text-white text-sm sm:text-base">{aantalDeuren}</p>
                       </div>
                     )}
                     {aantalZitplaatsen && (
-                      <div className="p-3 bg-[#0a0a0a] rounded-lg">
-                        <p className="text-sm text-white/50">Zitplaatsen</p>
-                        <p className="font-semibold text-white">{aantalZitplaatsen}</p>
+                      <div className="p-2 sm:p-3 bg-[#0a0a0a] rounded-lg">
+                        <p className="text-xs sm:text-sm text-white/50">Zitplaatsen</p>
+                        <p className="font-semibold text-white text-sm sm:text-base">{aantalZitplaatsen}</p>
                       </div>
                     )}
                     {trekgewicht && (
-                      <div className="p-3 bg-[#0a0a0a] rounded-lg">
-                        <p className="text-sm text-white/50">Trekgewicht</p>
-                        <p className="font-semibold text-white">{trekgewicht} kg</p>
+                      <div className="p-2 sm:p-3 bg-[#0a0a0a] rounded-lg">
+                        <p className="text-xs sm:text-sm text-white/50">Trekgewicht</p>
+                        <p className="font-semibold text-white text-sm sm:text-base">{trekgewicht} kg</p>
                       </div>
                     )}
                     {gewicht && (
-                      <div className="p-3 bg-[#0a0a0a] rounded-lg">
-                        <p className="text-sm text-white/50">Gewicht</p>
-                        <p className="font-semibold text-white">{gewicht} kg</p>
+                      <div className="p-2 sm:p-3 bg-[#0a0a0a] rounded-lg">
+                        <p className="text-xs sm:text-sm text-white/50">Gewicht</p>
+                        <p className="font-semibold text-white text-sm sm:text-base">{gewicht} kg</p>
                       </div>
                     )}
                   </div>
@@ -357,10 +358,10 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
 
             {/* Description */}
             {vweData?.opmerkingen && (
-              <div className="bg-[#1a1a1a] rounded-2xl p-6 border border-white/5">
-                <h2 className="text-xl font-bold text-white mb-4">Beschrijving</h2>
+              <div className="bg-[#1a1a1a] rounded-xl lg:rounded-2xl p-4 sm:p-6 border border-white/5">
+                <h2 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">Beschrijving</h2>
                 <div 
-                  className="text-white/60 leading-relaxed prose prose-invert max-w-none"
+                  className="text-white/60 leading-relaxed prose prose-invert max-w-none text-sm sm:text-base"
                   dangerouslySetInnerHTML={{ __html: vweData.opmerkingen }}
                 />
               </div>
@@ -368,13 +369,13 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
 
             {/* Options/Equipment */}
             {optieGroepen.length > 0 && (
-              <div className="bg-[#1a1a1a] rounded-2xl p-6 border border-white/5">
-                <h2 className="text-xl font-bold text-white mb-6">Uitrusting</h2>
-                <div className="space-y-6">
+              <div className="bg-[#1a1a1a] rounded-xl lg:rounded-2xl p-4 sm:p-6 border border-white/5">
+                <h2 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Uitrusting</h2>
+                <div className="space-y-4 sm:space-y-6">
                   {optieGroepen.map((groep: any, idx: number) => (
                     <div key={idx}>
-                      <h3 className="text-lg font-semibold text-[#c8102e] mb-3">{groep.naam}</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                      <h3 className="text-base sm:text-lg font-semibold text-[#c8102e] mb-2 sm:mb-3">{groep.naam}</h3>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2">
                         {Array.isArray(groep.accessoire) ? groep.accessoire.map((optie: any, optieIdx: number) => (
                           <div key={optieIdx} className="flex items-center gap-2">
                             <Check className="w-4 h-4 text-[#c8102e] flex-shrink-0" />
@@ -390,12 +391,12 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
 
             {/* All Options (if no groups) */}
             {opties.length > 0 && optieGroepen.length === 0 && (
-              <div className="bg-[#1a1a1a] rounded-2xl p-6 border border-white/5">
-                <h2 className="text-xl font-bold text-white mb-4">Uitrusting</h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              <div className="bg-[#1a1a1a] rounded-xl lg:rounded-2xl p-4 sm:p-6 border border-white/5">
+                <h2 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">Uitrusting</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
                   {opties.map((optie: any, idx: number) => (
                     <div key={idx} className="flex items-center gap-2">
-                      <Check className="w-4 h-4 text-[#c8102e]" />
+                      <Check className="w-4 h-4 text-[#c8102e] flex-shrink-0" />
                       <span className="text-white/60 text-sm">{optie.naam}</span>
                     </div>
                   ))}
@@ -405,13 +406,13 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
 
             {/* Features from Car object */}
             {car.features && car.features.length > 0 && (
-              <div className="bg-[#1a1a1a] rounded-2xl p-6 border border-white/5">
-                <h2 className="text-xl font-bold text-white mb-4">Kenmerken</h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              <div className="bg-[#1a1a1a] rounded-xl lg:rounded-2xl p-4 sm:p-6 border border-white/5">
+                <h2 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">Kenmerken</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
                   {car.features.map((feature, i) => (
                     <div key={i} className="flex items-center gap-2">
-                      <Check className="w-4 h-4 text-[#c8102e]" />
-                      <span className="text-white/60">{feature}</span>
+                      <Check className="w-4 h-4 text-[#c8102e] flex-shrink-0" />
+                      <span className="text-white/60 text-sm">{feature}</span>
                     </div>
                   ))}
                 </div>
@@ -420,21 +421,21 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
           </div>
 
           {/* Right Column - Price & Contact */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-28 space-y-6">
+          <div className="lg:col-span-1 order-first lg:order-last">
+            <div className="lg:sticky lg:top-28 space-y-4 lg:space-y-6">
               {/* Price Card */}
-              <div className="bg-[#1a1a1a] rounded-2xl p-6 border border-white/5">
-                <div className="mb-4">
-                  <h1 className="text-2xl font-bold text-white">
+              <div className="bg-[#1a1a1a] rounded-xl lg:rounded-2xl p-4 sm:p-6 border border-white/5">
+                <div className="mb-3 sm:mb-4">
+                  <h1 className="text-xl sm:text-2xl font-bold text-white">
                     {car.merk} {car.model}
                   </h1>
-                  <p className="text-white/50">{car.variant || car.beschrijving}</p>
+                  <p className="text-white/50 text-sm sm:text-base">{car.variant || car.beschrijving}</p>
                 </div>
                 
-                <div className="mb-6">
-                  <p className="text-sm text-white/40 mb-1">Prijs</p>
-                  <p className="text-4xl font-bold text-[#c8102e]">{formatPrice(car.prijs)}</p>
-                  <p className="text-sm text-white/40 mt-1">
+                <div className="mb-4 sm:mb-6">
+                  <p className="text-xs sm:text-sm text-white/40 mb-1">Prijs</p>
+                  <p className="text-3xl sm:text-4xl font-bold text-[#c8102e]">{formatPrice(car.prijs)}</p>
+                  <p className="text-xs sm:text-sm text-white/40 mt-1">
                     {btwMarge === 'M' ? 'Marge (BTW verrekenbaar)' : 'Incl. BTW & BPM'}
                   </p>
                 </div>
@@ -447,26 +448,26 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
                 )}
 
                 {car.status === 'beschikbaar' ? (
-                  <div className="space-y-3">
+                  <div className="space-y-2 sm:space-y-3">
                     <a
                       href={`https://wa.me/31687118768?text=Ik ben geïnteresseerd in de ${car.merk} ${car.model} (${car.kenteken || car.id})`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white py-4 rounded-xl font-semibold transition-all duration-300"
+                      className="w-full flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white py-3 sm:py-4 rounded-xl font-semibold transition-all duration-300 text-sm sm:text-base"
                     >
-                      <MessageCircle className="w-5 h-5" />
+                      <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
                       WhatsApp Ons
                     </a>
                     <a
                       href="tel:31687118768"
-                      className="w-full flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 py-4 rounded-xl font-semibold transition-all duration-300"
+                      className="w-full flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 py-3 sm:py-4 rounded-xl font-semibold transition-all duration-300 text-sm sm:text-base"
                     >
-                      <Phone className="w-5 h-5" />
+                      <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
                       Bel voor meer info
                     </a>
                     <button
                       onClick={() => setShowContactForm(!showContactForm)}
-                      className="w-full flex items-center justify-center gap-2 bg-[#0a0a0a] hover:bg-[#1a1a1a] text-white border border-white/10 py-3 rounded-xl font-semibold transition-all duration-300"
+                      className="w-full flex items-center justify-center gap-2 bg-[#0a0a0a] hover:bg-[#1a1a1a] text-white border border-white/10 py-2.5 sm:py-3 rounded-xl font-semibold transition-all duration-300 text-sm sm:text-base"
                     >
                       Contactformulier
                     </button>
@@ -500,7 +501,7 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
               )}
 
               {/* Dealer Info */}
-              <div className="bg-[#0d0d0d] rounded-2xl p-6 text-white border border-white/5">
+              <div className="hidden lg:block bg-[#0d0d0d] rounded-2xl p-6 text-white border border-white/5">
                 <h3 className="font-bold mb-4">Car Store Cuijk</h3>
                 <div className="space-y-3 text-sm">
                   <p className="text-white/50">Veldweg 28<br />5431 NS Cuijk</p>
@@ -522,9 +523,9 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
         </div>
 
         {/* Interesse Formulier Sectie */}
-        <div className="mt-16">
-          <div className="grid lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2">
+        <div className="mt-6 sm:mt-8 lg:mt-16 px-1 sm:px-0">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-8">
+            <div className="col-span-1 lg:col-span-2 min-w-0">
               <InteresseForm 
                 auto={{
                   merk: car.merk,
@@ -534,29 +535,29 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
                 }}
               />
             </div>
-            <div className="lg:col-span-1">
-              <div className="bg-[#1a1a1a] rounded-2xl p-8 border border-white/5">
-                <h3 className="text-xl font-bold text-white mb-4">Waarom Car Store Cuijk?</h3>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-[#c8102e] flex-shrink-0 mt-0.5" />
-                    <p className="text-white/60">168+ reviews, 5 sterren rating</p>
+            <div className="col-span-1 lg:col-span-1">
+              <div className="bg-[#1a1a1a] rounded-xl lg:rounded-2xl p-3 sm:p-4 lg:p-8 border border-white/5">
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-4">Waarom Car Store Cuijk?</h3>
+                <div className="space-y-3 sm:space-y-4">
+                  <div className="flex items-start gap-2 sm:gap-3">
+                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-[#c8102e] flex-shrink-0 mt-0.5" />
+                    <p className="text-white/60 text-sm sm:text-base">168+ reviews, 5 sterren rating</p>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-[#c8102e] flex-shrink-0 mt-0.5" />
-                    <p className="text-white/60">3 maanden huisgarantie op alle auto's</p>
+                  <div className="flex items-start gap-2 sm:gap-3">
+                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-[#c8102e] flex-shrink-0 mt-0.5" />
+                    <p className="text-white/60 text-sm sm:text-base">3 maanden huisgarantie op alle auto's</p>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-[#c8102e] flex-shrink-0 mt-0.5" />
-                    <p className="text-white/60">RDW erkend</p>
+                  <div className="flex items-start gap-2 sm:gap-3">
+                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-[#c8102e] flex-shrink-0 mt-0.5" />
+                    <p className="text-white/60 text-sm sm:text-base">RDW erkend</p>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-[#c8102e] flex-shrink-0 mt-0.5" />
-                    <p className="text-white/60">Open tot 22:00, ook voor spoed</p>
+                  <div className="flex items-start gap-2 sm:gap-3">
+                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-[#c8102e] flex-shrink-0 mt-0.5" />
+                    <p className="text-white/60 text-sm sm:text-base">Open tot 22:00, ook voor spoed</p>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-[#c8102e] flex-shrink-0 mt-0.5" />
-                    <p className="text-white/60">NAP gecertificeerd</p>
+                  <div className="flex items-start gap-2 sm:gap-3">
+                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-[#c8102e] flex-shrink-0 mt-0.5" />
+                    <p className="text-white/60 text-sm sm:text-base">NAP gecertificeerd</p>
                   </div>
                 </div>
               </div>
@@ -566,9 +567,9 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
 
         {/* Similar Cars */}
         {similarCars.length > 0 && (
-          <div className="mt-16">
-            <h2 className="text-2xl font-bold text-white mb-8">Vergelijkbare occasions</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="mt-6 sm:mt-8 lg:mt-16 px-1 sm:px-0">
+            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-3 sm:mb-4 lg:mb-8">Vergelijkbare occasions</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {similarCars.map((similarCar) => (
                 <Link
                   key={similarCar.id}
@@ -578,7 +579,7 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
                   <div className="relative aspect-[16/10] overflow-hidden">
                     <img
                       src={similarCar.afbeeldingen[0] || '/cars/placeholder.svg'}
-                      alt={`${similarCar.merk} ${similarCar.model}`}
+                      alt={`${similarCar.merk} ${similarCar.model} - Vergelijkbare occasion te koop bij Car Store Cuijk`}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/80 via-transparent to-transparent" />
@@ -588,12 +589,12 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
                       </span>
                     </div>
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#c8102e] transition-colors">
+                  <div className="p-4 sm:p-6">
+                    <h3 className="text-lg sm:text-xl font-bold text-white mb-2 group-hover:text-[#c8102e] transition-colors">
                       {similarCar.merk} {similarCar.model}
                     </h3>
-                    <p className="text-white/60 text-sm mb-4">{similarCar.transmissie} | {similarCar.carrosserie}</p>
-                    <div className="grid grid-cols-3 gap-4 text-sm">
+                    <p className="text-white/60 text-sm mb-3 sm:mb-4">{similarCar.transmissie} | {similarCar.carrosserie}</p>
+                    <div className="grid grid-cols-3 gap-2 sm:gap-4 text-sm">
                       <div>
                         <span className="text-white/40 block text-xs">Bouwjaar</span>
                         <span className="text-white font-medium">{similarCar.bouwjaar}</span>

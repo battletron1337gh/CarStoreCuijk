@@ -130,12 +130,57 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   if (!car) {
     return {
       title: 'Auto niet gevonden | Car Store Cuijk',
+      description: 'Deze occasion is niet gevonden. Bekijk ons actuele aanbod occasions.',
+      robots: {
+        index: false,
+        follow: true,
+      },
     };
   }
   
+  const title = `${car.merk} ${car.model} ${car.bouwjaar} | €${car.prijs.toLocaleString('nl-NL')} | Car Store Cuijk`;
+  const description = `${car.merk} ${car.model} ${car.bouwjaar} - ${car.kilometerstand.toLocaleString('nl-NL')} km - ${car.brandstof} - ${car.transmissie}. ${car.features?.includes('1ste eigenaar') ? '1ste eigenaar auto. ' : ''}Bekijk deze occasion nu bij Car Store Cuijk!`;
+  
   return {
-    title: `${car.merk} ${car.model} ${car.bouwjaar} | €${car.prijs.toLocaleString('nl-NL')} | Car Store Cuijk`,
-    description: `${car.merk} ${car.model} ${car.bouwjaar} - ${car.kilometerstand.toLocaleString('nl-NL')} km - ${car.brandstof} - ${car.transmissie}. Bekijk deze occasion nu bij Car Store Cuijk!`,
+    title,
+    description,
+    keywords: `${car.merk} ${car.model}, ${car.merk} ${car.model} ${car.bouwjaar}, occasion ${car.merk}, tweedehands ${car.merk} ${car.model}, ${car.bouwjaar} ${car.merk}, ${car.brandstof} ${car.merk}`,
+    alternates: {
+      canonical: `/occasions/${car.id}`,
+      languages: {
+        'nl-NL': `/occasions/${car.id}`,
+      },
+    },
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      locale: 'nl_NL',
+      url: `https://www.carstorecuijk.nl/occasions/${car.id}`,
+      images: car.afbeeldingen && car.afbeeldingen.length > 0 ? [
+        {
+          url: car.afbeeldingen[0],
+          width: 1200,
+          height: 800,
+          alt: `${car.merk} ${car.model} ${car.bouwjaar} - €${car.prijs.toLocaleString('nl-NL')} - Car Store Cuijk`,
+        },
+      ] : undefined,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: car.afbeeldingen && car.afbeeldingen.length > 0 ? [car.afbeeldingen[0]] : undefined,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+      },
+    },
   };
 }
 

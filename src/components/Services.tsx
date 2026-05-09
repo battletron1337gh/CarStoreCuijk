@@ -14,12 +14,12 @@ import {
 import { services, contactInfo } from '@/data/cars';
 
 const iconMap: Record<string, React.ReactNode> = {
-  ClipboardCheck: <ClipboardCheck className="w-8 h-8" />,
-  Droplets: <Droplets className="w-8 h-8" />,
-  Wrench: <Wrench className="w-8 h-8" />,
-  Wind: <Wind className="w-8 h-8" />,
-  CircleDot: <CircleDot className="w-8 h-8" />,
-  CarFront: <CarFront className="w-8 h-8" />,
+  ClipboardCheck: <ClipboardCheck className="w-6 h-6 sm:w-8 sm:h-8" />,
+  Droplets: <Droplets className="w-6 h-6 sm:w-8 sm:h-8" />,
+  Wrench: <Wrench className="w-6 h-6 sm:w-8 sm:h-8" />,
+  Wind: <Wind className="w-6 h-6 sm:w-8 sm:h-8" />,
+  CircleDot: <CircleDot className="w-6 h-6 sm:w-8 sm:h-8" />,
+  CarFront: <CarFront className="w-6 h-6 sm:w-8 sm:h-8" />,
 };
 
 // Hook for intersection observer
@@ -57,7 +57,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
   return (
     <div
       ref={ref}
-      className={`group bg-[#1a1a1a] rounded-2xl p-8 border border-white/5 hover:border-[#c8102e]/30 transition-all duration-500 hover:-translate-y-1 ${
+      className={`group bg-[#1a1a1a] rounded-xl sm:rounded-2xl p-5 sm:p-8 border border-white/5 hover:border-[#c8102e]/30 transition-all duration-500 hover:-translate-y-1 ${
         isInView ? 'opacity-100 translate-y-0 scale-100' : 'opacity-90 translate-y-5 scale-[0.98]'
       }`}
       style={{ 
@@ -65,33 +65,33 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
         willChange: 'transform, opacity'
       }}
     >
-      {/* Icon */}
-      <div className="w-16 h-16 bg-[#c8102e]/10 text-[#c8102e] rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#c8102e] group-hover:text-white transition-colors duration-300">
+      {/* Icon - Smaller on mobile */}
+      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-[#c8102e]/10 text-[#c8102e] rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6 group-hover:bg-[#c8102e] group-hover:text-white transition-colors duration-300">
         {iconMap[service.icon]}
       </div>
 
       {/* Content */}
-      <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#c8102e] transition-colors">
+      <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3 group-hover:text-[#c8102e] transition-colors">
         {service.title}
       </h3>
-      <p className="text-white/50 mb-6 leading-relaxed">
+      <p className="text-white/50 text-sm sm:text-base mb-4 sm:mb-6 leading-relaxed">
         {service.description}
       </p>
 
-      {/* Features */}
-      <ul className="space-y-2 mb-6">
-        {service.features.map((feature, i) => (
-          <li key={i} className="flex items-center gap-2 text-sm text-white/40">
-            <span className="w-1.5 h-1.5 bg-[#c8102e] rounded-full" />
-            {feature}
+      {/* Features - Compact on mobile */}
+      <ul className="space-y-1.5 sm:space-y-2 mb-4 sm:mb-6">
+        {service.features.slice(0, 3).map((feature, i) => (
+          <li key={i} className="flex items-center gap-2 text-xs sm:text-sm text-white/40">
+            <span className="w-1.5 h-1.5 bg-[#c8102e] rounded-full flex-shrink-0" />
+            <span className="line-clamp-1">{feature}</span>
           </li>
         ))}
       </ul>
 
       {/* Price */}
       {service.price && (
-        <div className="mb-6">
-          <span className="text-2xl font-bold text-[#c8102e]">
+        <div className="mb-4 sm:mb-6">
+          <span className="text-xl sm:text-2xl font-bold text-[#c8102e]">
             €{service.price}
           </span>
           <span className="text-white/40 text-sm"> vanaf</span>
@@ -100,10 +100,10 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
 
       {/* CTA */}
       <Link
-        href="/onderhoud"
-        className="inline-flex items-center gap-2 text-white font-semibold group-hover:text-[#c8102e] transition-colors"
+        href="/onderhoud#offerte-form"
+        className="inline-flex items-center gap-2 text-white text-sm sm:text-base font-semibold group-hover:text-[#c8102e] transition-colors"
       >
-        Meer info
+        Offerte aanvragen
         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
       </Link>
     </div>
@@ -114,50 +114,50 @@ export default function Services() {
   const { ref: headerRef, isInView: headerInView } = useInView(0.3);
 
   return (
-    <section className="py-20 lg:py-32 bg-[#0d0d0d]">
+    <section className="py-16 sm:py-20 lg:py-32 bg-[#0d0d0d]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div
           ref={headerRef}
-          className={`text-center mb-16 transition-all duration-600 ${
+          className={`text-center mb-10 sm:mb-16 transition-all duration-600 ${
             headerInView ? 'opacity-100 translate-y-0' : 'opacity-90 translate-y-5'
           }`}
           style={{ willChange: 'transform, opacity' }}
         >
-          <span className="inline-block text-[#c8102e] font-semibold text-sm uppercase tracking-wider mb-4">
+          <span className="inline-block text-[#c8102e] font-semibold text-xs sm:text-sm uppercase tracking-wider mb-3 sm:mb-4">
             Onderhoud & Service
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6">
             Auto Onderhoud & Reparatie Cuijk
           </h2>
-          <p className="text-lg text-white/50 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-white/50 max-w-2xl mx-auto px-4 sm:px-0">
             Professioneel auto onderhoud voor alle merken. APK, kleine en grote beurt, 
-            distributieriem, koppeling, remblokken. 168 reviews, 5 sterren.
+            distributieriem, koppeling, remblokken.
           </p>
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {services.map((service, index) => (
             <ServiceCard key={service.id} service={service} index={index} />
           ))}
         </div>
 
         {/* CTA Section */}
-        <div className="mt-16 text-center">
-          <p className="text-white/50 mb-6">
+        <div className="mt-10 sm:mt-16 text-center">
+          <p className="text-white/50 text-sm sm:text-base mb-4 sm:mb-6 px-4 sm:px-0">
             Heeft u vragen over onze diensten? Neem gerust contact op.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 px-4 sm:px-0">
             <Link
               href={`tel:${contactInfo.telefoon.replace(/\s|-/g, '')}`}
-              className="inline-flex items-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-8 py-4 rounded-xl font-semibold transition-colors"
+              className="inline-flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-6 py-3 sm:px-8 sm:py-4 rounded-xl font-semibold transition-colors w-full sm:w-auto"
             >
               Bel {contactInfo.telefoon}
             </Link>
             <Link
               href="/onderhoud"
-              className="inline-flex items-center gap-2 text-white font-semibold hover:text-[#c8102e] transition-colors"
+              className="inline-flex items-center justify-center gap-2 text-white font-semibold hover:text-[#c8102e] transition-colors"
             >
               Bekijk alle diensten
               <ArrowRight className="w-5 h-5" />

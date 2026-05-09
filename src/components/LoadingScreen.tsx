@@ -44,7 +44,7 @@ export default function LoadingScreen({ children }: { children: React.ReactNode 
               {/* Car Store Logo */}
               <motion.img
                 src="/images/logo.png"
-                alt="Car Store Cuijk"
+                alt="Car Store Cuijk - Welkom bij onze RDW erkende garage"
                 width="640"
                 height="640"
                 className="object-contain"

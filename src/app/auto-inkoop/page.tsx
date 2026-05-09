@@ -3,18 +3,6 @@ import Footer from '@/components/Footer';
 import AutoInruilForm from '@/components/AutoInruilForm';
 import { Car, Phone, MessageCircle, CheckCircle, DollarSign, Clock, Shield } from 'lucide-react';
 import { contactInfo } from '@/data/cars';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Auto Inkoop Cuijk | Wij Kopen 1ste Eigenaar Auto\'s',
-  description: "Auto inkoop Cuijk - Wij kopen voornamelijk 1ste eigenaar autos en alle merken. Gratis taxatie, direct geld. Ook 1e eigenaar autos met schade. 168 reviews, 5 sterren.",
-  keywords: 'auto inkoop Cuijk, 1ste eigenaar autos inkoop, 1e eigenaar, eerste eigenaar auto verkopen, auto verkopen, alle merken, auto inruilen, taxatie auto',
-  openGraph: {
-    title: 'Auto Inkoop Cuijk | Alle Merken Gezocht',
-    description: "Wij kopen alle merken auto's. Gratis taxatie, direct geld. 168 reviews, 5 sterren.",
-    type: 'website',
-  },
-};
 
 export default function AutoInkoopPage() {
   const stappen = [

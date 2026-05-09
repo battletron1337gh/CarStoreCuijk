@@ -1,19 +1,11 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import AutoInruilForm from '@/components/AutoInruilForm';
-import { vweCars } from '@/data/vwe-cars';
-import Link from 'next/link';
-import type { Metadata } from 'next';
+import OccasionsFilter from './OccasionsFilter';
 
-export const metadata: Metadata = {
-  title: 'Occasions Cuijk | 1ste Eigenaar Auto\'s & Tweedehands',
-  description: 'Ruim aanbod occasions in Cuijk met voornamelijk 1ste eigenaar autos. Tweedehands auto\'s van alle merken met garantie. RDW erkend. 168 reviews, 5 sterren.',
-  keywords: 'occasions Cuijk, 1ste eigenaar autos, 1e eigenaar, eerste eigenaar, tweedehands auto\'s, gebruikte auto\'s, alle merken, auto kopen, betrouwbare occasions, RDW occasions',
-  openGraph: {
-    title: 'Occasions Cuijk | Tweedehands & Gebruikte Auto\'s',
-    description: 'Ruim aanbod tweedehands en gebruikte auto\'s. Alle merken, garantie. 168 reviews, 5 sterren.',
-    type: 'website',
-  },
+export const metadata = {
+  title: 'Occasions | Car Store Cuijk - Tweedehands Auto\'s',
+  description: 'Bekijk ons actuele aanbod occasions in Cuijk. Alle auto\'s worden geleverd met garantie en zijn uitgebreid gecontroleerd. RDW erkend met 5 sterren op Google.',
 };
 
 export default function OccasionsPage() {
@@ -22,7 +14,7 @@ export default function OccasionsPage() {
       <Header />
       <main className="min-h-screen bg-[#0a0a0a]">
         {/* Hero Section */}
-        <section className="relative py-20 lg:py-32 bg-[#0a0a0a] border-b border-white/5">
+        <section className="relative py-16 lg:py-24 bg-[#0a0a0a] border-b border-white/5">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto">
               <span className="inline-flex items-center gap-2 text-[#c8102e] font-semibold text-sm uppercase tracking-wider mb-4">
@@ -38,59 +30,10 @@ export default function OccasionsPage() {
           </div>
         </section>
 
-        {/* Occasions Grid */}
-        <section className="py-12 lg:py-20 bg-[#0a0a0a]">
+        {/* Filter Section */}
+        <section className="py-8 lg:py-12 bg-[#0a0a0a]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-              {vweCars.map((car) => (
-                <Link
-                  key={car.id}
-                  href={`/occasions/${car.id}`}
-                  className="group bg-[#1a1a1a] rounded-2xl overflow-hidden border border-white/5 hover:border-[#c8102e]/30 transition-all duration-300 hover:shadow-xl hover:shadow-[#c8102e]/5"
-                >
-                  {/* Afbeelding */}
-                  <div className="relative aspect-[16/10] overflow-hidden">
-                    <img
-                      src={car.afbeeldingen[0] || '/cars/placeholder.svg'}
-                      alt={`${car.merk} ${car.model}`}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/80 via-transparent to-transparent" />
-                    
-                    {/* Prijs badge */}
-                    <div className="absolute bottom-4 left-4">
-                      <span className="bg-[#c8102e] text-white px-4 py-2 rounded-lg font-bold text-lg">
-                        € {car.prijs.toLocaleString('nl-NL')}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#c8102e] transition-colors">
-                      {car.merk} {car.model}
-                    </h3>
-                    <p className="text-white/60 text-sm mb-4">{car.transmissie} | {car.carrosserie}</p>
-                    
-                    {/* Specs */}
-                    <div className="grid grid-cols-3 gap-4 text-sm">
-                      <div>
-                        <span className="text-white/40 block text-xs">Bouwjaar</span>
-                        <span className="text-white font-medium">{car.bouwjaar}</span>
-                      </div>
-                      <div>
-                        <span className="text-white/40 block text-xs">KM-stand</span>
-                        <span className="text-white font-medium">{car.kilometerstand?.toLocaleString('nl-NL') || '-'}</span>
-                      </div>
-                      <div>
-                        <span className="text-white/40 block text-xs">Brandstof</span>
-                        <span className="text-white font-medium">{car.brandstof}</span>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
+            <OccasionsFilter />
           </div>
         </section>
 

@@ -2,31 +2,39 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X, Phone, MessageCircle } from 'lucide-react';
+import { Menu, X, Phone, MessageCircle, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { trackWhatsAppClick, trackPhoneClick } from '@/lib/analytics';
 
 const navItems = [
   { href: '/', label: 'Home' },
   { href: '/occasions', label: 'Occasions' },
-  { href: '/auto-verkopen', label: 'Auto Verkopen' },
+  { href: '/auto-verkopen', label: 'Inkoop' },
   { href: '/onderhoud', label: 'Onderhoud' },
   { href: '/financiering', label: 'Financiering' },
-  { href: '/kennisbank', label: 'Tips & Advies' },
+  { href: '/kennisbank', label: 'Tips' },
   { href: '/contact', label: 'Contact' },
 ];
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [pathname, setPathname] = useState('');
 
   useEffect(() => {
+    setPathname(window.location.pathname);
+    
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const isActive = (path: string) => {
+    if (path === '/') return pathname === '/';
+    return pathname.startsWith(path);
+  };
 
   const handleWhatsAppClick = () => {
     trackWhatsAppClick('header');
@@ -45,54 +53,59 @@ export default function Header() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-xl lg:text-2xl font-bold text-white">
-              Car Store <span className="text-[#c8102e]">Cuijk</span>
-            </span>
+        <div className="flex items-center justify-between h-20 lg:h-28">
+          {/* Desktop: Logo - Left */}
+          <Link href="/" className="hidden lg:flex items-center -my-4 lg:-my-6">
+            <img
+              src="/images/logo.png"
+              alt="Car Store Cuijk - Garage en Occasion Dealer in Cuijk"
+              className="h-40 lg:h-52 w-auto object-contain"
+            />
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
+          {/* Desktop Navigation - Center */}
+          <nav className="hidden lg:flex items-center gap-1">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-white/60 hover:text-white font-medium transition-colors relative group"
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  isActive(item.href)
+                    ? 'text-[#c8102e] bg-white/10'
+                    : 'text-white/80 hover:text-white hover:bg-white/5'
+                }`}
               >
                 {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#c8102e] transition-all duration-300 group-hover:w-full" />
               </Link>
             ))}
           </nav>
 
-          {/* Desktop CTA Buttons */}
+          {/* Desktop CTA Buttons - Right */}
           <div className="hidden lg:flex items-center gap-4">
             <a
               href="tel:0687118768"
               onClick={handlePhoneClick}
-              className="flex items-center gap-2 text-white/60 hover:text-white transition-colors"
+              className="flex items-center justify-center w-10 h-10 rounded-lg bg-white/5 hover:bg-white/10 text-white/80 hover:text-white transition-all"
+              aria-label="Bel ons"
             >
-              <Phone className="w-4 h-4" />
-              <span className="font-medium">06 - 871 187 68</span>
+              <Phone className="w-5 h-5" />
             </a>
             <a
               href="https://wa.me/31687118768"
               target="_blank"
               rel="noopener noreferrer"
               onClick={handleWhatsAppClick}
-              className="flex items-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:shadow-lg"
+              className="flex items-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-5 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:shadow-[#c8102e]/20"
             >
               <MessageCircle className="w-4 h-4" />
               WhatsApp
             </a>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile: Menu Button - Left */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2 text-white"
+            className="lg:hidden p-2 text-white z-10"
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? (
@@ -101,6 +114,25 @@ export default function Header() {
               <Menu className="w-6 h-6" />
             )}
           </button>
+
+          {/* Mobile: Logo - Center */}
+          <Link href="/" className="lg:hidden flex items-center absolute left-1/2 -translate-x-1/2 -my-4">
+            <img
+              src="/images/logo.png"
+              alt="Car Store Cuijk - Garage en Occasion Dealer in Cuijk"
+              className="h-40 w-auto object-contain"
+            />
+          </Link>
+
+          {/* Mobile: Phone Icon - Right */}
+          <a
+            href="tel:0687118768"
+            onClick={handlePhoneClick}
+            className="lg:hidden p-2 text-white z-10"
+            aria-label="Bel ons"
+          >
+            <Phone className="w-6 h-6" />
+          </a>
         </div>
       </div>
 
@@ -111,40 +143,45 @@ export default function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-[#0a0a0a] border-t border-white/10"
+            className="lg:hidden bg-[#0a0a0a]/95 backdrop-blur-md border-t border-white/10"
           >
-            <nav className="flex flex-col px-4 py-6 gap-4">
+            <div className="px-4 py-6 space-y-2">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-white/80 hover:text-white font-medium py-2 border-b border-white/10"
+                  className={`flex items-center justify-between px-4 py-3 rounded-lg text-base font-medium transition-all ${
+                    isActive(item.href)
+                      ? 'text-[#c8102e] bg-white/10'
+                      : 'text-white/80 hover:text-white hover:bg-white/5'
+                  }`}
                 >
                   {item.label}
+                  <ChevronRight className="w-4 h-4" />
                 </Link>
               ))}
-              <div className="flex flex-col gap-3 mt-4">
+              <div className="pt-4 border-t border-white/10 space-y-3">
                 <a
                   href="tel:0687118768"
                   onClick={handlePhoneClick}
-                  className="flex items-center justify-center gap-2 text-white/80 hover:text-white transition-colors py-2"
+                  className="flex items-center justify-center gap-2 text-white/80 hover:text-white transition-colors py-3"
                 >
                   <Phone className="w-4 h-4" />
-                  <span className="font-medium">06 - 871 187 68</span>
+                  06 - 871 187 68
                 </a>
                 <a
                   href="https://wa.me/31687118768"
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={handleWhatsAppClick}
-                  className="flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-4 py-3 rounded-lg font-medium transition-all"
+                  className="w-full flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-5 py-3 rounded-full font-semibold transition-all"
                 >
                   <MessageCircle className="w-4 h-4" />
                   WhatsApp Ons
                 </a>
               </div>
-            </nav>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -2,18 +2,6 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Snowflake, Phone, MessageCircle, CheckCircle, Thermometer, Wind, AlertCircle } from 'lucide-react';
 import { contactInfo } from '@/data/cars';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Airco Vullen Cuijk | Service voor 1ste Eigenaar Auto\'s',
-  description: 'Airco vullen in Cuijk vanaf €89. Specialist in onderhoud van 1ste eigenaar autos. R134a en R1234yf koelmiddel. 168 reviews, 5 sterren. Bel nu!',
-  keywords: 'airco vullen Cuijk, 1ste eigenaar auto onderhoud, airco service, airco onderhoud, airco reparatie, R134a, R1234yf, auto airco',
-  openGraph: {
-    title: 'Airco Vullen Cuijk | Airco Service & Onderhoud',
-    description: 'Airco vullen vanaf €89. R134a en R1234yf. Onderhoud en reparatie. 168 reviews, 5 sterren.',
-    type: 'website',
-  },
-};
 
 export default function AircoPage() {
   const diensten = [
