@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Verkochte Auto\'s | Car Store Cuijk | Recent Verkocht',
-  description: 'Bekijk onze recent verkochte auto\'s. Car Store Cuijk heeft al honderden tevreden klanten. RDW erkend met 168 reviews, 5 sterren. Bekijk ons aanbod voor vergelijkbare occasions.',
+  description: 'Bekijk onze recent verkochte auto\'s. Car Store Cuijk heeft al honderden tevreden klanten. RDW erkend met 175 reviews, 5 sterren. Bekijk ons aanbod voor vergelijkbare occasions.',
   keywords: 'verkochte auto\'s, recent verkocht, auto verkocht Cuijk, tevreden klanten, social proof, 1ste eigenaar autos verkocht',
   alternates: {
     canonical: '/verkochte-autos',
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Verkochte Auto\'s | Car Store Cuijk | Recent Verkocht',
-    description: 'Bekijk onze recent verkochte auto\'s. Al honderden tevreden klanten. 168 reviews, 5 sterren.',
+    description: 'Bekijk onze recent verkochte auto\'s. Al honderden tevreden klanten. 175 reviews, 5 sterren.',
     type: 'website',
     locale: 'nl_NL',
     url: 'https://www.carstorecuijk.nl/verkochte-autos',

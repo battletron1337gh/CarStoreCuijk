@@ -1,9 +1,16 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { vweCars } from '@/data/vwe-cars';
+import VerkochteAutosClient from './VerkochteAutosClient';
+import { loadVweCarsFromFile } from '@/data/vwe-cars-static';
 
-export default function VerkochteAutosPage() {
-  const verkochteAutos = vweCars.filter(car => car.status === 'verkocht');
+export const metadata = {
+  title: 'Verkochte Auto\'s | Car Store Cuijk',
+  description: 'Bekijk onze recent verkochte occasions. Deze auto\'s zijn verkocht aan tevreden klanten.',
+};
+
+export default async function VerkochteAutosPage() {
+  const cars = await loadVweCarsFromFile();
+  const verkochteAutos = cars.filter(car => car.status === 'verkocht');
   
   return (
     <>
@@ -17,100 +24,20 @@ export default function VerkochteAutosPage() {
                 Social Proof
               </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
-                Verkochte <span className="text-[#c8102e]">Auto\'s</span>
+                Verkochte <span className="text-[#c8102e]">Auto's</span>
               </h1>
               <p className="text-lg lg:text-xl text-white/50 max-w-2xl mx-auto">
-                Deze auto\'s zijn recent verkocht aan tevreden klanten. 
+                Deze auto's zijn recent verkocht aan tevreden klanten. 
                 Bekijk ons huidige aanbod voor vergelijkbare occasions.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Verkochte Auto\'s Grid */}
+        {/* Verkochte Auto's Filter */}
         <section className="py-12 lg:py-20 bg-[#0a0a0a]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {verkochteAutos.length === 0 ? (
-              <div className="text-center py-20">
-                <div className="inline-flex items-center justify-center w-20 h-20 bg-white/5 rounded-full mb-6">
-                  <svg className="w-10 h-10 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <h2 className="text-2xl font-bold text-white mb-4">Geen verkochte auto\'s gevonden</h2>
-                <p className="text-white/50 max-w-md mx-auto mb-8">
-                  Momenteel zijn er geen verkochte auto\'s in onze database. 
-                  Bekijk ons actuele aanbod occasions.
-                </p>
-                <a
-                  href="/occasions"
-                  className="inline-flex items-center gap-2 bg-[#c8102e] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#a00d24] transition-colors"
-                >
-                  Bekijk Occasions
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </a>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                {verkochteAutos.map((car) => (
-                  <div
-                    key={car.id}
-                    className="group relative bg-[#1a1a1a] rounded-2xl overflow-hidden border border-white/5"
-                  >
-                    {/* Afbeelding met grijze overlay */}
-                    <div className="relative aspect-[16/10] overflow-hidden">
-                      <img
-                        src={car.afbeeldingen[0] || '/cars/placeholder.svg'}
-                        alt={`${car.merk} ${car.model} - Verkochte occasion bij Car Store Cuijk`}
-                        className="w-full h-full object-cover grayscale"
-                      />
-                      {/* Grijze overlay */}
-                      <div className="absolute inset-0 bg-[#0a0a0a]/60" />
-                      
-                      {/* VERKOCHT Badge */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="bg-[#c8102e] text-white px-6 py-3 rounded-xl font-bold text-xl shadow-2xl transform -rotate-12 border-4 border-white/20">
-                          VERKOCHT
-                        </div>
-                      </div>
-                      
-                      {/* Prijs badge - doorgehaald */}
-                      <div className="absolute bottom-4 left-4">
-                        <span className="bg-white/10 text-white/50 px-4 py-2 rounded-lg font-bold text-lg line-through">
-                          € {car.prijs.toLocaleString('nl-NL')}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold text-white/60 mb-2">
-                        {car.merk} {car.model}
-                      </h3>
-                      <p className="text-white/40 text-sm mb-4">{car.transmissie} | {car.carrosserie}</p>
-                      
-                      {/* Specs */}
-                      <div className="grid grid-cols-3 gap-4 text-sm">
-                        <div>
-                          <span className="text-white/30 block text-xs">Bouwjaar</span>
-                          <span className="text-white/50 font-medium">{car.bouwjaar}</span>
-                        </div>
-                        <div>
-                          <span className="text-white/30 block text-xs">KM-stand</span>
-                          <span className="text-white/50 font-medium">{car.kilometerstand?.toLocaleString('nl-NL') || '-'}</span>
-                        </div>
-                        <div>
-                          <span className="text-white/30 block text-xs">Brandstof</span>
-                          <span className="text-white/50 font-medium">{car.brandstof}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+            <VerkochteAutosClient cars={verkochteAutos} />
           </div>
         </section>
 
@@ -120,7 +47,7 @@ export default function VerkochteAutosPage() {
             <div className="text-center max-w-2xl mx-auto">
               <h2 className="text-2xl font-bold text-white mb-4">Op zoek naar een vergelijkbare auto?</h2>
               <p className="text-white/60 mb-8">
-                Bekijk ons actuele aanbod occasions. Wij hebben regelmatig nieuwe auto\'s in de showroom.
+                Bekijk ons actuele aanbod occasions. Wij hebben regelmatig nieuwe auto's in de showroom.
               </p>
               <a
                 href="/occasions"
