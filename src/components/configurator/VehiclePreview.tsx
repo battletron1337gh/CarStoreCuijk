@@ -4,9 +4,39 @@ import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ConfigOption, OverlayType } from '@/lib/configurator-options';
 
+const RDW_COLOR_MAP: Record<string, string> = {
+  ZWART: '#1a1a1a',
+  WIT: '#f5f5f5',
+  ROOD: '#c62828',
+  BLAUW: '#1565c0',
+  GRIJS: '#757575',
+  ZILVER: '#bdbdbd',
+  GROEN: '#2e7d32',
+  GEEL: '#f9a825',
+  ORANJE: '#ef6c00',
+  BRUIN: '#5d4037',
+  PAARS: '#6a1b9a',
+  BEIGE: '#d6c6a8',
+  BRONS: '#8c6239',
+  CREME: '#f5f5dc',
+  GOUD: '#d4af37',
+  ROZE: '#e91e63',
+  TURQUOISE: '#009688',
+  ANTRACIET: '#2b2b2b',
+  BLAUW_GRIJS: '#607d8b',
+  GRIJS_BLUW: '#607d8b',
+};
+
+function rdwColorToHex(color?: string | null): string | null {
+  if (!color) return null;
+  const normalized = color.toUpperCase().replace(/[\s\-]/g, '_');
+  return RDW_COLOR_MAP[normalized] || null;
+}
+
 interface VehiclePreviewProps {
   selectedOptions: ConfigOption[];
   selectedColors?: Record<string, string>;
+  vehicleColor?: string | null;
   className?: string;
 }
 
@@ -33,6 +63,7 @@ const BASE_IMAGE_URL =
 export default function VehiclePreview({
   selectedOptions,
   selectedColors = {},
+  vehicleColor,
   className = '',
 }: VehiclePreviewProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -107,6 +138,23 @@ export default function VehiclePreview({
               imageLoaded && !imageError ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.98]'
             }`}
           />
+
+          {/* RDW body color overlay */}
+          {imageLoaded && !imageError && rdwColorToHex(vehicleColor) && (
+            <svg
+              viewBox="0 0 1000 560"
+              preserveAspectRatio="xMidYMid meet"
+              className="pointer-events-none absolute inset-0 z-[15] h-full w-full"
+            >
+              <g transform="scale(1.25 1.555556)">
+                <path
+                  d="M 120 210 C 120 185, 150 160, 200 155 L 260 150 C 300 120, 360 100, 440 100 C 520 100, 600 120, 660 155 C 710 165, 740 185, 740 210 C 745 235, 730 250, 700 255 L 680 255 C 670 225, 640 205, 600 205 C 560 205, 530 225, 520 255 L 300 255 C 290 225, 260 205, 220 205 C 180 205, 150 225, 140 255 L 120 255 C 100 250, 100 230, 120 210 Z"
+                  fill={rdwColorToHex(vehicleColor) || undefined}
+                  style={{ mixBlendMode: 'color', opacity: 0.85 }}
+                />
+              </g>
+            </svg>
+          )}
 
           {/* Premium placeholder / fallback */}
           {(!imageLoaded || imageError) && (

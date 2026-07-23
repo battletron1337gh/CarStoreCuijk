@@ -390,7 +390,7 @@ export default function AutoConfiguratorPage() {
             <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
               {/* Mobile layout */}
               <div className="flex flex-col gap-6 lg:hidden">
-                <VehiclePreview selectedOptions={selectedOptions} selectedColors={optionColors} className="min-h-[300px]" />
+                <VehiclePreview selectedOptions={selectedOptions} selectedColors={optionColors} vehicleColor={vehicle?.kleur} className="min-h-[300px]" />
 
                 <ConfiguratorSidebar
                   categories={CONFIG_CATEGORIES}
@@ -454,7 +454,7 @@ export default function AutoConfiguratorPage() {
 
                 {/* Center preview + options */}
                 <div className="lg:col-span-7 xl:col-span-7 space-y-6">
-                  <VehiclePreview selectedOptions={selectedOptions} selectedColors={optionColors} className="min-h-[520px]" />
+                  <VehiclePreview selectedOptions={selectedOptions} selectedColors={optionColors} vehicleColor={vehicle?.kleur} className="min-h-[520px]" />
 
                   <ConfigCategory
                     category={CONFIG_CATEGORIES.find((c) => c.id === activeCategory)!}

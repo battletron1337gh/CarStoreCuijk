@@ -20,6 +20,15 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $configFile = __DIR__ . '/config.php';
 $config = file_exists($configFile) ? require $configFile : require __DIR__ . '/config.example.php';
 
+$pricesFile = __DIR__ . '/configurator-prices.json';
+$prices = [];
+if (file_exists($pricesFile)) {
+    $prices = json_decode(file_get_contents($pricesFile), true);
+    if (!is_array($prices)) {
+        $prices = [];
+    }
+}
+
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 
@@ -77,15 +86,64 @@ $montage = htmlspecialchars($data['montage'] ?? 'Niet opgegeven');
 $gewenste_datum = htmlspecialchars($data['gewenste_datum'] ?? 'Niet opgegeven');
 $opmerkingen = htmlspecialchars($data['opmerkingen'] ?? 'Geen opmerkingen');
 $parts = $data['parts'];
-$totaal = floatval($data['totaal'] ?? 0);
 $to_email = $data['to_email'] ?? $config['to_email'] ?? 'info@carstorecuijk.nl';
+
+// Server-side price validation
+$validatedParts = [];
+$subtotal = 0;
+foreach ($parts as $part) {
+    $partName = $part['name'] ?? '';
+    // Try to find the option id from the submitted name (stripped of quantity suffix)
+    $baseName = preg_replace('/\\s*\\(x\\d+\\)$/', '', $partName);
+    $optionId = null;
+    foreach ($prices as $id => $price) {
+        if (stripos($baseName, $id) !== false) {
+            $optionId = $id;
+            break;
+        }
+    }
+    if (!$optionId) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Onbekend onderdeel in aanvraag']);
+        exit();
+    }
+    $unitPrice = $prices[$optionId];
+    // Determine quantity from name suffix or default to 1
+    $quantity = 1;
+    if (preg_match('/\\(x(\\d+)\\)$/', $partName, $matches)) {
+        $quantity = intval($matches[1]);
+    }
+    $lineTotal = $unitPrice * $quantity;
+    $subtotal += $lineTotal;
+    $validatedParts[] = [
+        'name' => $baseName,
+        'quantity' => $quantity,
+        'unitPrice' => $unitPrice,
+        'lineTotal' => $lineTotal,
+    ];
+}
+
+$vat = $subtotal * 0.21;
+$totaal = $subtotal + $vat;
+
+$submittedTotal = round(floatval($data['totaal'] ?? 0), 2);
+if (abs($submittedTotal - round($totaal, 2)) > 0.01) {
+    http_response_code(400);
+    echo json_encode(['error' => 'Ongeldig totaalbedrag']);
+    exit();
+}
 
 // Build parts text
 $partsText = '';
-foreach ($parts as $part) {
-    $partNaam = htmlspecialchars($part['name'] ?? '');
-    $partPrijs = number_format(floatval($part['price'] ?? 0), 2, ',', '.');
-    $partsText .= "- {$partNaam}: €{$partPrijs}\n";
+foreach ($validatedParts as $part) {
+    $partNaam = htmlspecialchars($part['name']);
+    $lineTotalFormatted = number_format($part['lineTotal'], 2, ',', '.');
+    $unitPriceFormatted = number_format($part['unitPrice'], 2, ',', '.');
+    if ($part['quantity'] > 1) {
+        $partsText .= "- {$partNaam} (x{$part['quantity']} á €{$unitPriceFormatted}): €{$lineTotalFormatted}\n";
+    } else {
+        $partsText .= "- {$partNaam}: €{$lineTotalFormatted}\n";
+    }
 }
 
 // Save lead to JSON file
@@ -122,7 +180,7 @@ $lead = [
     'email' => $email,
     'telefoon' => $telefoon,
     'opmerkingen' => $opmerkingen,
-    'parts' => $parts,
+    'parts' => $validatedParts,
     'totaal' => $totaal,
     'ip' => $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? 'unknown',
 ];
