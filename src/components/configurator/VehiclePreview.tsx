@@ -57,8 +57,10 @@ interface OverlayState {
   'chrome-delete'?: boolean;
 }
 
-const BASE_IMAGE_URL =
-  'https://images.unsplash.com/photo-1502161254066-6c74afbf07aa?auto=format&fit=crop&w=1400&q=85';
+const BODY_PATH =
+  'M 120 360 L 120 300 C 120 250, 140 245, 180 240 L 270 230 C 310 170, 690 170, 730 230 L 820 240 C 860 245, 880 250, 880 300 L 880 360 L 815 360 A 60 60 0 0 0 695 360 L 610 360 A 60 60 0 0 0 490 360 L 295 360 A 60 60 0 0 0 175 360 L 120 360 Z';
+
+const WINDOW_PATH = 'M 285 230 L 340 188 L 660 188 L 705 230 Z';
 
 export default function VehiclePreview({
   selectedOptions,
@@ -66,8 +68,6 @@ export default function VehiclePreview({
   vehicleColor,
   className = '',
 }: VehiclePreviewProps) {
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageError, setImageError] = useState(false);
   const [bump, setBump] = useState(0);
 
   const optionSignature = selectedOptions.map((o) => o.id).join(',');
@@ -120,70 +120,13 @@ export default function VehiclePreview({
       {/* Reflection strip */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/[0.03] to-transparent" />
 
-      {/* Base car image */}
+      {/* Car preview */}
       <div className="relative z-10 w-full max-w-[1100px] px-4 sm:px-8">
         <motion.div
           animate={bump > 0 ? { scale: [1, 1.012, 1] } : { scale: 1 }}
           transition={{ duration: 0.35, ease: 'easeInOut' }}
           className="relative aspect-[16/9] w-full"
         >
-          <img
-            src={BASE_IMAGE_URL}
-            alt="Voertuig preview"
-            loading="lazy"
-            decoding="async"
-            onLoad={() => setImageLoaded(true)}
-            onError={() => setImageError(true)}
-            className={`absolute inset-0 h-full w-full object-contain transition-all duration-700 ${
-              imageLoaded && !imageError ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.98]'
-            }`}
-          />
-
-          {/* RDW body color overlay */}
-          {imageLoaded && !imageError && rdwColorToHex(vehicleColor) && (
-            <svg
-              viewBox="0 0 1000 560"
-              preserveAspectRatio="xMidYMid meet"
-              className="pointer-events-none absolute inset-0 z-[15] h-full w-full"
-            >
-              <g transform="scale(1.25 1.555556)">
-                <path
-                  d="M 120 210 C 120 185, 150 160, 200 155 L 260 150 C 300 120, 360 100, 440 100 C 520 100, 600 120, 660 155 C 710 165, 740 185, 740 210 C 745 235, 730 250, 700 255 L 680 255 C 670 225, 640 205, 600 205 C 560 205, 530 225, 520 255 L 300 255 C 290 225, 260 205, 220 205 C 180 205, 150 225, 140 255 L 120 255 C 100 250, 100 230, 120 210 Z"
-                  fill={rdwColorToHex(vehicleColor) || undefined}
-                  style={{ mixBlendMode: 'color', opacity: 0.85 }}
-                />
-              </g>
-            </svg>
-          )}
-
-          {/* Premium placeholder / fallback */}
-          {(!imageLoaded || imageError) && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <svg
-                viewBox="0 0 800 360"
-                className="h-full w-full max-w-[900px] opacity-60"
-                role="img"
-                aria-label="Voertuig silhouet"
-              >
-                <defs>
-                  <linearGradient id="fallbackBody" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="#2a2a2a" />
-                    <stop offset="100%" stopColor="#111111" />
-                  </linearGradient>
-                </defs>
-                <path
-                  d="M 120 210 C 120 185, 150 160, 200 155 L 260 150 C 300 120, 360 100, 440 100 C 520 100, 600 120, 660 155 C 710 165, 740 185, 740 210 C 745 235, 730 250, 700 255 L 680 255 C 670 225, 640 205, 600 205 C 560 205, 530 225, 520 255 L 300 255 C 290 225, 260 205, 220 205 C 180 205, 150 225, 140 255 L 120 255 C 100 250, 100 230, 120 210 Z"
-                  fill="url(#fallbackBody)"
-                  stroke="#3f3f46"
-                  strokeWidth="1.5"
-                />
-              </svg>
-              {imageError && (
-                <p className="absolute bottom-4 text-xs text-white/40">Afbeelding kon niet worden geladen</p>
-              )}
-            </div>
-          )}
-
           {/* SVG overlay layer */}
           <svg
             viewBox="0 0 1000 560"
@@ -214,6 +157,21 @@ export default function VehiclePreview({
               animate={{ y: bodyDrop }}
               transition={{ type: 'spring', stiffness: 100, damping: 18 }}
             >
+              {/* Base car body */}
+              <path
+                d={BODY_PATH}
+                fill={rdwColorToHex(vehicleColor) || '#1f2937'}
+                stroke="#000000"
+                strokeWidth="1"
+                filter="url(#softShadow)"
+              />
+              {/* Side window */}
+              <path
+                d={WINDOW_PATH}
+                fill="#0f172a"
+                opacity={0.9}
+              />
+
               {/* Window tint overlay */}
               <AnimatePresence>
                 {overlays.windows && (
