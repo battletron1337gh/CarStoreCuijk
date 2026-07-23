@@ -13,6 +13,8 @@ export interface RdwVehicle {
   bouwjaar: string | null;
   cilinderinhoud: string | null;
   aantal_zitplaatsen: string | null;
+  vermogen_kw?: number | null;
+  massa_rijklaar?: number | null;
 }
 
 interface VehicleInfoProps {
@@ -35,6 +37,7 @@ export default function VehicleInfo({ vehicle }: VehicleInfoProps) {
     { icon: Palette, label: 'Kleur', value: vehicle.kleur },
     { icon: Layers, label: 'Carrosserie', value: vehicle.carrosserie },
     { icon: Gauge, label: 'Cilinderinhoud', value: vehicle.cilinderinhoud ? `${vehicle.cilinderinhoud} cm³` : null },
+    { icon: Gauge, label: 'Vermogen', value: vehicle.vermogen_kw ? `${Math.round(vehicle.vermogen_kw * 1.362)} pk` : null },
     { icon: Users, label: 'Zitplaatsen', value: vehicle.aantal_zitplaatsen },
   ].filter((r) => r.value);
 

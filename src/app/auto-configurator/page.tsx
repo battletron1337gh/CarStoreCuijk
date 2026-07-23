@@ -7,6 +7,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import VehicleInfo, { RdwVehicle } from '@/components/configurator/VehicleInfo';
 import VehiclePreview from '@/components/configurator/VehiclePreview';
+import PerformancePanel from '@/components/configurator/PerformancePanel';
 import ConfiguratorSidebar from '@/components/configurator/ConfiguratorSidebar';
 import ConfigCategory from '@/components/configurator/ConfigCategory';
 import Cart from '@/components/configurator/Cart';
@@ -409,6 +410,13 @@ export default function AutoConfiguratorPage() {
                   onColorChange={handleColorChange}
                 />
 
+                {activeCategory === 'tuning' && (
+                  <PerformancePanel
+                    vehicle={vehicle}
+                    selectedOptions={selectedOptions.filter((o) => o.category === 'tuning')}
+                  />
+                )}
+
                 <Cart
                   items={selectedItems}
                   onRemove={removeOption}
@@ -455,6 +463,13 @@ export default function AutoConfiguratorPage() {
                 {/* Center preview + options */}
                 <div className="lg:col-span-7 xl:col-span-7 space-y-6">
                   <VehiclePreview selectedOptions={selectedOptions} selectedColors={optionColors} vehicleColor={vehicle?.kleur} className="min-h-[520px]" />
+
+                  {activeCategory === 'tuning' && (
+                    <PerformancePanel
+                      vehicle={vehicle}
+                      selectedOptions={selectedOptions.filter((o) => o.category === 'tuning')}
+                    />
+                  )}
 
                   <ConfigCategory
                     category={CONFIG_CATEGORIES.find((c) => c.id === activeCategory)!}

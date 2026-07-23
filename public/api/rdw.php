@@ -55,6 +55,8 @@ $result = [
     'bouwjaar' => isset($vehicle['datum_eerste_toelating']) ? substr($vehicle['datum_eerste_toelating'], 0, 4) : null,
     'cilinderinhoud' => $vehicle['cilinderinhoud'] ?? null,
     'aantal_zitplaatsen' => $vehicle['aantal_zitplaatsen'] ?? null,
+    'vermogen_kw' => isset($vehicle['nettomaximumvermogen']) ? (int)$vehicle['nettomaximumvermogen'] : null,
+    'massa_rijklaar' => isset($vehicle['massa_rijklaar']) ? (int)$vehicle['massa_rijklaar'] : null,
 ];
 
 echo json_encode(['success' => true, 'data' => $result]);

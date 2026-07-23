@@ -40,6 +40,11 @@ export interface ConfigOption {
   exclusive?: boolean;
   /** Optional group key for mutually exclusive options that don't share an overlayType. */
   exclusiveGroup?: string;
+  /** Performance tuning gains (percentages). */
+  powerGainPercent?: number;
+  torqueGainPercent?: number;
+  /** Maintenance item lifespan in km. */
+  lifespanKm?: number;
 }
 
 export interface ConfigCategory {
@@ -461,6 +466,32 @@ export const CONFIG_OPTIONS: ConfigOption[] = [
     iconName: 'Cpu',
     installTimeHours: 2,
     deliveryDays: 1,
+    powerGainPercent: 15,
+    torqueGainPercent: 18,
+  },
+  {
+    id: 'downpipe',
+    name: 'Sport downpipe',
+    description: 'Downpipe met katvervanging voor minder tegendruk en meer vermogen.',
+    price: 449,
+    category: 'tuning',
+    iconName: 'Cable',
+    installTimeHours: 2,
+    deliveryDays: 3,
+    powerGainPercent: 6,
+    torqueGainPercent: 7,
+  },
+  {
+    id: 'sport-cat',
+    name: 'Sport katalysator',
+    description: 'High-flow sport kat voor betere uitlaatflow.',
+    price: 379,
+    category: 'tuning',
+    iconName: 'Flame',
+    installTimeHours: 2,
+    deliveryDays: 3,
+    powerGainPercent: 3,
+    torqueGainPercent: 4,
   },
   {
     id: 'uitlaat-sport',
@@ -472,6 +503,8 @@ export const CONFIG_OPTIONS: ConfigOption[] = [
     installTimeHours: 3,
     deliveryDays: 5,
     overlayType: 'exhaust',
+    powerGainPercent: 4,
+    torqueGainPercent: 4,
   },
   {
     id: 'inlaat-sport',
@@ -482,6 +515,32 @@ export const CONFIG_OPTIONS: ConfigOption[] = [
     iconName: 'Wind',
     installTimeHours: 1.5,
     deliveryDays: 3,
+    powerGainPercent: 3,
+    torqueGainPercent: 3,
+  },
+  {
+    id: 'intercooler',
+    name: 'Upgrade intercooler',
+    description: 'Grotere intercooler voor lagere temperaturen en consistent vermogen.',
+    price: 699,
+    category: 'tuning',
+    iconName: 'Thermometer',
+    installTimeHours: 2.5,
+    deliveryDays: 4,
+    powerGainPercent: 4,
+    torqueGainPercent: 5,
+  },
+  {
+    id: 'sportfilters',
+    name: 'Sportluchtfilter',
+    description: 'High-flow luchtfilter voor betere ademhaling motor.',
+    price: 129,
+    category: 'tuning',
+    iconName: 'Filter',
+    installTimeHours: 0.5,
+    deliveryDays: 2,
+    powerGainPercent: 2,
+    torqueGainPercent: 2,
   },
   {
     id: 'vering-sport',
@@ -505,16 +564,6 @@ export const CONFIG_OPTIONS: ConfigOption[] = [
     deliveryDays: 5,
     overlayType: 'suspension',
     exclusive: true,
-  },
-  {
-    id: 'sportfilters',
-    name: 'Sportluchtfilter',
-    description: 'High-flow luchtfilter voor betere ademhaling motor.',
-    price: 129,
-    category: 'tuning',
-    iconName: 'Filter',
-    installTimeHours: 0.5,
-    deliveryDays: 2,
   },
 ];
 
