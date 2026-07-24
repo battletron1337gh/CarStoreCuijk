@@ -8,6 +8,7 @@ import Footer from '@/components/Footer';
 import VehicleInfo, { RdwVehicle } from '@/components/configurator/VehicleInfo';
 import VehiclePreview from '@/components/configurator/VehiclePreview';
 import PerformancePanel from '@/components/configurator/PerformancePanel';
+import MaintenancePanel from '@/components/configurator/MaintenancePanel';
 import ConfiguratorSidebar from '@/components/configurator/ConfiguratorSidebar';
 import ConfigCategory from '@/components/configurator/ConfigCategory';
 import Cart from '@/components/configurator/Cart';
@@ -38,6 +39,7 @@ export default function AutoConfiguratorPage() {
   const [activeCategory, setActiveCategory] = useState<ConfigCategoryId>('exterieur');
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [optionColors, setOptionColors] = useState<Record<string, string>>({});
+  const [currentKm, setCurrentKm] = useState<number>(0);
 
   // ─── Contact / submit state ───
   const [naam, setNaam] = useState('');
@@ -47,6 +49,25 @@ export default function AutoConfiguratorPage() {
   const [gewensteDatum, setGewensteDatum] = useState('');
   const [opmerkingen, setOpmerkingen] = useState('');
   const [hcaptchaToken, setHcaptchaToken] = useState<string | null>(null);
+
+  // Load / persist current km-stand per kenteken
+  useEffect(() => {
+    if (!vehicle?.kenteken) return;
+    const key = `cfg-km-${vehicle.kenteken.toUpperCase()}`;
+    const saved = typeof window !== 'undefined' ? window.localStorage.getItem(key) : null;
+    if (saved) {
+      const parsed = parseInt(saved, 10);
+      if (!isNaN(parsed)) setCurrentKm(parsed);
+    }
+  }, [vehicle?.kenteken]);
+
+  const handleKmChange = (km: number) => {
+    setCurrentKm(km);
+    if (vehicle?.kenteken && typeof window !== 'undefined') {
+      const key = `cfg-km-${vehicle.kenteken.toUpperCase()}`;
+      window.localStorage.setItem(key, String(km));
+    }
+  };
 
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -234,6 +255,7 @@ export default function AutoConfiguratorPage() {
         kleur: vehicle!.kleur || 'Onbekend',
         brandstof: vehicle!.brandstof || 'Onbekend',
         bouwjaar: vehicle!.bouwjaar || 'Onbekend',
+        huidige_km: currentKm,
         montage,
         gewenste_datum: gewensteDatum,
         naam,
@@ -417,6 +439,15 @@ export default function AutoConfiguratorPage() {
                   />
                 )}
 
+                {activeCategory === 'onderhoud' && (
+                  <MaintenancePanel
+                    currentKm={currentKm}
+                    onKmChange={handleKmChange}
+                    quantities={quantities}
+                    onToggleOption={toggleOption}
+                  />
+                )}
+
                 <Cart
                   items={selectedItems}
                   onRemove={removeOption}
@@ -468,6 +499,15 @@ export default function AutoConfiguratorPage() {
                     <PerformancePanel
                       vehicle={vehicle}
                       selectedOptions={selectedOptions.filter((o) => o.category === 'tuning')}
+                    />
+                  )}
+
+                  {activeCategory === 'onderhoud' && (
+                    <MaintenancePanel
+                      currentKm={currentKm}
+                      onKmChange={handleKmChange}
+                      quantities={quantities}
+                      onToggleOption={toggleOption}
                     />
                   )}
 

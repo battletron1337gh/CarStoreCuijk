@@ -85,6 +85,7 @@ $bouwjaar = htmlspecialchars($data['bouwjaar'] ?? 'Onbekend');
 $montage = htmlspecialchars($data['montage'] ?? 'Niet opgegeven');
 $gewenste_datum = htmlspecialchars($data['gewenste_datum'] ?? 'Niet opgegeven');
 $opmerkingen = htmlspecialchars($data['opmerkingen'] ?? 'Geen opmerkingen');
+$huidige_km = intval($data['huidige_km'] ?? 0);
 $parts = $data['parts'];
 $to_email = $data['to_email'] ?? $config['to_email'] ?? 'info@carstorecuijk.nl';
 
@@ -92,16 +93,24 @@ $to_email = $data['to_email'] ?? $config['to_email'] ?? 'info@carstorecuijk.nl';
 $validatedParts = [];
 $subtotal = 0;
 foreach ($parts as $part) {
+    $partId = $part['id'] ?? null;
     $partName = $part['name'] ?? '';
-    // Try to find the option id from the submitted name (stripped of quantity suffix)
+    // Strip optional quantity suffix from name
     $baseName = preg_replace('/\\s*\\(x\\d+\\)$/', '', $partName);
+
     $optionId = null;
-    foreach ($prices as $id => $price) {
-        if (stripos($baseName, $id) !== false) {
-            $optionId = $id;
-            break;
+    if ($partId && isset($prices[$partId])) {
+        $optionId = $partId;
+    } else {
+        // Fallback: try to find the option id from the submitted name
+        foreach ($prices as $id => $price) {
+            if (stripos($baseName, $id) !== false) {
+                $optionId = $id;
+                break;
+            }
         }
     }
+
     if (!$optionId) {
         http_response_code(400);
         echo json_encode(['error' => 'Onbekend onderdeel in aanvraag']);
@@ -116,6 +125,7 @@ foreach ($parts as $part) {
     $lineTotal = $unitPrice * $quantity;
     $subtotal += $lineTotal;
     $validatedParts[] = [
+        'id' => $optionId,
         'name' => $baseName,
         'quantity' => $quantity,
         'unitPrice' => $unitPrice,
@@ -176,6 +186,7 @@ $lead = [
     'bouwjaar' => $bouwjaar,
     'montage' => $montage,
     'gewenste_datum' => $gewenste_datum,
+    'huidige_km' => $huidige_km,
     'naam' => $naam,
     'email' => $email,
     'telefoon' => $telefoon,
@@ -207,6 +218,7 @@ AUTO GEGEVENS:
 - Kleur: {$kleur}
 - Brandstof: {$brandstof}
 - Bouwjaar: {$bouwjaar}
+- Huidige km-stand: {$huidige_km} km
 
 GESELECTEERDE ONDERDELEN:
 {$partsText}

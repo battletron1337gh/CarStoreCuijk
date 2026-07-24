@@ -114,7 +114,7 @@ export default function ContactForm({
           />
         </Field>
 
-        <Field label="Montage" icon={Wrench}>
+        <Field label="Afhandeling" icon={Wrench}>
           <select
             value={montage}
             onChange={(e) => setMontage(e.target.value as MontageType)}
@@ -124,10 +124,10 @@ export default function ContactForm({
               In onze werkplaats laten monteren
             </option>
             <option value="zelf" className="bg-[#1a1a1a]">
-              Zelf monteren (onderdelen ophalen)
+              Onderdelen zelf ophalen
             </option>
             <option value="alleen-onderdelen" className="bg-[#1a1a1a]">
-              Alleen onderdelen bestellen
+              Onderdelen laten bezorgen
             </option>
             <option value="advies" className="bg-[#1a1a1a]">
               Eerst adviesgesprek
