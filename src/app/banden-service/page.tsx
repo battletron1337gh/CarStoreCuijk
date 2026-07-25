@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import CinematicServiceHero from '@/components/CinematicServiceHero';
+import CinematicReveal from '@/components/CinematicReveal';
 import { Circle, Phone, MessageCircle, CheckCircle, Thermometer, Calendar, Gauge } from 'lucide-react';
 import { contactInfo } from '@/data/cars';
 
@@ -53,28 +55,36 @@ export default function BandenServicePage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen pt-24 lg:pt-28">
+      <main className="min-h-screen bg-[#0a0a0a]">
         {/* Hero */}
-        <section className="bg-[#0a0a0a] py-20 lg:py-32 relative overflow-hidden">
-          <div className="absolute inset-0 bg-pattern opacity-30" />
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="text-center">
-              <span className="inline-flex items-center gap-2 bg-[#c8102e]/20 border border-[#c8102e]/40 text-white rounded-full px-4 py-2 mb-6">
-                <Circle className="w-4 h-4" />
-                Alle merken & maten
-              </span>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
-                Banden <span className="text-[#c8102e]">Service</span> Cuijk
-              </h1>
-              <p className="text-xl text-white/50 max-w-2xl mx-auto">
-                Professionele banden service voor uw auto. Wisselen, vervangen, balanceren en uitlijnen. 
-                Zomerbanden, winterbanden en all season banden. Snel en voordelig.
-              </p>
-            </div>
+        <CinematicServiceHero
+          badge={{ icon: <Circle className="w-4 h-4" />, text: 'Alle merken & maten' }}
+          title="Banden Service Cuijk"
+          highlightWord="Service"
+          subtitle="Professionele banden service voor uw auto. Wisselen, vervangen, balanceren en uitlijnen. Zomerbanden, winterbanden en all season banden. Snel en voordelig."
+        >
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href={`https://wa.me/${contactInfo.whatsapp.replace(/\s|-/g, '')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all"
+            >
+              <MessageCircle className="w-5 h-5" />
+              Afspraak via WhatsApp
+            </a>
+            <a
+              href={`tel:${contactInfo.telefoon.replace(/\s|-/g, '')}`}
+              className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-xl font-semibold text-lg transition-all"
+            >
+              <Phone className="w-5 h-5" />
+              {contactInfo.telefoon}
+            </a>
           </div>
-        </section>
+        </CinematicServiceHero>
 
         {/* Diensten */}
+        <CinematicReveal direction="up" duration={0.9}>
         <section className="py-20 lg:py-32 bg-[#0d0d0d]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
@@ -100,8 +110,10 @@ export default function BandenServicePage() {
             </div>
           </div>
         </section>
+        </CinematicReveal>
 
         {/* Signalen */}
+        <CinematicReveal direction="up" duration={0.9} delay={0.1}>
         <section className="py-20 lg:py-32 bg-[#0a0a0a]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -135,8 +147,10 @@ export default function BandenServicePage() {
             </div>
           </div>
         </section>
+        </CinematicReveal>
 
         {/* CTA */}
+        <CinematicReveal direction="scale" duration={0.9} delay={0.1}>
         <section className="py-20 lg:py-32 bg-[#0d0d0d]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-[#1a1a1a] rounded-3xl p-8 lg:p-12 border border-white/5 text-center">
@@ -169,8 +183,10 @@ export default function BandenServicePage() {
             </div>
           </div>
         </section>
+        </CinematicReveal>
 
         {/* SEO Content */}
+        <CinematicReveal direction="fade" duration={0.9} delay={0.1}>
         <section className="bg-[#0a0a0a] border-t border-white/5">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <h2 className="text-2xl font-bold text-white mb-4">Banden service in Cuijk - Professionele montage</h2>
@@ -192,6 +208,7 @@ export default function BandenServicePage() {
             </p>
           </div>
         </section>
+        </CinematicReveal>
       </main>
       <Footer />
     </>

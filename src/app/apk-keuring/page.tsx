@@ -1,5 +1,7 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import CinematicServiceHero from '@/components/CinematicServiceHero';
+import CinematicReveal from '@/components/CinematicReveal';
 import { CheckCircle, Phone, MessageCircle, Clock, Shield, AlertCircle, FileText, Car } from 'lucide-react';
 import { contactInfo, openingHours } from '@/data/cars';
 import type { Metadata } from 'next';
@@ -126,47 +128,36 @@ export default function ApkKeuringPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <Header />
-      <main className="min-h-screen pt-24 lg:pt-28">
+      <main className="min-h-screen bg-[#0a0a0a]">
         {/* Hero */}
-        <section className="bg-[#0a0a0a] py-20 lg:py-32 relative overflow-hidden">
-          <div className="absolute inset-0 bg-pattern opacity-30" />
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="text-center">
-              <span className="inline-flex items-center gap-2 bg-[#c8102e]/20 border border-[#c8102e]/40 text-white rounded-full px-4 py-2 mb-6">
-                <Shield className="w-4 h-4" />
-                RDW Erkend
-              </span>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
-                APK <span className="text-[#c8102e]">Keuring</span> Cuijk
-              </h1>
-              <p className="text-xl text-white/50 max-w-2xl mx-auto mb-8">
-                RDW erkende APK keuring in Cuijk. Alle merken, zonder afspraak. 
-                Snel geregeld terwijl u wacht. Garage open tot 22:00.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
-                  href={`tel:${contactInfo.telefoon.replace(/\s|-/g, '')}`}
-                  className="inline-flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all"
-                >
-                  <Phone className="w-5 h-5" />
-                  Bel Direct: {contactInfo.telefoon}
-                </a>
-                <a
-                  href={`https://wa.me/${contactInfo.whatsapp.replace(/\s|-/g, '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-xl font-semibold text-lg transition-all"
-                >
-                  <MessageCircle className="w-5 h-5" />
-                  WhatsApp
-                </a>
-              </div>
-            </div>
+        <CinematicServiceHero
+          badge={{ icon: <Shield className="w-4 h-4" />, text: 'RDW Erkend' }}
+          title="APK Keuring Cuijk"
+          highlightWord="Keuring"
+          subtitle="RDW erkende APK keuring in Cuijk. Alle merken, zonder afspraak. Snel geregeld terwijl u wacht. Garage open tot 22:00."
+        >
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href={`tel:${contactInfo.telefoon.replace(/\s|-/g, '')}`}
+              className="inline-flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all"
+            >
+              <Phone className="w-5 h-5" />
+              Bel Direct: {contactInfo.telefoon}
+            </a>
+            <a
+              href={`https://wa.me/${contactInfo.whatsapp.replace(/\s|-/g, '')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-xl font-semibold text-lg transition-all"
+            >
+              <MessageCircle className="w-5 h-5" />
+              WhatsApp
+            </a>
           </div>
-        </section>
+        </CinematicServiceHero>
 
         {/* Prijzen */}
+        <CinematicReveal direction="up" duration={0.9}>
         <section className="py-16 lg:py-24 bg-[#0d0d0d]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
@@ -233,8 +224,10 @@ export default function ApkKeuringPage() {
             </div>
           </div>
         </section>
+        </CinematicReveal>
 
         {/* Controlepunten */}
+        <CinematicReveal direction="up" duration={0.9} delay={0.1}>
         <section className="py-16 lg:py-24 bg-[#0a0a0a]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
@@ -259,8 +252,10 @@ export default function ApkKeuringPage() {
             </div>
           </div>
         </section>
+        </CinematicReveal>
 
         {/* Voordelen */}
+        <CinematicReveal direction="up" duration={0.9} delay={0.1}>
         <section className="py-16 lg:py-24 bg-[#0d0d0d]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -300,203 +295,37 @@ export default function ApkKeuringPage() {
                   en dat uw keuring officieel geldig is.
                 </p>
 
-                <div className="flex items-center gap-2 text-[#c8102e]">
-                  <CheckCircle className="w-5 h-5" />
-                  <span className="font-semibold">Officieel RDW erkend</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Hoe werkt het */}
-        <section className="py-16 lg:py-24 bg-[#0a0a0a]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-                Hoe werkt de APK keuring?
-              </h2>
-              <p className="text-white/50 max-w-2xl mx-auto">
-                Simpel, snel en zonder gedoe
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-[#c8102e] text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
-                  1
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">Langskomen</h3>
-                <p className="text-white/50">
-                  U rijdt bij ons naar binnen, zonder afspraak. Wij zijn 7 dagen per week open.
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div className="w-16 h-16 bg-[#c8102e] text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
-                  2
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">Keuring</h3>
-                <p className="text-white/50">
-                  Onze keurmeester controleert uw auto volgens de RDW richtlijnen (30-45 min).
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div className="w-16 h-16 bg-[#c8102e] text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
-                  3
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">Resultaat</h3>
-                <p className="text-white/50">
-                  Direct het resultaat. Bij goedkeuring krijgt u het APK rapport.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Openingstijden */}
-        <section className="py-16 lg:py-24 bg-[#0d0d0d]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-12">
-              <div>
-                <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">
-                  Openingstijden
-                </h2>
-                <p className="text-white/50 mb-8">
-                  Wij zijn 7 dagen per week open tot 22:00. Ook 's avonds kunt u bij ons terecht 
-                  voor uw APK keuring. Ideaal als u overdag werkt.
-                </p>
-
-                <div className="bg-[#1a1a1a] rounded-2xl p-6 border border-white/5">
-                  <div className="space-y-3">
-                    {openingHours.map((hours) => (
-                      <div key={hours.dag} className="flex justify-between py-2 border-b border-white/5 last:border-0">
-                        <span className="text-white/50">{hours.dag}</span>
-                        <span className="font-medium text-white">{hours.opening} - {hours.sluiting}</span>
-                      </div>
-                    ))}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <Clock className="w-5 h-5 text-[#c8102e]" />
+                    <span className="text-white/70">Maandag t/m vrijdag 08:00 - 22:00</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Clock className="w-5 h-5 text-[#c8102e]" />
+                    <span className="text-white/70">Zaterdag 09:00 - 17:00</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Phone className="w-5 h-5 text-[#c8102e]" />
+                    <span className="text-white/70">{contactInfo.telefoon}</span>
                   </div>
                 </div>
               </div>
-
-              <div className="bg-[#1a1a1a] rounded-3xl p-8 border border-white/5">
-                <h3 className="text-2xl font-bold text-white mb-6">Direct contact</h3>
-                <p className="text-white/50 mb-6">
-                  Heeft u vragen over de APK keuring? Bel of app ons direct.
-                </p>
-
-                <div className="space-y-4">
-                  <a
-                    href={`tel:${contactInfo.telefoon.replace(/\s|-/g, '')}`}
-                    className="flex items-center gap-4 bg-[#0a0a0a] rounded-xl p-4 border border-white/5 hover:border-[#c8102e]/30 transition-all"
-                  >
-                    <div className="w-12 h-12 bg-[#c8102e]/20 text-[#c8102e] rounded-xl flex items-center justify-center">
-                      <Phone className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <span className="text-white/50 text-sm block">Telefoon</span>
-                      <span className="text-white font-bold text-lg">{contactInfo.telefoon}</span>
-                    </div>
-                  </a>
-
-                  <a
-                    href={`https://wa.me/${contactInfo.whatsapp.replace(/\s|-/g, '')}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-4 bg-[#0a0a0a] rounded-xl p-4 border border-white/5 hover:border-[#c8102e]/30 transition-all"
-                  >
-                    <div className="w-12 h-12 bg-green-500/20 text-green-500 rounded-xl flex items-center justify-center">
-                      <MessageCircle className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <span className="text-white/50 text-sm block">WhatsApp</span>
-                      <span className="text-white font-bold text-lg">{contactInfo.whatsapp}</span>
-                    </div>
-                  </a>
-                </div>
-              </div>
             </div>
           </div>
         </section>
-
-        {/* FAQ Sectie */}
-        <section className="py-16 lg:py-24 bg-[#0a0a0a]">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-                Veelgestelde vragen
-              </h2>
-              <p className="text-white/50">
-                Antwoorden op veelgestelde vragen over APK keuring
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              <div className="bg-[#1a1a1a] rounded-2xl p-6 border border-white/5">
-                <h3 className="text-lg font-bold text-white mb-2">
-                  Wat kost een APK keuring in Cuijk?
-                </h3>
-                <p className="text-white/60">
-                  Een APK keuring bij Car Store Cuijk kost vanaf €49.99. Dit is de all-in prijs 
-                  inclusief keuring en eventueel herkeuren binnen 14 dagen.
-                </p>
-              </div>
-
-              <div className="bg-[#1a1a1a] rounded-2xl p-6 border border-white/5">
-                <h3 className="text-lg font-bold text-white mb-2">
-                  Kan ik zonder afspraak langskomen voor APK?
-                </h3>
-                <p className="text-white/60">
-                  Ja, bij Car Store Cuijk kunt u zonder afspraak langskomen voor een APK keuring. 
-                  Wij zijn 7 dagen per week open tot 22:00.
-                </p>
-              </div>
-
-              <div className="bg-[#1a1a1a] rounded-2xl p-6 border border-white/5">
-                <h3 className="text-lg font-bold text-white mb-2">
-                  Hoe lang duurt een APK keuring?
-                </h3>
-                <p className="text-white/60">
-                  Een APK keuring duurt ongeveer 30-45 minuten. U kunt in de wachtruimte wachten 
-                  terwijl wij uw auto keuren.
-                </p>
-              </div>
-
-              <div className="bg-[#1a1a1a] rounded-2xl p-6 border border-white/5">
-                <h3 className="text-lg font-bold text-white mb-2">
-                  Wat gebeurt er als mijn auto wordt afgekeurd?
-                </h3>
-                <p className="text-white/60">
-                  Als uw auto wordt afgekeurd, krijgt u een lijst met gebreken. Wij kunnen deze 
-                  direct voor u repareren. Herkeuring binnen 14 dagen is gratis.
-                </p>
-              </div>
-
-              <div className="bg-[#1a1a1a] rounded-2xl p-6 border border-white/5">
-                <h3 className="text-lg font-bold text-white mb-2">
-                  Wanneer moet mijn auto naar de APK?
-                </h3>
-                <p className="text-white/60">
-                  Dit hangt af van het brandstoftype en de leeftijd van uw auto. Benzine auto's 
-                  ouder dan 3 jaar gaan jaarlijks. Diesel auto's vanaf 3 jaar. Wij kunnen dit 
-                  voor u controleren aan de hand van uw kenteken.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+        </CinematicReveal>
 
         {/* CTA */}
-        <section className="py-20 lg:py-32 bg-[#0d0d0d]">
+        <CinematicReveal direction="scale" duration={0.9} delay={0.1}>
+        <section className="py-16 lg:py-24 bg-[#0a0a0a]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-[#1a1a1a] rounded-3xl p-8 lg:p-12 border border-white/5 text-center">
               <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-                APK Keuring Cuijk nodig?
+                Direct een APK keuring inplannen?
               </h2>
               <p className="text-white/50 mb-8 text-lg max-w-2xl mx-auto">
-                Kom langs voor een RDW erkende APK keuring. Zonder afspraak, 
-                snel geregeld. Alle merken welkom!
+                Bel ons direct of stuur een WhatsApp bericht. Wij zijn 7 dagen per week open, 
+                zonder afspraak mogelijk.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -507,39 +336,20 @@ export default function ApkKeuringPage() {
                   <Phone className="w-5 h-5" />
                   Bel Direct
                 </a>
-                <Link
-                  href="/contact"
+                <a
+                  href={`https://wa.me/${contactInfo.whatsapp.replace(/\s|-/g, '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-xl font-semibold text-lg transition-all"
                 >
-                  Contact opnemen
-                </Link>
+                  <MessageCircle className="w-5 h-5" />
+                  WhatsApp
+                </a>
               </div>
             </div>
           </div>
         </section>
-
-        {/* SEO Content */}
-        <section className="bg-[#0a0a0a] border-t border-white/5">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <h2 className="text-2xl font-bold text-white mb-4">APK Keuring Cuijk - Car Store Cuijk</h2>
-            <p className="text-white/60 mb-4">
-              Voor een APK keuring in Cuijk bent u bij Car Store Cuijk aan het juiste adres. 
-              Wij zijn RDW erkend en keuren alle merken auto's. U kunt zonder afspraak langskomen 
-              en wij zijn 7 dagen per week open tot 22:00. Een APK keuring duurt ongeveer 30-45 minuten 
-              en kost vanaf €49.99.
-            </p>
-            <p className="text-white/60 mb-4">
-              Tijdens de APK keuring controleren wij alle veiligheidsaspecten van uw auto, zoals 
-              verlichting, remmen, banden, uitlaat en carrosserie. Wij werken volgens de officiële 
-              RDW richtlijnen, zodat u zeker weet dat de keuring correct wordt uitgevoerd.
-            </p>
-            <p className="text-white/60">
-              Als uw auto wordt afgekeurd, kunnen wij de gebreken direct voor u repareren. 
-              Herkeuring binnen 14 dagen is gratis. Kom langs aan het Stationsplein 4 in Cuijk 
-              of bel {contactInfo.telefoon} voor meer informatie.
-            </p>
-          </div>
-        </section>
+        </CinematicReveal>
       </main>
       <Footer />
     </>
