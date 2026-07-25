@@ -18,18 +18,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "22"
           cache: npm
-      
+
       - name: Clean install dependencies
         run: |
           rm -rf node_modules package-lock.json
           npm install
-      
+
       - name: Build
         run: |
           npm run build 2>&1
@@ -37,7 +37,7 @@ jobs:
           NEXT_TELEMETRY_DISABLED: 1
           CI: true
         continue-on-error: false
-      
+
       - name: Check dist exists
         run: |
           ls -la
@@ -48,7 +48,7 @@ jobs:
             echo "ERROR: dist directory not found!"
             exit 1
           fi
-      
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
@@ -65,19 +65,36 @@ jobs:
         with:
           name: dist
           path: ./dist
-      
-      - name: Deploy to Hostinger via SSH
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.HOSTINGER_HOST }}
-          port: ${{ secrets.HOSTINGER_PORT }}
-          username: ${{ secrets.HOSTINGER_USER }}
-          key: ${{ secrets.HOSTINGER_SSH_KEY }}
-          source: "dist/*"
-          target: "~/domains/carstorecuijk.nl/public_html/"
-          strip_components: 1
-          rm: true
-      
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.HOSTINGER_SSH_KEY }}" > ~/.ssh/hostinger_deploy
+          chmod 600 ~/.ssh/hostinger_deploy
+          cat >> ~/.ssh/config <<EOF
+          Host hostinger
+            HostName ${{ secrets.HOSTINGER_HOST }}
+            Port ${{ secrets.HOSTINGER_PORT }}
+            User ${{ secrets.HOSTINGER_USER }}
+            IdentityFile ~/.ssh/hostinger_deploy
+            StrictHostKeyChecking no
+            UserKnownHostsFile /dev/null
+          EOF
+          chmod 600 ~/.ssh/config
+
+      - name: Deploy to Hostinger via rsync
+        run: |
+          rsync -avz --progress \
+            --exclude='api/' \
+            --exclude='data/' \
+            --exclude='vwe-fotos/' \
+            --exclude='status.php' \
+            --exclude='test-webhook.php' \
+            --exclude='config.php' \
+            -e "ssh -p ${{ secrets.HOSTINGER_PORT }} -i ~/.ssh/hostinger_deploy -o StrictHostKeyChecking=no" \
+            dist/ \
+            ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:~/domains/carstorecuijk.nl/public_html/
+
       - name: Verify deployment
         run: |
           echo "Deployment completed!"

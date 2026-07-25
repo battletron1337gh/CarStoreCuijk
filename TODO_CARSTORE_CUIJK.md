@@ -2,6 +2,24 @@
 
 ## 🔴 HOGE PRIORITEIT
 
+### Autonome rebuild / poll-and-rebuild vervangen
+- [ ] GitHub Actions workflow inrichten voor build + deploy bij push
+- [ ] `scripts/poll-and-rebuild.sh` en cronjob uitschakelen/verwijderen
+- [ ] Deploy keys / secrets veilig configureren
+
+### Cinematic website (Car Store Cuijk)
+- [ ] Homepage hero cinematic maken (video/animatie/parallax)
+- [ ] Dienstenpagina's (auto reparatie, onderhoud, etc.) visueel versterken
+- [ ] Scroll-animaties en overgangseffecten toevoegen
+- [ ] Algehele premium auto-bedrijf uitstraling
+
+### Configurator (vervolg)
+- [ ] Cinematic 2.5D intro-animatie verfijnen
+- [ ] Verdere visualisatie-effecten bij optie-wijzigingen
+- [ ] ProductiehCaptcha-keys in `public/api/config.php` zetten
+
+## 🟡 GEMIDDELDE PRIORITEIT
+
 ### Admin Systeem (Later)
 - [ ] Inlog systeem bouwen voor admin toegang
 - [ ] Admin link alleen zichtbaar voor ingelogde admins
@@ -9,14 +27,6 @@
 - [ ] Nieuwsbrief inschrijving
 - [ ] 10% korting voor geregistreerde klanten
 - [ ] Klant dashboard met favoriete auto's
-
-## 🟡 GEMIDDELDE PRIORITEIT
-
-### Configurator
-- [ ] Cinematic 2.5D intro-animatie verfijnen (meer onderdelen, geluid optioneel)
-- [ ] Verdere visualisatie-effecten bij optie-wijzigingen
-- [ ] ProductiehCaptcha-keys in `public/api/config.php` zetten
-- [ ] Autonome rebuild via GitHub Actions inrichten
 
 ### Website Verbeteringen
 - [ ] Meer SEO artikelen schrijven
@@ -28,6 +38,7 @@
 - [ ] Automatische backup systeem
 
 ## ✅ VOLTOOID
+- [x] Backup gemaakt voor cinematic werkzaamheden (`backup-2026-07-25-cinematic-start`)
 - [x] VWE Webhook op Hostinger
 - [x] Occasions filter
 - [x] Reviews systeem
