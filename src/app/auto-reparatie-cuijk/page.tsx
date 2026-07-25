@@ -1,5 +1,7 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import CinematicServiceHero from '@/components/CinematicServiceHero';
+import CinematicReveal from '@/components/CinematicReveal';
 import { Wrench, Phone, MessageCircle, CheckCircle, Clock, Shield, Car, Thermometer, Settings, AlertTriangle } from 'lucide-react';
 import { contactInfo } from '@/data/cars';
 import Script from 'next/script';
@@ -115,42 +117,36 @@ export default function AutoReparatieCuijkPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
       />
       <Header />
-      <main className="min-h-screen bg-[#0a0a0a] pt-16 sm:pt-20 lg:pt-28">
+      <main className="min-h-screen bg-[#0a0a0a]">
         {/* Hero */}
-        <section className="bg-[#0a0a0a] py-16 lg:py-24 relative overflow-hidden">
-          <div className="absolute inset-0 bg-pattern opacity-30" />
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="text-center">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-6">
-                Auto Reparatie <span className="text-[#c8102e]">Cuijk</span>
-              </h1>
-              <p className="text-lg sm:text-xl text-white/50 max-w-3xl mx-auto mb-8">
-                Vakkundige auto reparatie in Cuijk voor alle merken. Van onderhoud tot distributieriem vervangen, 
-                airco vullen, koppeling vervangen en APK keuring. Garage open tot 22:00, geen wachttijden.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
-                  href={`tel:${contactInfo.telefoon.replace(/\s|-/g, '')}`}
-                  className="inline-flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all"
-                >
-                  <Phone className="w-5 h-5" />
-                  Bel Direct: {contactInfo.telefoon}
-                </a>
-                <a
-                  href={`https://wa.me/${contactInfo.whatsapp.replace(/\s|-/g, '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-xl font-semibold text-lg transition-all"
-                >
-                  <MessageCircle className="w-5 h-5" />
-                  WhatsApp Afspraak
-                </a>
-              </div>
-            </div>
+        <CinematicServiceHero
+          badge={{ icon: <Wrench className="w-4 h-4" />, text: 'Garage open tot 22:00 - Spoed service' }}
+          title="Auto Reparatie Cuijk"
+          highlightWord="Cuijk"
+          subtitle="Vakkundige auto reparatie in Cuijk voor alle merken. Van onderhoud tot distributieriem vervangen, airco vullen, koppeling vervangen en APK keuring. Geen wachttijden."
+        >
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href={`tel:${contactInfo.telefoon.replace(/\s|-/g, '')}`}
+              className="inline-flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all"
+            >
+              <Phone className="w-5 h-5" />
+              Bel Direct: {contactInfo.telefoon}
+            </a>
+            <a
+              href={`https://wa.me/${contactInfo.whatsapp.replace(/\s|-/g, '')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-xl font-semibold text-lg transition-all"
+            >
+              <MessageCircle className="w-5 h-5" />
+              WhatsApp Afspraak
+            </a>
           </div>
-        </section>
+        </CinematicServiceHero>
 
         {/* Diensten Grid */}
+        <CinematicReveal direction="up" duration={0.9}>
         <section className="py-16 lg:py-24 bg-[#0d0d0d]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12 lg:mb-16">
@@ -176,8 +172,10 @@ export default function AutoReparatieCuijkPage() {
             </div>
           </div>
         </section>
+        </CinematicReveal>
 
         {/* Waarom wij */}
+        <CinematicReveal direction="up" duration={0.9} delay={0.1}>
         <section className="py-16 lg:py-24 bg-[#0a0a0a]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
@@ -204,8 +202,10 @@ export default function AutoReparatieCuijkPage() {
             </div>
           </div>
         </section>
+        </CinematicReveal>
 
         {/* CTA */}
+        <CinematicReveal direction="scale" duration={0.9} delay={0.1}>
         <section className="py-16 lg:py-24 bg-[#0d0d0d]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-[#1a1a1a] rounded-3xl p-8 lg:p-12 border border-white/5 text-center">
@@ -238,8 +238,10 @@ export default function AutoReparatieCuijkPage() {
             </div>
           </div>
         </section>
+        </CinematicReveal>
 
         {/* SEO Content */}
+        <CinematicReveal direction="fade" duration={0.9} delay={0.1}>
         <section className="bg-[#0a0a0a] border-t border-white/5">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">
@@ -269,6 +271,7 @@ export default function AutoReparatieCuijkPage() {
             </p>
           </div>
         </section>
+        </CinematicReveal>
       </main>
       <Footer />
     </>

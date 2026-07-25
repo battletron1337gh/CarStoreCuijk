@@ -1,5 +1,7 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import CinematicServiceHero from '@/components/CinematicServiceHero';
+import CinematicReveal from '@/components/CinematicReveal';
 import Services from '@/components/Services';
 import OnderhoudOfferteForm from '@/components/OnderhoudOfferteForm';
 import { Wrench, Phone, MessageCircle, Clock, CheckCircle, Shield, FileText } from 'lucide-react';
@@ -9,28 +11,17 @@ export default function OnderhoudPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen pt-24 lg:pt-28">
+      <main className="min-h-screen bg-[#0a0a0a]">
         {/* Hero */}
-        <section className="bg-[#0a0a0a] py-20 lg:py-32 relative overflow-hidden">
-          <div className="absolute inset-0 bg-pattern opacity-30" />
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="text-center">
-              <span className="inline-flex items-center gap-2 bg-[#c8102e]/20 border border-[#c8102e]/40 text-white rounded-full px-4 py-2 mb-6">
-                <Wrench className="w-4 h-4" />
-                Garage open tot 22:00 - Spoed service
-              </span>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
-                Auto <span className="text-[#c8102e]">Onderhoud</span> Cuijk
-              </h1>
-              <p className="text-xl text-white/50 max-w-2xl mx-auto">
-                Professioneel auto onderhoud voor alle merken. Garage open tot 22:00, altijd bereikbaar voor spoed reparatie. 
-                APK, kleine en grote beurt. Vertrouw op onze ervaren monteurs en moderne werkplaats. 175 reviews, 5 sterren.
-              </p>
-            </div>
-          </div>
-        </section>
+        <CinematicServiceHero
+          badge={{ icon: <Wrench className="w-4 h-4" />, text: 'Garage open tot 22:00 - Spoed service' }}
+          title="Auto Onderhoud Cuijk"
+          highlightWord="Onderhoud"
+          subtitle="Professioneel auto onderhoud voor alle merken. Garage open tot 22:00, altijd bereikbaar voor spoed reparatie. APK, kleine en grote beurt. 175 reviews, 5 sterren."
+        />
 
-        {/* Offerte Formulier - DIRECT ONDER HERO (alleen formulier, geen openingstijden) */}
+        {/* Offerte Formulier */}
+        <CinematicReveal direction="up" duration={0.9}>
         <section id="offerte" className="py-20 lg:py-32 bg-[#0d0d0d]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-2xl mx-auto">
@@ -47,11 +38,15 @@ export default function OnderhoudPage() {
             </div>
           </div>
         </section>
+        </CinematicReveal>
 
         {/* Services Grid */}
-        <Services />
+        <CinematicReveal direction="up" duration={0.9} delay={0.1}>
+          <Services />
+        </CinematicReveal>
 
         {/* Why Service With Us */}
+        <CinematicReveal direction="up" duration={0.9} delay={0.1}>
         <section className="py-20 lg:py-32 bg-[#0a0a0a]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
@@ -83,8 +78,10 @@ export default function OnderhoudPage() {
             </div>
           </div>
         </section>
+        </CinematicReveal>
 
-        {/* Contact & Openingstijden - ONDERAAN */}
+        {/* Contact & Openingstijden */}
+        <CinematicReveal direction="up" duration={0.9} delay={0.1}>
         <section className="py-20 lg:py-32 bg-[#0d0d0d]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12">
@@ -144,6 +141,7 @@ export default function OnderhoudPage() {
             </div>
           </div>
         </section>
+        </CinematicReveal>
       </main>
       <Footer />
     </>
