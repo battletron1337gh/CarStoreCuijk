@@ -3,9 +3,9 @@
 ## 🔴 HOGE PRIORITEIT
 
 ### Autonome rebuild / poll-and-rebuild vervangen
-- [ ] GitHub Actions workflow inrichten voor build + deploy bij push
-- [ ] `scripts/poll-and-rebuild.sh` en cronjob uitschakelen/verwijderen
-- [ ] Deploy keys / secrets veilig configureren
+- [x] GitHub Actions workflow inrichten voor build + deploy bij push
+- [x] `scripts/poll-and-rebuild.sh` en cronjob verwijderd
+- [x] Deploy keys / secrets veilig geconfigureerd
 
 ### Cinematic website (Car Store Cuijk)
 - [ ] Homepage hero cinematic maken (video/animatie/parallax)
