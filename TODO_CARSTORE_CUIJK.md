@@ -8,10 +8,10 @@
 - [x] Deploy keys / secrets veilig geconfigureerd
 
 ### Cinematic website (Car Store Cuijk)
-- [ ] Homepage hero cinematic maken (video/animatie/parallax)
+- [x] Homepage hero cinematic maken (split-text reveal, film grain, vignette)
+- [x] Scroll-animaties en overgangseffecten toegevoegd
 - [ ] Dienstenpagina's (auto reparatie, onderhoud, etc.) visueel versterken
-- [ ] Scroll-animaties en overgangseffecten toevoegen
-- [ ] Algehele premium auto-bedrijf uitstraling
+- [ ] Algehele premium auto-bedrijf uitstraling verder doorvoeren
 
 ### Configurator (vervolg)
 - [ ] Cinematic 2.5D intro-animatie verfijnen
