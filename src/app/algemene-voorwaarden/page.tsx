@@ -258,7 +258,8 @@ export default function AlgemeneVoorwaardenPage() {
                 href={`tel:${contactInfo.telefoon.replace(/\s|-/g, '')}`}
                 className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-xl font-semibold transition-all"
               >
-                Bel direct: {contactInfo.telefoon}
+                <span className="sm:hidden">Bel direct</span>
+                <span className="hidden sm:inline">+316 87118768</span>
               </a>
             </div>
           </div>

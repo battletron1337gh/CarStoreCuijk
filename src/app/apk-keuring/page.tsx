@@ -9,11 +9,11 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'APK Keuring Cuijk | RDW Erkend | Vanaf €49.99 | Alle Merken',
-  description: 'APK keuring Cuijk bij RDW erkende garage. ✅ Alle merken ✅ Zonder afspraak ✅ Snel geregeld. Garage open tot 22:00. Bel 0485-555090!',
+  description: 'APK keuring Cuijk bij RDW erkende garage. ✅ Alle merken ✅ Zonder afspraak ✅ Snel geregeld. Garage open tot 22:00. Bel 06-87118768!',
   keywords: 'apk keuring cuijk, apk keuring, rdw apk, auto keuren cuijk, apk garage cuijk, apk prijs, apk kosten',
   openGraph: {
     title: 'APK Keuring Cuijk | RDW Erkend | Alle Merken',
-    description: 'RDW erkende APK keuring in Cuijk. Alle merken, zonder afspraak. Bel nu!',
+    description: 'APK keuring in Cuijk. Alle merken, zonder afspraak. Bel nu!',
     type: 'website',
   },
 };
@@ -23,7 +23,7 @@ const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "AutoRepair",
   "name": "APK Keuring Cuijk - Car Store Cuijk",
-  "description": "RDW erkende APK keuring in Cuijk. Alle merken, zonder afspraak. Garage open tot 22:00.",
+  "description": "APK keuring in Cuijk. Alle merken, zonder afspraak. Garage open tot 22:00.",
   "provider": {
     "@type": "AutoRepair",
     "name": "Car Store Cuijk",
@@ -109,7 +109,7 @@ export default function ApkKeuringPage() {
   ];
 
   const voordelen = [
-    'RDW erkend keuringsstation',
+    'RDW erkend',
     'Zonder afspraak mogelijk',
     'Snelle service (30-45 min)',
     'Alle merken',
@@ -134,7 +134,7 @@ export default function ApkKeuringPage() {
           badge={{ icon: <Shield className="w-4 h-4" />, text: 'RDW Erkend' }}
           title="APK Keuring Cuijk"
           highlightWord="Keuring"
-          subtitle="RDW erkende APK keuring in Cuijk. Alle merken, zonder afspraak. Snel geregeld terwijl u wacht. Garage open tot 22:00."
+          subtitle="APK keuring in Cuijk. Alle merken, zonder afspraak. Snel geregeld terwijl u wacht. Garage open tot 22:00."
         >
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
@@ -142,7 +142,8 @@ export default function ApkKeuringPage() {
               className="inline-flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all"
             >
               <Phone className="w-5 h-5" />
-              Bel Direct: {contactInfo.telefoon}
+              <span className="sm:hidden">Bel direct</span>
+              <span className="hidden sm:inline">+316 87118768</span>
             </a>
             <a
               href={`https://wa.me/${contactInfo.whatsapp.replace(/\s|-/g, '')}`}
@@ -264,7 +265,7 @@ export default function ApkKeuringPage() {
                   Waarom kiezen voor Car Store Cuijk?
                 </h2>
                 <p className="text-white/50 mb-8">
-                  Als RDW erkend keuringsstation garanderen wij een vakkundige en eerlijke APK keuring. 
+                  Wij regelen uw APK keuring vakkundig en eerlijk. 
                   Wij keuren alle merken en u kunt zonder afspraak langskomen.
                 </p>
 
@@ -285,14 +286,13 @@ export default function ApkKeuringPage() {
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-white">RDW Erkend</h3>
-                    <p className="text-white/50">Officieel keuringsstation</p>
+                    <p className="text-white/50">RDW erkend</p>
                   </div>
                 </div>
 
                 <p className="text-white/60 mb-6">
-                  Car Store Cuijk is officieel erkend door de RDW voor het uitvoeren van 
-                  APK keuringen. Dit betekent dat wij voldoen aan alle kwaliteitseisen 
-                  en dat uw keuring officieel geldig is.
+                  Car Store Cuijk is RDW erkend en regelt uw APK keuring. 
+                  Uw keuring wordt officieel geregistreerd en is wettelijk geldig.
                 </p>
 
                 <div className="space-y-3">
@@ -334,7 +334,8 @@ export default function ApkKeuringPage() {
                   className="inline-flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all"
                 >
                   <Phone className="w-5 h-5" />
-                  Bel Direct
+                  <span className="sm:hidden">Bel direct</span>
+              <span className="hidden sm:inline">+316 87118768</span>
                 </a>
                 <a
                   href={`https://wa.me/${contactInfo.whatsapp.replace(/\s|-/g, '')}`}

@@ -127,7 +127,8 @@ export default function GarageGravePage() {
                   className="inline-flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all"
                 >
                   <Phone className="w-5 h-5" />
-                  Bel Direct: {contactInfo.telefoon}
+                  <span className="sm:hidden">Bel direct</span>
+              <span className="hidden sm:inline">+316 87118768</span>
                 </a>
                 <a
                   href={`https://wa.me/${contactInfo.whatsapp.replace(/\s|-/g, '')}`}
@@ -428,7 +429,8 @@ export default function GarageGravePage() {
                   className="inline-flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all"
                 >
                   <Phone className="w-5 h-5" />
-                  Bel Direct
+                  <span className="sm:hidden">Bel direct</span>
+              <span className="hidden sm:inline">+316 87118768</span>
                 </a>
                 <Link
                   href="/contact"
