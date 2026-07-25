@@ -1,5 +1,8 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import CinematicServiceHero from '@/components/CinematicServiceHero';
+import CinematicReveal from '@/components/CinematicReveal';
+
 import ContactForm from '@/components/ContactForm';
 import { MapPin, Phone, Mail, MessageCircle, Clock } from 'lucide-react';
 import { contactInfo, openingHours } from '@/data/cars';
@@ -8,23 +11,17 @@ export default function ContactPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen pt-24 lg:pt-28">
+      <main className="min-h-screen bg-[#0a0a0a]">
         {/* Hero */}
-        <section className="bg-[#0a0a0a] py-20 lg:py-32 relative overflow-hidden">
-          <div className="absolute inset-0 bg-pattern opacity-30" />
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="text-center">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
-                Contact <span className="text-[#c8102e]">Opnemen</span>
-              </h1>
-              <p className="text-xl text-white/50 max-w-2xl mx-auto">
-                Heeft u vragen of wilt u een afspraak maken? 
-                Neem gerust contact met ons op. Garage open tot 22:00, altijd bereikbaar voor spoed!
-              </p>
-            </div>
-          </div>
-        </section>
+        <CinematicServiceHero
+          badge={{ icon: <Mail className="w-4 h-4" />, text: "Altijd bereikbaar" }}
+          title="Contact Opnemen"
+          highlightWord="Opnemen"
+          subtitle="Heeft u vragen of wilt u een afspraak maken? Neem gerust contact met ons op. Garage open tot 22:00, altijd bereikbaar voor spoed!"
+        />
 
+
+                <CinematicReveal direction="up" duration={0.9} delay={0.1}>
         {/* Contact Info & Form */}
         <section className="py-20 lg:py-32 bg-[#0d0d0d]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -207,6 +204,7 @@ export default function ContactPage() {
             </div>
           </div>
         </section>
+        </CinematicReveal>
       </main>
       <Footer />
     </>

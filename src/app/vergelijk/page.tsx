@@ -9,6 +9,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useCompare } from '@/context/CompareContext';
 import { motion } from 'framer-motion';
+import CinematicServiceHero from '@/components/CinematicServiceHero';
+import CinematicReveal from '@/components/CinematicReveal';
 
 export default function VergelijkPage() {
   const { selectedCars, removeCar, clearCars } = useCompare();
@@ -42,7 +44,15 @@ export default function VergelijkPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-[#0a0a0a] pt-32 sm:pt-28 lg:pt-28 pb-24">
+      <main className="min-h-screen bg-[#0a0a0a] pb-24">
+        <CinematicServiceHero
+          badge={{ icon: <Scale className="w-4 h-4" />, text: "Occasions vergelijken" }}
+          title="Auto Vergelijken"
+          highlightWord="Vergelijken"
+          subtitle="Vergelijk eenvoudig meerdere occasions op specificaties, prijs en uitrusting."
+        />
+
+        <CinematicReveal direction="up" duration={0.9} delay={0.1}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
             <div>
@@ -53,10 +63,10 @@ export default function VergelijkPage() {
                 <ArrowLeft className="w-4 h-4" />
                 Terug naar occasions
               </Link>
-              <h1 className="text-3xl sm:text-4xl font-bold text-white flex items-center gap-3">
+              <h2 className="text-3xl sm:text-4xl font-bold text-white flex items-center gap-3">
                 <Scale className="w-8 h-8 text-[#c8102e]" />
                 Auto vergelijken
-              </h1>
+              </h2>
             </div>
             <button
               onClick={clearCars}
@@ -164,6 +174,7 @@ export default function VergelijkPage() {
             </div>
           </div>
         </div>
+        </CinematicReveal>
       </main>
       <Footer />
     </>
