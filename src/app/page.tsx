@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, MessageCircle, Phone, Star, FileText, Lightbulb, Shield } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import CinematicReveal, { SplitTextReveal, CinematicLine } from '@/components/CinematicReveal';
 import StatsSection from '@/components/StatsSection';
 import Services from '@/components/Services';
 import WhyChooseUs from '@/components/WhyChooseUs';
@@ -100,6 +101,17 @@ function Hero() {
       <div className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-96 sm:h-96 bg-[#c8102e]/10 rounded-full blur-3xl z-[2]" />
       <div className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-96 sm:h-96 bg-[#c8102e]/5 rounded-full blur-3xl z-[2]" />
 
+      {/* Cinematic film grain overlay */}
+      <div
+        className="pointer-events-none absolute inset-0 z-[2] opacity-[0.035]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+        }}
+      />
+
+      {/* Vignette */}
+      <div className="pointer-events-none absolute inset-0 z-[2] bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.6)_100%)]" />
+
       {/* Content */}
       <motion.div 
         className="relative z-[3] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32 text-center"
@@ -115,14 +127,13 @@ function Hero() {
           <span className="text-white/80 text-xs sm:text-sm font-medium">Bereikbaar tot 22:00 · Altijd bereikbaar voor spoed</span>
         </motion.div>
 
-        <motion.h1
-          variants={heroItemVariants}
-          className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight"
-        >
-          Vind uw <span className="text-[#c8102e]">droomoccasion</span>
+        <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight">
+          <SplitTextReveal text="Vind uw" className="text-white" delay={0.3} />
+          {' '}
+          <SplitTextReveal text="droomoccasion" className="text-[#c8102e]" delay={0.5} />
           <br />
-          <span className="text-white/40">bij Car Store Cuijk</span>
-        </motion.h1>
+          <SplitTextReveal text="bij Car Store Cuijk" className="text-white/40" delay={0.7} />
+        </h1>
 
         <motion.p
           variants={heroItemVariants}
@@ -536,25 +547,49 @@ export default function HomeV5() {
       <main>
         {/* 1. Originele Hero (exact zoals /page.tsx) */}
         <Hero />
-        
+
         {/* 2. Stats (origineel) */}
         <StatsSection />
-        
+
+        <CinematicLine delay={0.2} />
+
         {/* Featured Cars - 3 duurste auto's */}
-        <FeaturedCarsSection />
-        
+        <CinematicReveal direction="up" duration={0.9}>
+          <FeaturedCarsSection />
+        </CinematicReveal>
+
+        <CinematicLine delay={0.2} />
+
         {/* Rest van originele home */}
-        <WhyChooseUs />
-        <Services />
-        
+        <CinematicReveal direction="up" duration={0.9} delay={0.1}>
+          <WhyChooseUs />
+        </CinematicReveal>
+
+        <CinematicReveal direction="up" duration={0.9} delay={0.1}>
+          <Services />
+        </CinematicReveal>
+
+        <CinematicLine delay={0.2} />
+
         {/* Handige Tips & Advies Sectie */}
-        <TipsSection />
-        
+        <CinematicReveal direction="up" duration={0.9} delay={0.1}>
+          <TipsSection />
+        </CinematicReveal>
+
         {/* SEO Content voor betere ranking */}
-        <SEOContentSection />
-        
-        <ReviewMarquee />
-        <CTASection />
+        <CinematicReveal direction="up" duration={0.9} delay={0.1}>
+          <SEOContentSection />
+        </CinematicReveal>
+
+        <CinematicLine delay={0.2} />
+
+        <CinematicReveal direction="scale" duration={0.9} delay={0.1}>
+          <ReviewMarquee />
+        </CinematicReveal>
+
+        <CinematicReveal direction="up" duration={0.9} delay={0.1}>
+          <CTASection />
+        </CinematicReveal>
       </main>
       <Footer />
     </>
