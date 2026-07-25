@@ -41,6 +41,9 @@ export default function AutoConfiguratorPage() {
   const [optionColors, setOptionColors] = useState<Record<string, string>>({});
   const [currentKm, setCurrentKm] = useState<number>(0);
 
+  // ─── Cinematic assembly state ───
+  const [showAssembly, setShowAssembly] = useState(false);
+
   // ─── Contact / submit state ───
   const [naam, setNaam] = useState('');
   const [email, setEmail] = useState('');
@@ -125,6 +128,7 @@ export default function AutoConfiguratorPage() {
         setVehicle(null);
       } else {
         setVehicle(data.data);
+        setShowAssembly(true);
       }
     } catch {
       setRdwError('RDW lookup mislukt, probeer opnieuw');
@@ -206,6 +210,7 @@ export default function AutoConfiguratorPage() {
     setVehicle(null);
     setQuantities({});
     setOptionColors({});
+    setShowAssembly(false);
     setNaam('');
     setEmail('');
     setTelefoon('');
@@ -288,6 +293,10 @@ export default function AutoConfiguratorPage() {
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const handleAssemblyComplete = () => {
+    setShowAssembly(false);
   };
 
   // ─── Success view ───
@@ -413,7 +422,14 @@ export default function AutoConfiguratorPage() {
             <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
               {/* Mobile layout */}
               <div className="flex flex-col gap-6 lg:hidden">
-                <VehiclePreview selectedOptions={selectedOptions} selectedColors={optionColors} vehicleColor={vehicle?.kleur} className="min-h-[300px]" />
+                <VehiclePreview
+                  selectedOptions={selectedOptions}
+                  selectedColors={optionColors}
+                  vehicleColor={vehicle?.kleur}
+                  className="min-h-[300px]"
+                  animateEntry={showAssembly}
+                  onEntryComplete={handleAssemblyComplete}
+                />
 
                 <ConfiguratorSidebar
                   categories={CONFIG_CATEGORIES}
@@ -493,7 +509,14 @@ export default function AutoConfiguratorPage() {
 
                 {/* Center preview + options */}
                 <div className="lg:col-span-7 xl:col-span-7 space-y-6">
-                  <VehiclePreview selectedOptions={selectedOptions} selectedColors={optionColors} vehicleColor={vehicle?.kleur} className="min-h-[520px]" />
+                  <VehiclePreview
+                    selectedOptions={selectedOptions}
+                    selectedColors={optionColors}
+                    vehicleColor={vehicle?.kleur}
+                    className="min-h-[520px]"
+                    animateEntry={showAssembly}
+                    onEntryComplete={handleAssemblyComplete}
+                  />
 
                   {activeCategory === 'tuning' && (
                     <PerformancePanel

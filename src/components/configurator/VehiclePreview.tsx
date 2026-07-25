@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ConfigOption, OverlayType } from '@/lib/configurator-options';
+import CinematicAssembly from './CinematicAssembly';
 
 const RDW_COLOR_MAP: Record<string, string> = {
   ZWART: '#1a1a1a',
@@ -38,6 +39,8 @@ interface VehiclePreviewProps {
   selectedColors?: Record<string, string>;
   vehicleColor?: string | null;
   className?: string;
+  animateEntry?: boolean;
+  onEntryComplete?: () => void;
 }
 
 interface OverlayState {
@@ -70,6 +73,8 @@ export default function VehiclePreview({
   selectedColors = {},
   vehicleColor,
   className = '',
+  animateEntry = false,
+  onEntryComplete,
 }: VehiclePreviewProps) {
   const [bump, setBump] = useState(0);
 
@@ -115,6 +120,24 @@ export default function VehiclePreview({
     <div
       className={`relative flex items-center justify-center overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-[#141414] to-[#0a0a0a] shadow-2xl backdrop-blur-md ${className}`}
     >
+      {/* Cinematic entry assembly animation */}
+      <AnimatePresence>
+        {animateEntry && (
+          <motion.div
+            key="assembly"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, ease: 'easeInOut' }}
+            className="absolute inset-0 z-40"
+          >
+            <CinematicAssembly
+              vehicleColor={vehicleColor}
+              onComplete={onEntryComplete}
+              duration={2.8}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
       {/* Studio background */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,rgba(60,60,70,0.35),transparent_65%)]" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,rgba(200,16,46,0.06),transparent_50%)]" />
