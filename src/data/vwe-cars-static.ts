@@ -1,7 +1,7 @@
 
 
 import { Car } from '@/types';
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync, readdirSync } from 'fs';
 import { join } from 'path';
 
 // Helper functie om VWE data om te zetten naar Car formaat
@@ -68,32 +68,47 @@ function convertVweToCar(vweVehicle: any): Car | null {
     ? `${voertuignr}/${klantnummer}`
     : (vweVehicle.kenteken || vweVehicle.id || 'unknown');
   
-  // Haal foto URLs op - eerst uit vweVehicle.fotoUrls (van API), dan uit raw
+  // Haal foto URLs op - geef voorrang aan lokale bestanden op de server,
+  // omdat externe VWE URLs regelmatig verlopen/verwijderd worden.
   const fotoUrls: string[] = [];
   const kenteken = vweVehicle.kenteken || '';
-  
-  // Gebruik fotoUrls uit vweVehicle (van API)
-  if (vweVehicle.fotoUrls && Array.isArray(vweVehicle.fotoUrls) && vweVehicle.fotoUrls.length > 0) {
+
+  // 1. Probeer lokale foto's op de server (public/vwe-fotos/<kenteken>/)
+  if (kenteken) {
+    const localDir = join(process.cwd(), 'public', 'vwe-fotos', kenteken);
+    if (existsSync(localDir)) {
+      try {
+        const localFiles = readdirSync(localDir)
+          .filter((file) => /\.(jpg|jpeg|png|webp)$/i.test(file))
+          .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+        if (localFiles.length > 0) {
+          fotoUrls.push(...localFiles.map((file) => `/vwe-fotos/${kenteken}/${file}`));
+        }
+      } catch {
+        // ignore read errors
+      }
+    }
+  }
+
+  // 2. Fallback naar externe VWE fotoUrls
+  if (fotoUrls.length === 0 && vweVehicle.fotoUrls && Array.isArray(vweVehicle.fotoUrls) && vweVehicle.fotoUrls.length > 0) {
     fotoUrls.push(...vweVehicle.fotoUrls);
   }
-  // Fallback naar localFotos
-  else if (vweVehicle.localFotos && Array.isArray(vweVehicle.localFotos) && vweVehicle.localFotos.length > 0) {
-    fotoUrls.push(...vweVehicle.localFotos.map((path: string) => `https://carstorecuijk.nl${path}`));
-  }
-  // Fallback naar raw.afbeeldingen
-  else if (raw.afbeeldingen?.afbeelding && Array.isArray(raw.afbeeldingen.afbeelding)) {
+
+  // 3. Fallback naar raw.afbeeldingen
+  if (fotoUrls.length === 0 && raw.afbeeldingen?.afbeelding && Array.isArray(raw.afbeeldingen.afbeelding)) {
     raw.afbeeldingen.afbeelding.forEach((img: any) => {
       if (img['@attributes']?.url) {
         fotoUrls.push(img['@attributes'].url);
       } else if (img.bestandsnaam && kenteken) {
-        fotoUrls.push(`https://carstorecuijk.nl/vwe-fotos/${kenteken}/${img.bestandsnaam}`);
+        fotoUrls.push(`/vwe-fotos/${kenteken}/${img.bestandsnaam}`);
       } else if (img.url) {
         fotoUrls.push(img.url);
       }
     });
   }
-  
-  // Fallback: gebruik placeholder als er geen foto's zijn
+
+  // 4. Laatste fallback: placeholder
   if (fotoUrls.length === 0) {
     fotoUrls.push('/cars/placeholder.svg');
   }
