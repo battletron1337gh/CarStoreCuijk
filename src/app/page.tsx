@@ -12,6 +12,7 @@ import Services from '@/components/Services';
 import WhyChooseUs from '@/components/WhyChooseUs';
 import ReviewMarquee from '@/components/ReviewMarquee';
 import CTASection from '@/components/CTASection';
+import GarageDoorIntro from '@/components/GarageDoorIntro';
 import Image from 'next/image';
 import { contactInfo } from '@/data/cars';
 import { reviewStats } from '@/data/google-reviews';
@@ -544,6 +545,7 @@ export default function HomeV5() {
   return (
     <>
       <Header />
+      <GarageDoorIntro />
       <main>
         {/* 1. Originele Hero (exact zoals /page.tsx) */}
         <Hero />
