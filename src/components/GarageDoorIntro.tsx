@@ -20,7 +20,7 @@ export default function GarageDoorIntro() {
     // Korte pauze zodat het logo leesbaar is, dan openen.
     const timer = setTimeout(() => {
       setIsOpening(true);
-    }, 1200);
+    }, 900);
 
     return () => clearTimeout(timer);
   }, []);
@@ -62,7 +62,7 @@ export default function GarageDoorIntro() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                transition={{ delay: 0.8 }}
+                transition={{ delay: 0.4 }}
                 onClick={skip}
                 className="absolute top-6 right-6 z-[110] text-white/40 hover:text-white text-sm font-medium tracking-wide transition-colors"
               >
@@ -80,14 +80,15 @@ export default function GarageDoorIntro() {
                 ? { opacity: 0, scale: 1.1, y: -40 }
                 : { opacity: 1, scale: 1, y: 0 }
             }
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80">
+            <div className="relative w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72">
               <Image
                 src="/logo.png"
                 alt="Car Store Cuijk"
                 fill
                 className="object-contain drop-shadow-[0_0_30px_rgba(200,16,46,0.35)]"
+                sizes="(max-width: 640px) 160px, (max-width: 768px) 224px, 288px"
                 priority
               />
             </div>
@@ -107,7 +108,7 @@ export default function GarageDoorIntro() {
             initial={{ y: 0 }}
             animate={isOpening ? { y: '-100%' } : { y: 0 }}
             transition={{
-              duration: 1.4,
+              duration: 1.1,
               ease: [0.22, 1, 0.36, 1],
               delay: isOpening ? 0 : 0,
             }}
@@ -134,19 +135,6 @@ export default function GarageDoorIntro() {
             <div className="absolute inset-x-0 bottom-0 h-2 bg-[#c8102e] shadow-[0_0_40px_rgba(200,16,46,0.6)]" />
             <div className="absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-[#c8102e]/40 to-transparent" />
             <div className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-[#c8102e]/40 to-transparent" />
-
-            {/* Centraal logo op de deur (silhouet / reflectie) */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-[0.08]">
-              <div className="relative w-64 h-64 sm:w-96 sm:h-96">
-                <Image
-                  src="/logo.png"
-                  alt=""
-                  fill
-                  className="object-contain"
-                  priority
-                />
-              </div>
-            </div>
 
             {/* Onder lichtstrip op de deur */}
             <div className="absolute bottom-2 inset-x-0 h-[2px] bg-[#ff2a4d] shadow-[0_0_20px_#c8102e]" />
