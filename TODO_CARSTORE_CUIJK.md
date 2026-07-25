@@ -10,7 +10,11 @@
 ### Cinematic website (Car Store Cuijk)
 - [x] Homepage hero cinematic maken (split-text reveal, film grain, vignette)
 - [x] Scroll-animaties en overgangseffecten toegevoegd
-- [ ] Dienstenpagina's (auto reparatie, onderhoud, etc.) visueel versterken
+- [x] Dienstenpagina's visueel versterkt:
+  - [x] /auto-reparatie-cuijk
+  - [x] /onderhoud
+  - [x] /airco-vullen
+- [ ] Overige dienstenpagina's cinematic versterken (APK, banden, koplampen, inkoop, verkoop)
 - [ ] Algehele premium auto-bedrijf uitstraling verder doorvoeren
 
 ### Configurator (vervolg)
