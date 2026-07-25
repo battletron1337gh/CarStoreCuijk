@@ -25,6 +25,30 @@ jobs:
           node-version: "22"
           cache: npm
 
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.HOSTINGER_SSH_KEY }}" > ~/.ssh/hostinger_deploy
+          chmod 600 ~/.ssh/hostinger_deploy
+          cat >> ~/.ssh/config <<EOF
+          Host hostinger
+            HostName ${{ secrets.HOSTINGER_HOST }}
+            Port ${{ secrets.HOSTINGER_PORT }}
+            User ${{ secrets.HOSTINGER_USER }}
+            IdentityFile ~/.ssh/hostinger_deploy
+            StrictHostKeyChecking no
+            UserKnownHostsFile /dev/null
+          EOF
+          chmod 600 ~/.ssh/config
+
+      - name: Sync vwe-fotos from Hostinger
+        run: |
+          mkdir -p public/vwe-fotos
+          rsync -avz --progress \
+            -e "ssh -p ${{ secrets.HOSTINGER_PORT }} -i ~/.ssh/hostinger_deploy -o StrictHostKeyChecking=no" \
+            ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:~/domains/carstorecuijk.nl/public_html/vwe-fotos/ \
+            public/vwe-fotos/ || echo "No remote vwe-fotos to sync"
+
       - name: Clean install dependencies
         run: |
           rm -rf node_modules package-lock.json
