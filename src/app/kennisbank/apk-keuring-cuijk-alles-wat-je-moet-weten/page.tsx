@@ -6,11 +6,11 @@ import { Clock, ArrowLeft, ArrowRight, CheckCircle, ClipboardCheck, Phone, Alert
 
 export const metadata: Metadata = {
   title: 'APK Keuring Cuijk - Alles Wat Je Moet Weten | Car Store Cuijk',
-  description: 'APK keuring in Cuijk vanaf €29.95. ✓ Zonder afspraak ✓ Directe uitslag ✓ Garantie. Lees alles over kosten, termijnen en wat er wordt gecontroleerd.',
+  description: 'APK keuring in Cuijk vanaf €49.99. ✓ Zonder afspraak ✓ Directe uitslag ✓ Garantie. Lees alles over kosten, termijnen en wat er wordt gecontroleerd.',
   keywords: 'APK keuring Cuijk, APK Cuijk, APK keuring kosten, APK termijn, auto keuring Cuijk, APK garage Cuijk',
   openGraph: {
     title: 'APK Keuring Cuijk - Alles Wat Je Moet Weten | Car Store Cuijk',
-    description: 'APK keuring in Cuijk vanaf €29.95. Zonder afspraak, directe uitslag, garantie.',
+    description: 'APK keuring in Cuijk vanaf €49.99. Zonder afspraak, directe uitslag, garantie.',
     type: 'article',
     locale: 'nl_NL',
     siteName: 'Car Store Cuijk',
@@ -22,7 +22,7 @@ const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "APK Keuring Cuijk - Alles Wat Je Moet Weten",
-  "description": "APK keuring in Cuijk vanaf €29.95. Zonder afspraak, directe uitslag, garantie.",
+  "description": "APK keuring in Cuijk vanaf €49.99. Zonder afspraak, directe uitslag, garantie.",
   "author": {
     "@type": "Organization",
     "name": "Car Store Cuijk"
@@ -102,7 +102,7 @@ export default function APKKeuringCuijkPage() {
 
               <h2 className="text-2xl font-bold text-white mt-12 mb-6">APK Kosten in Cuijk</h2>
               <p className="text-white/60 leading-relaxed mb-6">
-                Bij Car Store Cuijk betaal je voor een APK keuring slechts <strong>€29,95</strong>. 
+                Bij Car Store Cuijk betaal je voor een APK keuring slechts <strong>€49,99</strong>. 
                 Dit is een all-in prijs zonder verborgen kosten. Heb je een aanhanger of bestelbus? 
                 Neem dan contact met ons op voor de specifieke tarieven.
               </p>
@@ -113,7 +113,7 @@ export default function APKKeuringCuijkPage() {
                     <h3 className="text-lg font-semibold text-white">APK Keuring Cuijk</h3>
                     <p className="text-white/60">Inclusief administratiekosten</p>
                   </div>
-                  <div className="text-4xl font-bold text-[#c8102e]">€29,95</div>
+                  <div className="text-4xl font-bold text-[#c8102e]">€49,99</div>
                 </div>
               </div>
 
@@ -273,7 +273,7 @@ export default function APKKeuringCuijkPage() {
               <div className="bg-gradient-to-r from-[#c8102e]/20 to-[#1a1a1a] rounded-2xl p-8 text-center border border-[#c8102e]/30">
                 <h3 className="text-2xl font-bold text-white mb-4">APK Keuring Nodig in Cuijk?</h3>
                 <p className="text-white/60 mb-6 max-w-xl mx-auto">
-                  Kom langs bij Car Store Cuijk voor je APK keuring. Vanaf €29,95, zonder afspraak, 
+                  Kom langs bij Car Store Cuijk voor je APK keuring. Vanaf €49,99, zonder afspraak, 
                   direct geholpen!
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

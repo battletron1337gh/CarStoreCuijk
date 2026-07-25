@@ -231,9 +231,9 @@ const fallbackReviews: Review[] = [
 
 const fallbackStats: ReviewStats = {
   gemiddelde: 5.0,
-  totaal: 168,
+  totaal: 175,
   verdeling: {
-    vijfSterren: 168,
+    vijfSterren: 175,
     vierSterren: 0,
     drieSterren: 0,
     tweeSterren: 0,
@@ -243,7 +243,7 @@ const fallbackStats: ReviewStats = {
 
 const fallbackTrustpilotStats = {
   gemiddelde: 4.7,
-  totaal: 25,
+  totaal: 26,
 };
 
 // Lees cache van localStorage (client-side only)

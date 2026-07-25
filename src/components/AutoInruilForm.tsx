@@ -2,9 +2,9 @@
 
 import { useState, useRef } from 'react';
 import { Send, CheckCircle, Loader2, User, Mail, Phone, MessageSquare, Car, Calendar, Gauge, Fuel, Settings2, Euro, AlertCircle } from 'lucide-react';
-// import emailjs from '@emailjs/browser'; // EMAILJS UITGESCHAKELD - Gebruik SMTP
-// import { EMAILJS_CONFIG } from '@/lib/emailjs'; // EMAILJS UITGESCHAKELD
-import { sendEmail } from '@/lib/email'; // SMTP EMAIL SERVICE
+
+import HCaptcha from '@hcaptcha/react-hcaptcha';
+import { HCAPTCHA_CONFIG } from '@/lib/hcaptcha';
 
 interface FormData {
   typeAanvraag: string;
@@ -32,6 +32,7 @@ interface FormErrors {
   kilometerstand?: string;
   brandstof?: string;
   transmissie?: string;
+  hcaptcha?: string;
 }
 
 interface AutoInruilFormProps {
@@ -41,6 +42,7 @@ interface AutoInruilFormProps {
 
 export default function AutoInruilForm({ onSuccess, defaultType = '' }: AutoInruilFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
+  const hcaptchaRef = useRef<HCaptcha>(null);
   const [formData, setFormData] = useState<FormData>({
     typeAanvraag: defaultType,
     naam: '',
@@ -59,6 +61,7 @@ export default function AutoInruilForm({ onSuccess, defaultType = '' }: AutoInru
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [hcaptchaToken, setHcaptchaToken] = useState<string | null>(null);
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -109,6 +112,10 @@ export default function AutoInruilForm({ onSuccess, defaultType = '' }: AutoInru
       newErrors.transmissie = 'Transmissie is verplicht';
     }
 
+    if (!hcaptchaToken) {
+      newErrors.hcaptcha = 'Bevestig dat u geen robot bent';
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -122,8 +129,6 @@ export default function AutoInruilForm({ onSuccess, defaultType = '' }: AutoInru
     setIsSubmitting(true);
 
     try {
-      // SMTP EMAIL SERVICE (nieuwe methode)
-      // Bepaal het onderwerp op basis van type aanvraag
       const getOnderwerp = (type: string) => {
         switch (type) {
           case 'Auto verkopen (directe inkoop)':
@@ -137,70 +142,33 @@ export default function AutoInruilForm({ onSuccess, defaultType = '' }: AutoInru
         }
       };
 
-      await sendEmail({
-        type_aanvraag: formData.typeAanvraag,
-        naam: formData.naam,
-        email: formData.email,
-        telefoon: formData.telefoon,
-        kenteken: formData.kenteken,
-        merk_model: formData.merkModel,
-        bouwjaar: formData.bouwjaar,
-        kilometerstand: formData.kilometerstand,
-        brandstof: formData.brandstof,
-        transmissie: formData.transmissie,
-        gewenste_prijs: formData.gewenstePrijs || 'Niet opgegeven',
-        opmerkingen: formData.opmerkingen || 'Geen opmerkingen',
-        onderwerp: getOnderwerp(formData.typeAanvraag),
-        to_email: 'info@carstorecuijk.nl',
+      const response = await fetch('/api/send-email.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type_aanvraag: formData.typeAanvraag,
+          naam: formData.naam,
+          email: formData.email,
+          telefoon: formData.telefoon,
+          kenteken: formData.kenteken,
+          merk_model: formData.merkModel,
+          bouwjaar: formData.bouwjaar,
+          kilometerstand: formData.kilometerstand,
+          brandstof: formData.brandstof,
+          transmissie: formData.transmissie,
+          gewenste_prijs: formData.gewenstePrijs || 'Niet opgegeven',
+          opmerkingen: formData.opmerkingen || 'Geen opmerkingen',
+          onderwerp: getOnderwerp(formData.typeAanvraag),
+          to_email: 'info@carstorecuijk.nl',
+          hcaptcha_token: hcaptchaToken,
+        }),
       });
 
-      /* 
-      // EMAILJS ALTERNATIEF (uitgeschakeld)
-      // Uncomment deze code om EmailJS te gebruiken in plaats van SMTP:
-      
-      if (!EMAILJS_CONFIG.SERVICE_ID || !EMAILJS_CONFIG.TEMPLATE_ID_INKOOP || !EMAILJS_CONFIG.PUBLIC_KEY) {
-        setSubmitError('EmailJS is niet correct geconfigureerd. Neem contact op met de beheerder.');
-        return;
-      }
-      
-      // Bepaal het onderwerp op basis van type aanvraag
-      const getOnderwerp = (type: string) => {
-        switch (type) {
-          case 'Auto verkopen (directe inkoop)':
-            return 'Auto verkoop aanbod';
-          case 'Auto inruilen':
-            return 'Auto inruil aanbod';
-          case 'Consignatie (verkopen via ons)':
-            return 'Auto consignatie aanbod';
-          default:
-            return 'Auto aanbod';
-        }
-      };
-      
-      const templateParams = {
-        type_aanvraag: formData.typeAanvraag,
-        naam: formData.naam,
-        email: formData.email,
-        telefoon: formData.telefoon,
-        kenteken: formData.kenteken,
-        merk_model: formData.merkModel,
-        bouwjaar: formData.bouwjaar,
-        kilometerstand: formData.kilometerstand,
-        brandstof: formData.brandstof,
-        transmissie: formData.transmissie,
-        gewenste_prijs: formData.gewenstePrijs || 'Niet opgegeven',
-        opmerkingen: formData.opmerkingen || 'Geen opmerkingen',
-        onderwerp: getOnderwerp(formData.typeAanvraag),
-        to_email: 'info@carstorecuijk.nl',
-      };
+      const data = await response.json();
 
-      await emailjs.send(
-        EMAILJS_CONFIG.SERVICE_ID,
-        EMAILJS_CONFIG.TEMPLATE_ID_INKOOP,
-        templateParams,
-        EMAILJS_CONFIG.PUBLIC_KEY
-      );
-      */
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to send email');
+      }
 
       setIsSubmitting(false);
       setIsSubmitted(true);
@@ -223,8 +191,18 @@ export default function AutoInruilForm({ onSuccess, defaultType = '' }: AutoInru
     }
   };
 
+  const onHCaptchaVerify = (token: string) => {
+    setHcaptchaToken(token);
+    if (errors.hcaptcha) {
+      setErrors(prev => ({ ...prev, hcaptcha: undefined }));
+    }
+  };
+
+  const onHCaptchaExpire = () => {
+    setHcaptchaToken(null);
+  };
+
   if (isSubmitted) {
-    // Bepaal het succes bericht op basis van type aanvraag
     const getSuccessMessage = () => {
       switch (formData.typeAanvraag) {
         case 'Auto verkopen (directe inkoop)':
@@ -279,6 +257,8 @@ export default function AutoInruilForm({ onSuccess, defaultType = '' }: AutoInru
               opmerkingen: '',
             });
             setSubmitError(null);
+            setHcaptchaToken(null);
+            hcaptchaRef.current?.resetCaptcha();
           }}
           className="text-[#c8102e] hover:underline font-medium"
         >
@@ -290,7 +270,6 @@ export default function AutoInruilForm({ onSuccess, defaultType = '' }: AutoInru
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="bg-[#1a1a1a] rounded-2xl p-8 border border-white/5" id="formulier">
-      {/* Dynamische titel op basis van type aanvraag */}
       {(() => {
         const getTitle = () => {
           switch (formData.typeAanvraag) {
@@ -613,10 +592,24 @@ export default function AutoInruilForm({ onSuccess, defaultType = '' }: AutoInru
           </div>
         </div>
 
+        {/* hCaptcha */}
+        <div className="flex justify-center">
+          <HCaptcha
+            ref={hcaptchaRef}
+            sitekey={HCAPTCHA_CONFIG.SITE_KEY}
+            onVerify={onHCaptchaVerify}
+            onExpire={onHCaptchaExpire}
+            theme="dark"
+          />
+        </div>
+        {errors.hcaptcha && (
+          <p className="text-red-500 text-sm text-center">{errors.hcaptcha}</p>
+        )}
+
         {/* Submit Button */}
         <button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isSubmitting || !hcaptchaToken}
           className="w-full flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] disabled:bg-[#c8102e]/50 text-white py-4 rounded-xl font-semibold transition-all disabled:cursor-not-allowed"
         >
           {isSubmitting ? (

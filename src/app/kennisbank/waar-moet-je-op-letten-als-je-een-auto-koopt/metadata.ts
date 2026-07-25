@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Waar Moet Je Op Letten Als Je Een Auto Koopt? | Car Store Cuijk',
-  description: 'Een auto kopen? Ontdek waar je op moet letten bij de aankoop van een tweedehands auto. Tips over onderhoudshistorie, proefrit, prijs en documenten. 168 reviews, 5 sterren.',
+  description: 'Een auto kopen? Ontdek waar je op moet letten bij de aankoop van een tweedehands auto. Tips over onderhoudshistorie, proefrit, prijs en documenten. 175 reviews, 5 sterren.',
   keywords: 'auto kopen tips, tweedehands auto kopen, waar op letten auto kopen, auto aankoop checklist, occasion kopen advies, auto kopen wat checken, 1ste eigenaar auto kopen',
   alternates: {
     canonical: '/kennisbank/waar-moet-je-op-letten-als-je-een-auto-koopt',

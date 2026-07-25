@@ -1,14 +1,32 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import AutoInruilForm from '@/components/AutoInruilForm';
-import OccasionsFilter from './OccasionsFilter';
+import OccasionsFilterV2 from './OccasionsFilterV2';
+import { loadVweCarsFromFile } from '@/data/vwe-cars-static';
+import fs from 'fs';
+import path from 'path';
 
 export const metadata = {
   title: 'Occasions | Car Store Cuijk - Tweedehands Auto\'s',
   description: 'Bekijk ons actuele aanbod occasions in Cuijk. Alle auto\'s worden geleverd met garantie en zijn uitgebreid gecontroleerd. RDW erkend met 5 sterren op Google.',
 };
 
-export default function OccasionsPage() {
+export default async function OccasionsPage() {
+  // Load cars server-side during build
+  const cars = await loadVweCarsFromFile();
+  const availableCars = cars.filter(car => car.status === 'beschikbaar');
+
+  // Write a public JSON snapshot that the client can refresh from at runtime
+  try {
+    const publicDir = path.join(process.cwd(), 'public');
+    fs.writeFileSync(
+      path.join(publicDir, 'vwe-voorraad-live.json'),
+      JSON.stringify(availableCars)
+    );
+  } catch (e) {
+    console.error('Failed to write vwe-voorraad-live.json:', e);
+  }
+
   return (
     <>
       <Header />
@@ -30,10 +48,10 @@ export default function OccasionsPage() {
           </div>
         </section>
 
-        {/* Filter Section */}
-        <section className="py-8 lg:py-12 bg-[#0a0a0a]">
+        {/* Occasions Filter - Server loaded */}
+        <section className="py-12 lg:py-16 bg-[#0a0a0a]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <OccasionsFilter />
+            <OccasionsFilterV2 cars={availableCars} />
           </div>
         </section>
 
@@ -50,7 +68,7 @@ export default function OccasionsPage() {
                   Al onze 1e eigenaar autos worden grondig gecontroleerd voordat ze in de verkoop gaan.
                 </p>
                 <p className="text-white/60">
-                  Wij zijn RDW erkend met 168 reviews en 5 sterren op Google reviews. Dat betekent garantie op uw aankoop 
+                  Wij zijn RDW erkend met 175 reviews en 5 sterren op Google reviews. Dat betekent garantie op uw aankoop 
                   en vertrouwde service. Daarnaast bieden wij mogelijkheden voor financiering en verzekering.
                 </p>
               </div>

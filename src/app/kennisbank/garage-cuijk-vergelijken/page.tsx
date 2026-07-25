@@ -6,11 +6,11 @@ import { Clock, ArrowLeft, ArrowRight, CheckCircle, Phone, Star, MapPin, Wrench,
 
 export const metadata: Metadata = {
   title: 'Garage Cuijk Vergelijken - Waarom Car Store? | Car Store Cuijk',
-  description: 'Op zoek naar een betrouwbare garage in Cuijk? Ontdek waarom Car Store Cuijk de beste keuze is. 168+ reviews, 5 sterren, eerlijke prijzen en persoonlijke service.',
+  description: 'Op zoek naar een betrouwbare garage in Cuijk? Ontdek waarom Car Store Cuijk de beste keuze is. 175++ reviews, 5 sterren, eerlijke prijzen en persoonlijke service.',
   keywords: 'garage cuijk, autobedrijf cuijk, garage vergelijken cuijk, auto onderhoud cuijk, betrouwbare garage cuijk, car store cuijk ervaringen',
   openGraph: {
     title: 'Garage Cuijk Vergelijken - Waarom Car Store? | Car Store Cuijk',
-    description: 'Op zoek naar een betrouwbare garage in Cuijk? Ontdek waarom Car Store Cuijk de beste keuze is. 168+ reviews, 5 sterren.',
+    description: 'Op zoek naar een betrouwbare garage in Cuijk? Ontdek waarom Car Store Cuijk de beste keuze is. 175++ reviews, 5 sterren.',
     type: 'article',
     locale: 'nl_NL',
     siteName: 'Car Store Cuijk',
@@ -163,10 +163,10 @@ export default function GarageVergelijkenPage() {
                 waarop we ons onderscheiden van andere garages in Cuijk:
               </p>
 
-              <h3 className="text-xl font-semibold text-white mt-8 mb-4">1. Uitstekende Reviews: 168+ Klanten Beoordelen Ons Met 5 Sterren</h3>
+              <h3 className="text-xl font-semibold text-white mt-8 mb-4">1. Uitstekende Reviews: 175++ Klanten Beoordelen Ons Met 5 Sterren</h3>
               <p className="text-white/60 leading-relaxed mb-6">
                 Niets zegt meer over een garage dan de ervaringen van eerdere klanten. 
-                Car Store Cuijk is trots op <strong>meer dan 168 positieve reviews</strong> waarin klanten 
+                Car Store Cuijk is trots op <strong>meer dan 175+ positieve reviews</strong> waarin klanten 
                 ons gemiddeld beoordelen met 5 sterren. Onze klanten waarderen vooral onze eerlijkheid, 
                 snelle service en de persoonlijke aandacht die ze krijgen.
               </p>
@@ -321,7 +321,7 @@ export default function GarageVergelijkenPage() {
               <div className="bg-gradient-to-r from-[#c8102e]/20 to-[#1a1a1a] rounded-2xl p-8 text-center border border-[#c8102e]/30">
                 <h3 className="text-2xl font-bold text-white mb-4">Kies voor Car Store Cuijk</h3>
                 <p className="text-white/60 mb-6 max-w-xl mx-auto">
-                  Ervaar zelf waarom meer dan 168 klanten ons beoordelen met 5 sterren. 
+                  Ervaar zelf waarom meer dan 175+ klanten ons beoordelen met 5 sterren. 
                   Kom langs of neem contact op voor een vrijblijvende prijsopgave.
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

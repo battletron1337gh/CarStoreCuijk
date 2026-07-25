@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import CarCard from '@/components/CarCard';
-import { vweCars } from '@/data/vwe-cars';
+import { fetchVweCars, type Car } from '@/data/vwe-cars';
+import { useState, useEffect } from 'react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -18,10 +19,33 @@ const containerVariants = {
 };
 
 export default function FeaturedCars() {
+  const [cars, setCars] = useState<Car[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchVweCars().then(data => {
+      setCars(data);
+      setLoading(false);
+    });
+  }, []);
+
   // Get only available cars, sorted by newest (highest year), show only 3
-  const featuredCars = vweCars
+  const featuredCars = cars
+    .filter(car => car.status === 'beschikbaar')
     .sort((a, b) => b.bouwjaar - a.bouwjaar)
     .slice(0, 3);
+
+  if (loading) {
+    return (
+      <section id="occasions" className="py-20 lg:py-32 bg-[#0d0d0d]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="animate-pulse text-white/60">Occasions laden...</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="occasions" className="py-20 lg:py-32 bg-[#0d0d0d]">

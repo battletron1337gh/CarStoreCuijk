@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Kennisbank | Tips & Advies over Auto\'s | Car Store Cuijk',
-  description: 'Handige tips en advies over auto kopen, auto verkopen, APK keuring en meer. Lees onze kennisbank artikelen voor betrouwbaar advies van Car Store Cuijk. 168 reviews, 5 sterren.',
+  description: 'Handige tips en advies over auto kopen, auto verkopen, APK keuring en meer. Lees onze kennisbank artikelen voor betrouwbaar advies van Car Store Cuijk. 175 reviews, 5 sterren.',
   keywords: 'auto kopen tips, auto verkopen tips, APK keuring, tweedehands auto advies, auto onderhoud tips, Car Store Cuijk kennisbank, 1ste eigenaar autos tips',
   alternates: {
     canonical: '/kennisbank',

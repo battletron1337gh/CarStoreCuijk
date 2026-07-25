@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Koplampen Polijsten Cuijk | Vanaf €59 | UV Coating',
-  description: 'Koplampen polijsten in Cuijk vanaf €59. Ook voor 1ste eigenaar autos. Vergeelde koplampen weer als nieuw. UV coating, 6 maanden garantie. 168 reviews, 5 sterren. Bel nu!',
+  description: 'Koplampen polijsten in Cuijk vanaf €59. Ook voor 1ste eigenaar autos. Vergeelde koplampen weer als nieuw. UV coating, 6 maanden garantie. 175 reviews, 5 sterren. Bel nu!',
   keywords: 'koplampen polijsten Cuijk, 1ste eigenaar auto onderhoud, koplampen herstellen, vergeelde koplampen, koplamp renovatie, koplamp coating, auto koplampen, koplamp polijsten',
   alternates: {
     canonical: '/koplampen-polijsten',
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Koplampen Polijsten Cuijk | Vanaf €59 | UV Coating',
-    description: 'Vergeelde koplampen weer helder. UV coating, 6 maanden garantie. 168 reviews, 5 sterren.',
+    description: 'Vergeelde koplampen weer helder. UV coating, 6 maanden garantie. 175 reviews, 5 sterren.',
     type: 'website',
     locale: 'nl_NL',
     url: 'https://www.carstorecuijk.nl/koplampen-polijsten',

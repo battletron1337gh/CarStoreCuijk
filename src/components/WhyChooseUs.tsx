@@ -22,7 +22,7 @@ const reasons = [
   {
     icon: Award,
     title: 'Erkend',
-    description: 'RDW erkend. 168 reviews, 5 sterren op Google reviews.'
+    description: 'RDW erkend. 175 reviews, 5 sterren op Google reviews.'
   },
   {
     icon: Wrench,

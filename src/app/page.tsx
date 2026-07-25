@@ -12,9 +12,11 @@ import WhyChooseUs from '@/components/WhyChooseUs';
 import ReviewMarquee from '@/components/ReviewMarquee';
 import CTASection from '@/components/CTASection';
 import Image from 'next/image';
-import { cars as staticCars, contactInfo } from '@/data/cars';
+import { contactInfo } from '@/data/cars';
 import { reviewStats } from '@/data/google-reviews';
 import { useCars } from '@/hooks/useCars';
+
+
 
 // ==================== ORIGINELE HERO (exact zoals /page.tsx) ====================
 const heroContainerVariants = {
@@ -41,22 +43,66 @@ const heroItemVariants = {
 };
 
 function Hero() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.play().catch(() => {
+        // Autoplay was prevented, try again after user interaction
+        const playVideo = () => {
+          video.play();
+          document.removeEventListener('touchstart', playVideo);
+          document.removeEventListener('click', playVideo);
+        };
+        document.addEventListener('touchstart', playVideo, { once: true });
+        document.addEventListener('click', playVideo, { once: true });
+      });
+    }
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-[#0a0a0a] overflow-hidden">
+      {/* Video Background — desktop only, mobile gets optimized poster */}
+      <div className="absolute inset-0 z-0">
+        {/* Mobile: static poster (no video download, saves data) */}
+        <div
+          className="absolute inset-0 sm:hidden bg-cover bg-center scale-[0.92]"
+          style={{ backgroundImage: 'url(/images/hero-poster.jpg)' }}
+        />
+        {/* Desktop: optimized WebM + MP4 fallback */}
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          webkit-playsinline="true"
+          className="hidden sm:block absolute inset-0 w-full h-full object-cover object-center scale-[0.92] sm:scale-100"
+          poster="/images/hero-poster.jpg"
+          preload="metadata"
+        >
+          <source src="/videos/hero-video.webm" type="video/webm" />
+          <source src="/videos/hero-video.mp4" type="video/mp4" />
+        </video>
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-black/40" />
+      </div>
+      
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-transparent to-[#0a0a0a]/90" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/80 via-transparent to-[#0a0a0a]/90 z-[1]" />
       
       {/* Accent Lines - Hidden on mobile */}
-      <div className="absolute top-0 left-1/4 w-px h-40 bg-gradient-to-b from-transparent via-[#c8102e]/50 to-transparent hidden sm:block" />
-      <div className="absolute bottom-0 right-1/3 w-px h-60 bg-gradient-to-b from-transparent via-[#c8102e]/30 to-transparent hidden sm:block" />
+      <div className="absolute top-0 left-1/4 w-px h-40 bg-gradient-to-b from-transparent via-[#c8102e]/50 to-transparent hidden sm:block z-[2]" />
+      <div className="absolute bottom-0 right-1/3 w-px h-60 bg-gradient-to-b from-transparent via-[#c8102e]/30 to-transparent hidden sm:block z-[2]" />
       
       {/* Glow Effects - Smaller on mobile */}
-      <div className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-96 sm:h-96 bg-[#c8102e]/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-96 sm:h-96 bg-[#c8102e]/5 rounded-full blur-3xl" />
+      <div className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-96 sm:h-96 bg-[#c8102e]/10 rounded-full blur-3xl z-[2]" />
+      <div className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-96 sm:h-96 bg-[#c8102e]/5 rounded-full blur-3xl z-[2]" />
 
       {/* Content */}
       <motion.div 
-        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32 text-center"
+        className="relative z-[3] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32 text-center"
         variants={heroContainerVariants}
         initial="hidden"
         animate="visible"
@@ -65,8 +111,8 @@ function Hero() {
           variants={heroItemVariants}
           className="inline-flex items-center gap-2 bg-[#c8102e]/10 border border-[#c8102e]/30 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-6 sm:mb-8"
         >
-          <span className="w-2 h-2 bg-[#c8102e] rounded-full animate-pulse" />
-          <span className="text-white/80 text-xs sm:text-sm font-medium">Garage open tot 22:00 - Altijd bereikbaar voor spoed</span>
+          <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+          <span className="text-white/80 text-xs sm:text-sm font-medium">Bereikbaar tot 22:00 · Altijd bereikbaar voor spoed</span>
         </motion.div>
 
         <motion.h1
@@ -82,11 +128,11 @@ function Hero() {
           variants={heroItemVariants}
           className="text-base sm:text-xl text-white/50 max-w-2xl mx-auto mb-8 sm:mb-10 px-2 sm:px-0"
         >
-          Ruim aanbod tweedehands auto's en gebruikte auto's van alle merken. 
-          Garage open tot 22:00, bereikbaar voor spoed reparatie. Auto inkoop, onderhoud, reparatie en airco vullen.
+          Ruim aanbod tweedehands auto's en gebruikte auto's van alle merken.
+          Bereikbaar tot 22:00 voor spoed reparatie. Showroom: 07:30–18:00 (daarna op afspraak). Auto inkoop, onderhoud, reparatie en airco vullen.
         </motion.p>
 
-        {/* Review Stats Badge - Stacked on mobile */}
+        {/* Review Stats Badge - Google only */}
         <motion.div
           variants={heroItemVariants}
           className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-8 sm:mb-10"
@@ -99,17 +145,6 @@ function Hero() {
             <div className="h-4 w-px bg-white/20" />
             <div className="text-white/60 text-sm">
               <span className="font-medium text-white">{reviewStats.totaal}</span> Google reviews
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 sm:px-5 sm:py-2.5">
-            <div className="flex items-center gap-1">
-              <Star className="w-4 h-4 text-[#c8102e] fill-[#c8102e]" />
-              <span className="text-white font-bold">4.7</span>
-            </div>
-            <div className="h-4 w-px bg-white/20" />
-            <div className="text-white/60 text-sm">
-              <span className="font-medium text-white">25</span> Trustpilot reviews
             </div>
           </div>
         </motion.div>
@@ -149,7 +184,7 @@ function Hero() {
           <span className="hidden sm:block text-white/20">•</span>
           <span className="text-center sm:text-left">{contactInfo.adres}, {contactInfo.plaats}</span>
           <span className="hidden sm:block text-white/20">•</span>
-          <span className="hidden sm:inline">Open tot 22:00</span>
+          <span className="hidden sm:inline">Bereikbaar tot 22:00</span>
         </motion.div>
       </motion.div>
 
@@ -159,16 +194,14 @@ function Hero() {
 
 
 
-// ==================== CAR MARQUEE (swipe bar) ====================
-function CarMarqueeSection() {
+// ==================== FEATURED CARS (3 uitgelicht) ====================
+function FeaturedCarsSection() {
   const { cars: dbCars, isLoading } = useCars();
-  const availableCars = dbCars.filter(car => car.afbeeldingen.length > 0 && car.status === 'beschikbaar').slice(0, 8);
-  const carsMulti = [...availableCars, ...availableCars, ...availableCars, ...availableCars, ...availableCars, ...availableCars];
-  
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isPaused, setIsPaused] = useState(false);
-  const animationRef = useRef<number | undefined>(undefined);
-  const scrollPos = useRef(0);
+  // Toon de 3 duurste beschikbare auto's
+  const featuredCars = dbCars
+    .filter(car => car.afbeeldingen.length > 0 && car.status === 'beschikbaar')
+    .sort((a, b) => b.prijs - a.prijs)
+    .slice(0, 3);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('nl-NL', {
@@ -178,84 +211,51 @@ function CarMarqueeSection() {
     }).format(price);
   };
 
-  useEffect(() => {
-    const animate = () => {
-      if (!isPaused && containerRef.current) {
-        scrollPos.current += 1; // Slower on mobile
-        
-        const maxScroll = containerRef.current.scrollWidth / 2;
-        if (scrollPos.current >= maxScroll) {
-          scrollPos.current = 0;
-        }
-        
-        containerRef.current.scrollLeft = scrollPos.current;
-      }
-      animationRef.current = requestAnimationFrame(animate);
-    };
-    
-    animationRef.current = requestAnimationFrame(animate);
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
-  }, [isPaused]);
-
-  const handleTouchStart = () => setIsPaused(true);
-  const handleTouchEnd = () => {
-    if (containerRef.current) {
-      scrollPos.current = containerRef.current.scrollLeft;
-    }
-    setIsPaused(false);
-  };
+  if (isLoading || featuredCars.length === 0) {
+    return null;
+  }
 
   return (
-    <section className="py-6 sm:py-16 bg-[#0a0a0a] overflow-hidden border-y border-white/5">
-      <div className="mb-3 sm:mb-8 text-center px-4">
-        <h3 className="text-sm sm:text-xl font-semibold text-white/80">
-          Bekijk al onze occasions
-        </h3>
-        <p className="text-white/40 text-xs sm:text-sm mt-1">
-          Raak aan om te pauzeren, swipe om te scrollen
-        </p>
-      </div>
+    <section className="py-12 sm:py-20 bg-[#0a0a0a] border-y border-white/5">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-8 sm:mb-12">
+          <span className="inline-flex items-center gap-2 text-[#c8102e] font-semibold text-sm uppercase tracking-wider mb-4">
+            Uitgelicht
+          </span>
+          <h2 className="text-2xl sm:text-4xl font-bold text-white mb-4">
+            Onze Top Occasions
+          </h2>
+          <p className="text-white/50 max-w-2xl mx-auto">
+            Bekijk onze nieuwste aanbod. Alle auto's worden geleverd met garantie.
+          </p>
+        </div>
 
-      <div className="relative">
-        <div className="absolute left-0 top-0 bottom-0 w-4 sm:w-16 lg:w-32 bg-gradient-to-r from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-4 sm:w-16 lg:w-32 bg-gradient-to-l from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
-
-        <div 
-          ref={containerRef}
-          className="flex overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing pb-2 sm:pb-4"
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          style={{ scrollBehavior: 'auto', WebkitOverflowScrolling: 'touch' }}
-        >
-          {carsMulti.map((car, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+          {featuredCars.map((car, index) => (
             <Link 
-              key={`${car.id}-${index}`} 
+              key={car.id} 
               href={`/occasions/${car.id}`}
-              className="group block flex-shrink-0 w-[160px] sm:w-[240px] lg:w-[280px] mx-1.5 sm:mx-2 lg:mx-3"
+              className="group block"
             >
-              <div className="bg-[#1a1a1a] rounded-lg sm:rounded-2xl overflow-hidden border border-white/10 hover:border-[#c8102e]/50 transition-all duration-300 hover:-translate-y-1 sm:hover:-translate-y-2">
+              <div className="bg-[#1a1a1a] rounded-2xl overflow-hidden border border-white/10 hover:border-[#c8102e]/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-[#c8102e]/10">
                 <div className="relative aspect-[4/3] overflow-hidden bg-[#0d0d0d]">
                   <Image
                     src={car.afbeeldingen[0] || '/cars/placeholder.svg'}
                     alt={`${car.merk} ${car.model} - Occasion te koop bij Car Store Cuijk`}
                     fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                    sizes="(max-width: 640px) 160px, (max-width: 1024px) 240px, 280px"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    loading={index === 0 ? "eager" : "lazy"}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-transparent to-transparent" />
                 </div>
 
-                <div className="p-2 sm:p-4">
-                  <h3 className="text-xs sm:text-base lg:text-lg font-bold text-white group-hover:text-[#c8102e] transition-colors line-clamp-1 mb-0.5 sm:mb-1">
+                <div className="p-5">
+                  <h3 className="text-lg font-bold text-white group-hover:text-[#c8102e] transition-colors line-clamp-1 mb-1">
                     {car.merk} {car.model}
                   </h3>
-                  <p className="text-sm sm:text-xl lg:text-2xl font-bold text-[#c8102e]">
+                  <p className="text-sm text-white/50 mb-3">{car.bouwjaar} • {car.kilometerstand?.toLocaleString('nl-NL')} km</p>
+                  <p className="text-2xl font-bold text-[#c8102e]">
                     {formatPrice(car.prijs)}
                   </p>
                 </div>
@@ -263,17 +263,17 @@ function CarMarqueeSection() {
             </Link>
           ))}
         </div>
-      </div>
 
-      <style jsx>{`
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
+        <div className="text-center mt-10">
+          <Link
+            href="/occasions"
+            className="inline-flex items-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:shadow-2xl hover:shadow-[#c8102e]/25"
+          >
+            Bekijk Alle Occasions
+            <ArrowRight className="w-5 h-5" />
+          </Link>
+        </div>
+      </div>
     </section>
   );
 }
@@ -282,24 +282,24 @@ function CarMarqueeSection() {
 const featuredTips = [
   {
     id: 1,
-    title: 'APK Keuring: Wat wordt er gecontroleerd?',
-    excerpt: 'Een complete checklist van alle onderdelen die tijdens de APK worden geïnspecteerd en hoe u uw auto kunt voorbereiden.',
+    title: 'APK Keuring Cuijk - Direct Terecht',
+    excerpt: 'RDW erkende APK keuring in Cuijk. Geen wachttijd, vaak zelfde week terecht. Direct afspraak maken online of bellen.',
     icon: Shield,
-    href: '/kennisbank/apk-keuring-wat-wordt-er-gecontroleerd',
+    href: '/apk-keuring',
   },
   {
     id: 2,
-    title: 'Occasion Kopen: De Ultieme Checklist',
-    excerpt: 'Waar moet u op letten bij het kopen van een tweedehands auto? Onze experts delen hun beste tips en valkuilen.',
+    title: 'Occasions Kopen - Bekijk Ons Aanbod',
+    excerpt: 'Ruim aanbod tweedehands auto&apos;s in Cuijk. Alle merken, met garantie. Bekijk direct onze occasions online.',
     icon: FileText,
-    href: '/kennisbank/waar-moet-je-op-letten-als-je-een-auto-koopt',
+    href: '/occasions',
   },
   {
     id: 3,
-    title: 'Auto Verkopen: Tips voor de Beste Prijs',
-    excerpt: 'Hoe bereidt u uw auto voor op verkoop? Tips over prijsbepaling, advertenties en papierwerk.',
+    title: 'Auto Verkopen - Vrijblijvende Taxatie',
+    excerpt: 'Auto verkopen in Cuijk? Wij kopen uw auto direct of verkopen deze in consignatie. Vrijblijvende taxatie aanvragen.',
     icon: Lightbulb,
-    href: '/kennisbank/waar-moet-je-op-letten-als-je-een-auto-verkoopt',
+    href: '/auto-inkoop',
   },
 ];
 
@@ -434,6 +434,100 @@ function TipsSection() {
 
 
 
+// ==================== SEO CONTENT SECTION ====================
+function SEOContentSection() {
+  return (
+    <section className="py-16 lg:py-24 bg-[#0d0d0d] border-t border-white/5">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+          {/* Left Column - Services */}
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
+              Auto Garage Cuijk - <span className="text-[#c8102e]">Alle Diensten</span>
+            </h2>
+            <div className="space-y-4 text-white/60">
+              <p>
+                Bij Car Store Cuijk bent u aan het juiste adres voor <strong className="text-white">auto inkoop</strong> en <strong className="text-white">auto verkoop</strong>. 
+                Wij zijn uw betrouwbare partner voor alle auto diensten in Cuijk en omgeving.
+              </p>
+              <p>
+                Onze <strong className="text-white">RDW erkende garage</strong> biedt professionele <strong className="text-white">APK check</strong>, 
+                <strong className="text-white"> diagnose</strong>, <strong className="text-white">onderhoud</strong> en <strong className="text-white">reparaties</strong>. 
+                Van distributieriem vervangen tot koppeling reparatie - wij doen het allemaal.
+              </p>
+              <p>
+                Daarnaast zijn wij gespecialiseerd in <strong className="text-white">airco vullen</strong> (R134a en R1234yf), 
+                <strong className="text-white"> bandenservice</strong>, en <strong className="text-white">koplampen polijsten</strong>. 
+                Kortom: alles voor uw auto onder één dak.
+              </p>
+            </div>
+          </div>
+
+          {/* Right Column - USPs */}
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
+              Waarom Car Store Cuijk? <span className="text-[#c8102e]">Onze USP's</span>
+            </h2>
+            <div className="space-y-4">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 bg-[#c8102e]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <span className="text-[#c8102e] font-bold">1</span>
+                </div>
+                <div>
+                  <h3 className="text-white font-semibold mb-1">Altijd Bereikbaar</h3>
+                  <p className="text-white/60 text-sm">Bereikbaar tot 22:00 voor spoed reparatie. Showroom: 07:30–18:00 (daarna op afspraak).</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 bg-[#c8102e]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <span className="text-[#c8102e] font-bold">2</span>
+                </div>
+                <div>
+                  <h3 className="text-white font-semibold mb-1">Geen Late Afspraken</h3>
+                  <p className="text-white/60 text-sm">Bijna altijd zelfde week terecht. Geen wachttijd van 3 weken zoals bij andere garages.</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 bg-[#c8102e]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <span className="text-[#c8102e] font-bold">3</span>
+                </div>
+                <div>
+                  <h3 className="text-white font-semibold mb-1">175+ Reviews, 5 Sterren</h3>
+                  <p className="text-white/60 text-sm">RDW erkend met uitstekende beoordelingen. Klanten waarderen onze service.</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 bg-[#c8102e]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <span className="text-[#c8102e] font-bold">4</span>
+                </div>
+                <div>
+                  <h3 className="text-white font-semibold mb-1">Specialisatie 1ste Eigenaar</h3>
+                  <p className="text-white/60 text-sm">Wij richten ons op 1ste eigenaar autos van alle merken. Kwaliteit staat voorop.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Local SEO - Areas */}
+        <div className="mt-16 pt-12 border-t border-white/5">
+          <h3 className="text-xl font-semibold text-white mb-4 text-center">
+            Wij zijn actief in <span className="text-[#c8102e]">Cuijk</span> en omgeving
+          </h3>
+          <p className="text-white/50 text-center max-w-3xl mx-auto">
+            Garage Cuijk • Auto onderhoud Cuijk • APK keuring Cuijk • Auto inkoop Cuijk • 
+            Auto verkoop Cuijk • Occasions Cuijk • Garage Boxmeer • Garage Grave • 
+            Auto reparatie Linden • Auto service Molenhoek
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ==================== MAIN PAGE ====================
 export default function HomeV5() {
   return (
@@ -446,8 +540,8 @@ export default function HomeV5() {
         {/* 2. Stats (origineel) */}
         <StatsSection />
         
-        {/* Car Marquee (swipe bar) */}
-        <CarMarqueeSection />
+        {/* Featured Cars - 3 duurste auto's */}
+        <FeaturedCarsSection />
         
         {/* Rest van originele home */}
         <WhyChooseUs />
@@ -455,6 +549,9 @@ export default function HomeV5() {
         
         {/* Handige Tips & Advies Sectie */}
         <TipsSection />
+        
+        {/* SEO Content voor betere ranking */}
+        <SEOContentSection />
         
         <ReviewMarquee />
         <CTASection />

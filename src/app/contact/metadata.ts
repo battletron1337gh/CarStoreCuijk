@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Contact | Garage Cuijk | Car Store - 22:00 Bereikbaar',
-  description: 'Neem contact op met Car Store Cuijk. Garage open tot 22:00, altijd bereikbaar voor spoed reparatie. Specialist in 1ste eigenaar autos. Bel of WhatsApp ons, ook na sluitingstijd. 168 reviews, 5 sterren.',
+  description: 'Neem contact op met Car Store Cuijk. Garage open tot 22:00, altijd bereikbaar voor spoed reparatie. Specialist in 1ste eigenaar autos. Bel of WhatsApp ons, ook na sluitingstijd. 175 reviews, 5 sterren.',
   keywords: 'contact Car Store Cuijk, garage open tot 22:00, 22:00 bereikbaar, spoed reparatie, reparatie na sluitingstijd, altijd bereikbaar voor spoed, 1ste eigenaar autos, auto inkoop Cuijk, auto verkopen Cuijk, garage Cuijk, adres Car Store Cuijk',
   alternates: {
     canonical: '/contact',

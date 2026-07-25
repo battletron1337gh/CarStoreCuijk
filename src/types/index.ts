@@ -19,8 +19,11 @@ export interface Car {
   co2?: string;
   kenteken?: string; // VWE koppeling
   vweId?: string; // VWE uniek ID
+  voertuignr?: string; // VWE voertuignummer voor detail pagina
   kleur?: string;
   vweData?: any; // Raw VWE data for detail page
+  createdAt?: string; // ISO date string, e.g. '2026-07-10'
+  soldAt?: string; // ISO date string when status is 'verkocht'
 }
 
 export interface Service {

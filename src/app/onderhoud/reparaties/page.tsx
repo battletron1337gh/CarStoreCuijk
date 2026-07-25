@@ -1,7 +1,14 @@
+import type { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Wrench, Phone, MessageCircle, CheckCircle, Clock, Shield, Car } from 'lucide-react';
 import { contactInfo } from '@/data/cars';
+
+export const metadata: Metadata = {
+  title: 'Auto Reparatie Cuijk | Garage voor Alle Merken | Car Store',
+  description: 'Auto reparatie in Cuijk - Distributieriem, koppeling, remmen, motor. Alle merken, RDW erkend. 175+ reviews, 5 sterren. Bel 06-87118768 voor een afspraak.',
+  keywords: 'auto reparatie Cuijk, garage Cuijk, auto reparatie, distributieriem vervangen, koppeling vervangen, remmen vervangen, motor reparatie, RDW erkend garage',
+};
 
 export default function ReparatiesPage() {
   const reparaties = [
@@ -137,7 +144,7 @@ export default function ReparatiesPage() {
               monteurs volgen regelmatig bijscholing.
             </p>
             <p className="text-white/60 mb-4">
-              Wij zijn RDW erkend met 168 reviews en 5 sterren op Google reviews. Of het nu gaat om een kleine reparatie 
+              Wij zijn RDW erkend met 175 reviews en 5 sterren op Google reviews. Of het nu gaat om een kleine reparatie 
               of een grote onderhoudsbeurt, wij staan voor u klaar. Wij werken met originele onderdelen of A-merk 
               alternatieven van hoge kwaliteit. Alle reparaties worden uitgevoerd volgens fabrieksvoorschriften.
             </p>

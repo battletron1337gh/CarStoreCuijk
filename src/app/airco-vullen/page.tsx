@@ -1,7 +1,14 @@
+import type { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Snowflake, Phone, MessageCircle, CheckCircle, Thermometer, Wind, AlertCircle } from 'lucide-react';
 import { contactInfo } from '@/data/cars';
+
+export const metadata: Metadata = {
+  title: 'Airco Vullen Cuijk | Airco Service & Onderhoud | Car Store',
+  description: 'Airco vullen in Cuijk vanaf €89. R134a en R1234yf koelmiddel. Professionele airco service, onderhoud en reparatie. Bel 06-87118768 voor een afspraak.',
+  keywords: 'airco vullen Cuijk, airco service Cuijk, airco onderhoud, R134a vullen, R1234yf vullen, auto airco bijvullen, airco reparatie Cuijk',
+};
 
 export default function AircoPage() {
   const diensten = [
@@ -171,7 +178,7 @@ export default function AircoPage() {
               Wij vullen uw airco met het juiste koelmiddel: R134a voor oudere auto's en R1234yf voor nieuwere modellen.
             </p>
             <p className="text-white/60 mb-4">
-              Wij zijn RDW erkend met 168 reviews en 5 sterren op Google reviews. Naast airco vullen bieden wij 
+              Wij zijn RDW erkend met 175 reviews en 5 sterren op Google reviews. Naast airco vullen bieden wij 
               ook complete airco service aan. Dit omvat lekdetectie, vervanging van de aircofilter, 
               reiniging van het systeem en controle van alle componenten. Zo voorkomt u storingen en houdt u 
               het systeem in topconditie.

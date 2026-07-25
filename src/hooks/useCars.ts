@@ -2,21 +2,33 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Car } from '@/types';
-import { vweCars } from '@/data/vwe-cars';
+import { fetchVweCars } from '@/data/vwe-cars';
 
 export function useCars() {
   const [cars, setCars] = useState<Car[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Load VWE cars from data/vehicles.json
-    setCars(vweCars);
-    setIsLoading(false);
+    // Load VWE cars from API
+    const loadCars = async () => {
+      setIsLoading(true);
+      try {
+        const loadedCars = await fetchVweCars();
+        setCars(loadedCars);
+      } catch (error) {
+        console.error('Error loading cars:', error);
+        setCars([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadCars();
   }, []);
 
-  const refresh = useCallback(() => {
-    // Refresh VWE cars (re-import)
-    setCars(vweCars);
+  const refresh = useCallback(async () => {
+    // Refresh VWE cars from API
+    const loadedCars = await fetchVweCars();
+    setCars(loadedCars);
   }, []);
 
   return {
@@ -32,9 +44,20 @@ export function useCar(id: string) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const found = vweCars.find((c) => c.id === id);
-    setCar(found || null);
-    setIsLoading(false);
+    const loadCar = async () => {
+      setIsLoading(true);
+      try {
+        const cars = await fetchVweCars();
+        const found = cars.find((c) => c.id === id);
+        setCar(found || null);
+      } catch (error) {
+        console.error('Error loading car:', error);
+        setCar(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadCar();
   }, [id]);
 
   return { car, isLoading };
@@ -45,22 +68,32 @@ export function useCarSearch(query: string) {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (!query.trim()) {
-      setResults([]);
-      return;
-    }
+    const searchCars = async () => {
+      if (!query.trim()) {
+        setResults([]);
+        return;
+      }
 
-    setIsLoading(true);
-    const lowerQuery = query.toLowerCase();
-    const filtered = vweCars.filter(car => 
-      car.merk.toLowerCase().includes(lowerQuery) ||
-      car.model.toLowerCase().includes(lowerQuery) ||
-      car.variant?.toLowerCase().includes(lowerQuery) ||
-      car.brandstof.toLowerCase().includes(lowerQuery) ||
-      car.kenteken?.toLowerCase().includes(lowerQuery)
-    );
-    setResults(filtered);
-    setIsLoading(false);
+      setIsLoading(true);
+      try {
+        const cars = await fetchVweCars();
+        const lowerQuery = query.toLowerCase();
+        const filtered = cars.filter(car => 
+          car.merk.toLowerCase().includes(lowerQuery) ||
+          car.model.toLowerCase().includes(lowerQuery) ||
+          car.variant?.toLowerCase().includes(lowerQuery) ||
+          car.brandstof.toLowerCase().includes(lowerQuery) ||
+          car.kenteken?.toLowerCase().includes(lowerQuery)
+        );
+        setResults(filtered);
+      } catch (error) {
+        console.error('Error searching cars:', error);
+        setResults([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    searchCars();
   }, [query]);
 
   return { results, isLoading };
@@ -79,33 +112,42 @@ export function useCarFilters(filters: {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
-    let filtered = vweCars;
+    const filterCars = async () => {
+      setIsLoading(true);
+      try {
+        let filtered = await fetchVweCars();
 
-    if (filters.merk) {
-      filtered = filtered.filter(c => c.merk === filters.merk);
-    }
-    if (filters.carrosserie) {
-      filtered = filtered.filter(c => c.carrosserie === filters.carrosserie);
-    }
-    if (filters.brandstof) {
-      filtered = filtered.filter(c => c.brandstof === filters.brandstof);
-    }
-    if (filters.minPrijs !== undefined) {
-      filtered = filtered.filter(c => c.prijs >= filters.minPrijs!);
-    }
-    if (filters.maxPrijs !== undefined) {
-      filtered = filtered.filter(c => c.prijs <= filters.maxPrijs!);
-    }
-    if (filters.minBouwjaar !== undefined) {
-      filtered = filtered.filter(c => c.bouwjaar >= filters.minBouwjaar!);
-    }
-    if (filters.maxBouwjaar !== undefined) {
-      filtered = filtered.filter(c => c.bouwjaar <= filters.maxBouwjaar!);
-    }
+        if (filters.merk) {
+          filtered = filtered.filter(c => c.merk === filters.merk);
+        }
+        if (filters.carrosserie) {
+          filtered = filtered.filter(c => c.carrosserie === filters.carrosserie);
+        }
+        if (filters.brandstof) {
+          filtered = filtered.filter(c => c.brandstof === filters.brandstof);
+        }
+        if (filters.minPrijs !== undefined) {
+          filtered = filtered.filter(c => c.prijs >= filters.minPrijs!);
+        }
+        if (filters.maxPrijs !== undefined) {
+          filtered = filtered.filter(c => c.prijs <= filters.maxPrijs!);
+        }
+        if (filters.minBouwjaar !== undefined) {
+          filtered = filtered.filter(c => c.bouwjaar >= filters.minBouwjaar!);
+        }
+        if (filters.maxBouwjaar !== undefined) {
+          filtered = filtered.filter(c => c.bouwjaar <= filters.maxBouwjaar!);
+        }
 
-    setFilteredCars(filtered);
-    setIsLoading(false);
+        setFilteredCars(filtered);
+      } catch (error) {
+        console.error('Error filtering cars:', error);
+        setFilteredCars([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    filterCars();
   }, [filters]);
 
   return { filteredCars, isLoading };

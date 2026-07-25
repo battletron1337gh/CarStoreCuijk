@@ -3,9 +3,8 @@
 import { useState, useRef } from 'react';
 import { Send, CheckCircle, Loader2, User, Mail, Phone, MessageSquare, FileText, AlertCircle } from 'lucide-react';
 import { trackContactFormSubmit } from '@/lib/analytics';
-// import emailjs from '@emailjs/browser'; // EMAILJS UITGESCHAKELD - Gebruik SMTP
-// import { EMAILJS_CONFIG } from '@/lib/emailjs'; // EMAILJS UITGESCHAKELD
-import { sendEmail } from '@/lib/email'; // SMTP EMAIL SERVICE
+import HCaptcha from '@hcaptcha/react-hcaptcha';
+import { HCAPTCHA_CONFIG } from '@/lib/hcaptcha';
 
 interface FormData {
   naam: string;
@@ -21,21 +20,29 @@ interface FormErrors {
   telefoon?: string;
   onderwerp?: string;
   bericht?: string;
+  hcaptcha?: string;
 }
 
-export default function ContactForm() {
+interface ContactFormProps {
+  defaultType?: string;
+  defaultMessage?: string;
+}
+
+export default function ContactForm({ defaultType, defaultMessage }: ContactFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
+  const hcaptchaRef = useRef<HCaptcha>(null);
   const [formData, setFormData] = useState<FormData>({
     naam: '',
     email: '',
     telefoon: '',
-    onderwerp: '',
-    bericht: '',
+    onderwerp: defaultType || '',
+    bericht: defaultMessage || '',
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [hcaptchaToken, setHcaptchaToken] = useState<string | null>(null);
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -68,6 +75,10 @@ export default function ContactForm() {
       newErrors.bericht = 'Bericht moet minimaal 10 karakters bevatten';
     }
 
+    if (!hcaptchaToken) {
+      newErrors.hcaptcha = 'Bevestig dat u geen robot bent';
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -81,43 +92,27 @@ export default function ContactForm() {
     setIsSubmitting(true);
 
     try {
-      // SMTP EMAIL SERVICE (nieuwe methode)
-      await sendEmail({
-        naam: formData.naam,
-        email: formData.email,
-        telefoon: formData.telefoon,
-        onderwerp: formData.onderwerp,
-        bericht: formData.bericht,
-        to_email: 'info@carstorecuijk.nl',
+      // Send email with hCaptcha token
+      const response = await fetch('/api/send-email.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          naam: formData.naam,
+          email: formData.email,
+          telefoon: formData.telefoon,
+          onderwerp: formData.onderwerp,
+          bericht: formData.bericht,
+          to_email: 'info@carstorecuijk.nl',
+          hcaptcha_token: hcaptchaToken,
+        }),
       });
 
-      /* 
-      // EMAILJS ALTERNATIEF (uitgeschakeld)
-      // Uncomment deze code om EmailJS te gebruiken in plaats van SMTP:
-      
-      if (!EMAILJS_CONFIG.SERVICE_ID || !EMAILJS_CONFIG.TEMPLATE_ID || !EMAILJS_CONFIG.PUBLIC_KEY) {
-        setSubmitError('EmailJS is niet correct geconfigureerd. Neem contact op met de beheerder.');
-        return;
+      const data = await response.json();
+
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to send email');
       }
-      
-      const templateParams = {
-        naam: formData.naam,
-        email: formData.email,
-        telefoon: formData.telefoon,
-        onderwerp: formData.onderwerp,
-        bericht: formData.bericht,
-        to_email: 'info@carstorecuijk.nl',
-      };
 
-      await emailjs.send(
-        EMAILJS_CONFIG.SERVICE_ID,
-        EMAILJS_CONFIG.TEMPLATE_ID,
-        templateParams,
-        EMAILJS_CONFIG.PUBLIC_KEY
-      );
-      */
-
-      // Track the form submission
       trackContactFormSubmit(formData.onderwerp);
 
       setIsSubmitting(false);
@@ -129,17 +124,29 @@ export default function ContactForm() {
     }
   };
 
+  // Check if form is pre-filled
+  const isPreFilled = Boolean(defaultType || defaultMessage);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    // Clear error when user starts typing
     if (errors[name as keyof FormErrors]) {
       setErrors(prev => ({ ...prev, [name]: undefined }));
     }
-    // Clear submit error when user makes changes
     if (submitError) {
       setSubmitError(null);
     }
+  };
+
+  const onHCaptchaVerify = (token: string) => {
+    setHcaptchaToken(token);
+    if (errors.hcaptcha) {
+      setErrors(prev => ({ ...prev, hcaptcha: undefined }));
+    }
+  };
+
+  const onHCaptchaExpire = () => {
+    setHcaptchaToken(null);
   };
 
   if (isSubmitted) {
@@ -159,10 +166,12 @@ export default function ContactForm() {
               naam: '',
               email: '',
               telefoon: '',
-              onderwerp: '',
-              bericht: '',
+              onderwerp: defaultType || '',
+              bericht: defaultMessage || '',
             });
             setSubmitError(null);
+            setHcaptchaToken(null);
+            hcaptchaRef.current?.resetCaptcha();
           }}
           className="text-[#c8102e] hover:underline font-medium"
         >
@@ -311,10 +320,24 @@ export default function ContactForm() {
           )}
         </div>
 
+        {/* hCaptcha */}
+        <div className="flex justify-center">
+          <HCaptcha
+            ref={hcaptchaRef}
+            sitekey={HCAPTCHA_CONFIG.SITE_KEY}
+            onVerify={onHCaptchaVerify}
+            onExpire={onHCaptchaExpire}
+            theme="dark"
+          />
+        </div>
+        {errors.hcaptcha && (
+          <p className="text-red-500 text-sm text-center">{errors.hcaptcha}</p>
+        )}
+
         {/* Submit Button */}
         <button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isSubmitting || !hcaptchaToken}
           className="w-full flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] disabled:bg-[#c8102e]/50 text-white py-4 rounded-xl font-semibold transition-all disabled:cursor-not-allowed"
         >
           {isSubmitting ? (

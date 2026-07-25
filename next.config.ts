@@ -7,6 +7,15 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   trailingSlash: true,
+  async redirects() {
+    return [
+      {
+        source: '/onderhoud/reparaties/',
+        destination: '/auto-reparatie-cuijk/',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

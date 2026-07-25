@@ -160,7 +160,7 @@ export default function ApkKeuringPage() {
                     <Euro className="w-6 h-6 text-[#c8102e]" />
                     <h3 className="text-lg font-semibold text-white">Standaard APK</h3>
                   </div>
-                  <div className="text-3xl font-bold text-[#c8102e] mb-2">€29,95</div>
+                  <div className="text-3xl font-bold text-[#c8102e] mb-2">€49,99</div>
                   <p className="text-white/60 text-sm">Inclusief keuringsrapport en registratie bij de RDW.</p>
                 </div>
 
@@ -319,7 +319,7 @@ export default function ApkKeuringPage() {
                 <h3 className="text-2xl font-bold text-white mb-4">APK Keuring Nodig in Cuijk?</h3>
                 <p className="text-white/60 mb-6 max-w-xl mx-auto">
                   Kom langs bij Car Store Cuijk voor je APK keuring. Zonder afspraak, 
-                  direct geholpen, scherpe tarieven vanaf €29,95.
+                  direct geholpen, scherpe tarieven vanaf €49,99.
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <Link href="/contact" className="inline-flex items-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] text-white px-6 py-3 rounded-xl font-semibold transition-colors">

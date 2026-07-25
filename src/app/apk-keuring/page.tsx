@@ -6,7 +6,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'APK Keuring Cuijk | RDW Erkend | Vanaf €49 | Alle Merken',
+  title: 'APK Keuring Cuijk | RDW Erkend | Vanaf €49.99 | Alle Merken',
   description: 'APK keuring Cuijk bij RDW erkende garage. ✅ Alle merken ✅ Zonder afspraak ✅ Snel geregeld. Garage open tot 22:00. Bel 0485-555090!',
   keywords: 'apk keuring cuijk, apk keuring, rdw apk, auto keuren cuijk, apk garage cuijk, apk prijs, apk kosten',
   openGraph: {
@@ -47,7 +47,7 @@ const serviceSchema = {
           "@type": "Service",
           "name": "APK Keuring"
         },
-        "price": "49.00",
+        "price": "49.99",
         "priceCurrency": "EUR"
       }
     ]
@@ -64,7 +64,7 @@ const faqSchema = {
       "name": "Wat kost een APK keuring in Cuijk?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Een APK keuring bij Car Store Cuijk kost vanaf €49. Dit is de all-in prijs inclusief keuring en eventueel herkeuren binnen 14 dagen."
+        "text": "Een APK keuring bij Car Store Cuijk kost vanaf €49.99. Dit is de all-in prijs inclusief keuring en eventueel herkeuren binnen 14 dagen."
       }
     },
     {
@@ -182,7 +182,7 @@ export default function ApkKeuringPage() {
               <div className="bg-[#1a1a1a] rounded-2xl p-8 border border-white/5">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-xl font-bold text-white">APK Keuring</h3>
-                  <span className="text-3xl font-bold text-[#c8102e]">€49,-</span>
+                  <span className="text-3xl font-bold text-[#c8102e]">€49,99</span>
                 </div>
                 <ul className="space-y-3 mb-6">
                   <li className="flex items-center gap-2 text-white/60">
@@ -438,7 +438,7 @@ export default function ApkKeuringPage() {
                   Wat kost een APK keuring in Cuijk?
                 </h3>
                 <p className="text-white/60">
-                  Een APK keuring bij Car Store Cuijk kost vanaf €49. Dit is de all-in prijs 
+                  Een APK keuring bij Car Store Cuijk kost vanaf €49.99. Dit is de all-in prijs 
                   inclusief keuring en eventueel herkeuren binnen 14 dagen.
                 </p>
               </div>
@@ -526,7 +526,7 @@ export default function ApkKeuringPage() {
               Voor een APK keuring in Cuijk bent u bij Car Store Cuijk aan het juiste adres. 
               Wij zijn RDW erkend en keuren alle merken auto's. U kunt zonder afspraak langskomen 
               en wij zijn 7 dagen per week open tot 22:00. Een APK keuring duurt ongeveer 30-45 minuten 
-              en kost vanaf €49.
+              en kost vanaf €49.99.
             </p>
             <p className="text-white/60 mb-4">
               Tijdens de APK keuring controleren wij alle veiligheidsaspecten van uw auto, zoals 

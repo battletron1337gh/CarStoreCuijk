@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Occasions Cuijk | 200+ Tweedehands Auto\'s & 1ste Eigenaar',
-  description: 'Ruim aanbod occasions in Cuijk met voornamelijk 1ste eigenaar autos. 200+ tweedehands auto\'s van alle merken met garantie. RDW erkend. 168 reviews, 5 sterren. Bekijk direct ons aanbod!',
+  description: 'Ruim aanbod occasions in Cuijk met voornamelijk 1ste eigenaar autos. 200+ tweedehands auto\'s van alle merken met garantie. RDW erkend. 175 reviews, 5 sterren. Bekijk direct ons aanbod!',
   keywords: 'occasions Cuijk, 1ste eigenaar autos, 1e eigenaar, eerste eigenaar, tweedehands auto\'s, gebruikte auto\'s, alle merken, auto kopen, betrouwbare occasions, RDW occasions, occasion Cuijk',
   alternates: {
     canonical: '/occasions',
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Occasions Cuijk | 200+ Tweedehands & Gebruikte Auto\'s',
-    description: 'Ruim aanbod tweedehands en gebruikte auto\'s. 1ste eigenaar autos met garantie. 168 reviews, 5 sterren.',
+    description: 'Ruim aanbod tweedehands en gebruikte auto\'s. 1ste eigenaar autos met garantie. 175 reviews, 5 sterren.',
     type: 'website',
     locale: 'nl_NL',
     url: 'https://www.carstorecuijk.nl/occasions',

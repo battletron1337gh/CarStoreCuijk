@@ -2,9 +2,9 @@
 
 import { useState, useRef } from 'react';
 import { Send, CheckCircle, Loader2, User, Mail, Phone, MessageSquare, Calendar, Car, AlertCircle } from 'lucide-react';
-// import emailjs from '@emailjs/browser'; // EMAILJS UITGESCHAKELD - Gebruik SMTP
-// import { EMAILJS_CONFIG } from '@/lib/emailjs'; // EMAILJS UITGESCHAKELD
-import { sendEmail } from '@/lib/email'; // SMTP EMAIL SERVICE
+
+import HCaptcha from '@hcaptcha/react-hcaptcha';
+import { HCAPTCHA_CONFIG } from '@/lib/hcaptcha';
 
 interface Auto {
   merk: string;
@@ -25,6 +25,7 @@ interface FormErrors {
   naam?: string;
   email?: string;
   telefoon?: string;
+  hcaptcha?: string;
 }
 
 interface InteresseFormProps {
@@ -34,6 +35,7 @@ interface InteresseFormProps {
 
 export default function InteresseForm({ auto, onSuccess }: InteresseFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
+  const hcaptchaRef = useRef<HCaptcha>(null);
   const [formData, setFormData] = useState<FormData>({
     naam: '',
     email: '',
@@ -45,6 +47,7 @@ export default function InteresseForm({ auto, onSuccess }: InteresseFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [hcaptchaToken, setHcaptchaToken] = useState<string | null>(null);
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -67,6 +70,10 @@ export default function InteresseForm({ auto, onSuccess }: InteresseFormProps) {
       newErrors.telefoon = 'Voer een geldig telefoonnummer in';
     }
 
+    if (!hcaptchaToken) {
+      newErrors.hcaptcha = 'Bevestig dat u geen robot bent';
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -80,36 +87,29 @@ export default function InteresseForm({ auto, onSuccess }: InteresseFormProps) {
     setIsSubmitting(true);
 
     try {
-      // SMTP EMAIL SERVICE (nieuwe methode)
-      await sendEmail({
-        naam: formData.naam,
-        email: formData.email,
-        telefoon: formData.telefoon,
-        auto_kenteken: auto.kenteken || 'Onbekend',
-        auto_merk_model: `${auto.merk} ${auto.model}`,
-        auto_id: auto.id.toString(),
-        gewenste_datum: formData.gewensteDatum || 'Niet opgegeven',
-        opmerkingen: formData.opmerkingen || 'Geen opmerkingen',
-        onderwerp: 'Interesse in occasion',
-        to_email: 'info@carstorecuijk.nl',
+      const response = await fetch('/api/send-email.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          naam: formData.naam,
+          email: formData.email,
+          telefoon: formData.telefoon,
+          auto_kenteken: auto.kenteken || 'Onbekend',
+          auto_merk_model: `${auto.merk} ${auto.model}`,
+          auto_id: auto.id.toString(),
+          gewenste_datum: formData.gewensteDatum || 'Niet opgegeven',
+          opmerkingen: formData.opmerkingen || 'Geen opmerkingen',
+          onderwerp: 'Interesse in occasion',
+          to_email: 'info@carstorecuijk.nl',
+          hcaptcha_token: hcaptchaToken,
+        }),
       });
 
-      /* 
-      // EMAILJS ALTERNATIEF (uitgeschakeld)
-      // Uncomment deze code om EmailJS te gebruiken in plaats van SMTP:
-      
-      if (!EMAILJS_CONFIG.SERVICE_ID || !EMAILJS_CONFIG.PUBLIC_KEY) {
-        setSubmitError('EmailJS is niet correct geconfigureerd.');
-        return;
+      const data = await response.json();
+
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to send email');
       }
-      
-      await emailjs.send(
-        EMAILJS_CONFIG.SERVICE_ID,
-        'template_rk0kuiv',
-        templateParams,
-        EMAILJS_CONFIG.PUBLIC_KEY
-      );
-      */
 
       setIsSubmitting(false);
       setIsSubmitted(true);
@@ -130,6 +130,17 @@ export default function InteresseForm({ auto, onSuccess }: InteresseFormProps) {
     if (submitError) {
       setSubmitError(null);
     }
+  };
+
+  const onHCaptchaVerify = (token: string) => {
+    setHcaptchaToken(token);
+    if (errors.hcaptcha) {
+      setErrors(prev => ({ ...prev, hcaptcha: undefined }));
+    }
+  };
+
+  const onHCaptchaExpire = () => {
+    setHcaptchaToken(null);
   };
 
   if (isSubmitted) {
@@ -153,6 +164,8 @@ export default function InteresseForm({ auto, onSuccess }: InteresseFormProps) {
               opmerkingen: '',
             });
             setSubmitError(null);
+            setHcaptchaToken(null);
+            hcaptchaRef.current?.resetCaptcha();
           }}
           className="text-[#c8102e] hover:underline font-medium text-sm sm:text-base"
         >
@@ -298,10 +311,24 @@ export default function InteresseForm({ auto, onSuccess }: InteresseFormProps) {
           </div>
         </div>
 
+        {/* hCaptcha */}
+        <div className="flex justify-center">
+          <HCaptcha
+            ref={hcaptchaRef}
+            sitekey={HCAPTCHA_CONFIG.SITE_KEY}
+            onVerify={onHCaptchaVerify}
+            onExpire={onHCaptchaExpire}
+            theme="dark"
+          />
+        </div>
+        {errors.hcaptcha && (
+          <p className="text-red-500 text-xs sm:text-sm text-center">{errors.hcaptcha}</p>
+        )}
+
         {/* Submit Button */}
         <button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isSubmitting || !hcaptchaToken}
           className="w-full flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] disabled:bg-[#c8102e]/50 text-white py-3 sm:py-4 rounded-lg sm:rounded-xl font-semibold transition-all disabled:cursor-not-allowed text-sm sm:text-base"
         >
           {isSubmitting ? (

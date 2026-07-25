@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Auto Verkopen Cuijk | Gratis Advertentie | 1ste Eigenaar Auto\'s',
-  description: 'Auto verkopen via Car Store Cuijk. Consignatie, inruil of directe inkoop. Wij verkopen voornamelijk 1ste eigenaar autos. Gratis waardebepaling en advertentie. 168 reviews, 5 sterren.',
+  description: 'Auto verkopen via Car Store Cuijk. Consignatie, inruil of directe inkoop. Wij verkopen voornamelijk 1ste eigenaar autos. Gratis waardebepaling en advertentie. 175 reviews, 5 sterren.',
   keywords: 'auto verkopen Cuijk, 1ste eigenaar autos te koop, 1e eigenaar, eerste eigenaar, occasion verkopen, auto inruilen, consumentenverkoop, waardebepaling auto, gratis advertentie',
   alternates: {
     canonical: '/auto-verkopen',
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Auto Verkopen Cuijk | Gratis Advertentie | Consignatie & Inruil',
-    description: 'Consumentenverkoop, inruil of directe inkoop. Gratis waardebepaling. 168 reviews, 5 sterren.',
+    description: 'Consumentenverkoop, inruil of directe inkoop. Gratis waardebepaling. 175 reviews, 5 sterren.',
     type: 'website',
     locale: 'nl_NL',
     url: 'https://www.carstorecuijk.nl/auto-verkopen',

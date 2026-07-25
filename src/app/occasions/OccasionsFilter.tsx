@@ -12,7 +12,6 @@ import {
   RotateCcw
 } from 'lucide-react';
 import CarCard from '@/components/CarCard';
-import { useCars } from '@/hooks/useCars';
 import { Car } from '@/types';
 
 interface FilterState {
@@ -35,14 +34,45 @@ function OccasionsFilterContent() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { cars: allCars, isLoading } = useCars();
   const [cars, setCars] = useState<Car[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
+  // Load cars directly from API
   useEffect(() => {
-    if (allCars.length > 0) {
-      setCars(allCars.filter(c => c.status !== 'verkocht'));
-    }
-  }, [allCars]);
+    const loadCars = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch('/api/vwe/vehicles.php');
+        if (response.ok) {
+          const data = await response.json();
+          if (data.vehicles && Array.isArray(data.vehicles)) {
+            // Convert VWE data to Car format
+            const convertedCars = data.vehicles.map((v: any) => ({
+              id: v.kenteken?.toLowerCase() || v.id,
+              merk: v.merk || 'Onbekend',
+              model: v.model || '',
+              variant: v.variant || '',
+              bouwjaar: parseInt(v.bouwjaar) || 0,
+              prijs: parseInt(v.prijs) || 0,
+              kilometerstand: parseInt(v.kmStand) || 0,
+              brandstof: v.brandstof || 'Benzine',
+              transmissie: v.transmissie || 'Handmatig',
+              afbeeldingen: v.fotoUrls || ['/cars/placeholder.svg'],
+              status: v.status || 'beschikbaar',
+              kenteken: v.kenteken,
+              features: v.features || [],
+            })).filter((c: Car) => c.status !== 'verkocht');
+            setCars(convertedCars);
+          }
+        }
+      } catch (error) {
+        console.error('Error loading cars:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadCars();
+  }, []);
 
   // Get available values from actual car data
   const availableData = useMemo(() => {
@@ -74,20 +104,48 @@ function OccasionsFilterContent() {
   }, [cars]);
 
   // Initialize filters from URL params
-  const [filters, setFilters] = useState<FilterState>(() => {
-    return {
-      merk: searchParams.get('merk') || '',
-      model: searchParams.get('model') || '',
-      minPrijs: parseInt(searchParams.get('prijs_min') || String(availableData.minPrijs)),
-      maxPrijs: parseInt(searchParams.get('prijs_max') || String(availableData.maxPrijs)),
-      minBouwjaar: parseInt(searchParams.get('bouwjaar_min') || String(availableData.minBouwjaar)),
-      maxBouwjaar: parseInt(searchParams.get('bouwjaar_max') || String(availableData.maxBouwjaar)),
-      minKm: parseInt(searchParams.get('km_min') || String(availableData.minKm)),
-      maxKm: parseInt(searchParams.get('km_max') || String(availableData.maxKm)),
-      brandstoffen: searchParams.get('brandstof')?.split(',').filter(Boolean) || [],
-      transmissies: searchParams.get('transmissie')?.split(',').filter(Boolean) || [],
-    };
+  const [filters, setFilters] = useState<FilterState>({
+    merk: '',
+    model: '',
+    minPrijs: 0,
+    maxPrijs: 100000,
+    minBouwjaar: 2000,
+    maxBouwjaar: new Date().getFullYear(),
+    minKm: 0,
+    maxKm: 300000,
+    brandstoffen: [],
+    transmissies: [],
   });
+
+  // Update filters when cars data is loaded (to set correct min/max values)
+  useEffect(() => {
+    if (cars.length > 0) {
+      const merken = [...new Set(cars.map(c => c.merk))].sort();
+      const prijzen = cars.map(c => c.prijs);
+      const bouwjaren = cars.map(c => c.bouwjaar);
+      const kmStanden = cars.map(c => c.kilometerstand);
+      
+      const newMinPrijs = Math.min(...prijzen);
+      const newMaxPrijs = Math.max(...prijzen);
+      const newMinBouwjaar = Math.min(...bouwjaren);
+      const newMaxBouwjaar = Math.max(...bouwjaren);
+      const newMinKm = Math.min(...kmStanden);
+      const newMaxKm = Math.max(...kmStanden);
+
+      setFilters(prev => ({
+        merk: searchParams.get('merk') || prev.merk,
+        model: searchParams.get('model') || prev.model,
+        minPrijs: parseInt(searchParams.get('prijs_min') || String(newMinPrijs)),
+        maxPrijs: parseInt(searchParams.get('prijs_max') || String(newMaxPrijs)),
+        minBouwjaar: parseInt(searchParams.get('bouwjaar_min') || String(newMinBouwjaar)),
+        maxBouwjaar: parseInt(searchParams.get('bouwjaar_max') || String(newMaxBouwjaar)),
+        minKm: parseInt(searchParams.get('km_min') || String(newMinKm)),
+        maxKm: parseInt(searchParams.get('km_max') || String(newMaxKm)),
+        brandstoffen: searchParams.get('brandstof')?.split(',').filter(Boolean) || prev.brandstoffen,
+        transmissies: searchParams.get('transmissie')?.split(',').filter(Boolean) || prev.transmissies,
+      }));
+    }
+  }, [cars.length, searchParams]);
 
   const [searchQuery, setSearchQuery] = useState(searchParams.get('zoek') || '');
   const [sortBy, setSortBy] = useState(searchParams.get('sorteer') || 'relevantie');
@@ -187,9 +245,12 @@ function OccasionsFilterContent() {
     return result;
   }, [filters, sortBy, searchQuery, cars]);
 
-  // Update URL when filters change
+  // Update URL when filters change - debounced to prevent infinite loops
   useEffect(() => {
-    updateURL(filters, sortBy, searchQuery);
+    const timeoutId = setTimeout(() => {
+      updateURL(filters, sortBy, searchQuery);
+    }, 500);
+    return () => clearTimeout(timeoutId);
   }, [filters, sortBy, searchQuery, updateURL]);
 
   // Handle merk change - reset model
@@ -534,12 +595,7 @@ function OccasionsFilterContent() {
         </div>
         <h3 className="text-xl font-semibold text-white mb-2">Geen occasions gevonden</h3>
         <p className="text-white/50 mb-4">Er zijn nog geen occasions toegevoegd aan de database.</p>
-        <a
-          href="/admin/occasions"
-          className="inline-block px-6 py-3 bg-[#c8102e] text-white rounded-xl hover:bg-[#a00d24] transition-colors"
-        >
-          Ga naar Admin
-        </a>
+        {/* TODO: Admin link removed - should be behind authentication */}
       </div>
     );
   }

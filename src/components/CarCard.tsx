@@ -3,8 +3,9 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Calendar, Fuel, Gauge, Settings2 } from 'lucide-react';
+import { Calendar, Fuel, Gauge, Settings2, Scale, Check } from 'lucide-react';
 import { Car } from '@/types';
+import { useCompare } from '@/context/CompareContext';
 
 interface CarCardProps {
   car: Car;
@@ -13,6 +14,9 @@ interface CarCardProps {
 }
 
 export default function CarCard({ car, index = 0, compact = false }: CarCardProps) {
+  const { isSelected, toggleCar } = useCompare();
+  const selected = isSelected(car.id);
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('nl-NL', {
       style: 'currency',
@@ -25,6 +29,20 @@ export default function CarCard({ car, index = 0, compact = false }: CarCardProp
     return new Intl.NumberFormat('nl-NL').format(km);
   };
 
+  const isNetBinnen = () => {
+    if (!car.createdAt) return false;
+    const created = new Date(car.createdAt);
+    const daysAgo = (Date.now() - created.getTime()) / (1000 * 60 * 60 * 24);
+    return daysAgo <= 14 && car.status === 'beschikbaar';
+  };
+
+  const isRecentVerkocht = () => {
+    if (!car.soldAt) return car.status === 'verkocht';
+    const sold = new Date(car.soldAt);
+    const daysAgo = (Date.now() - sold.getTime()) / (1000 * 60 * 60 * 24);
+    return daysAgo <= 30;
+  };
+
   const getStatusBadge = () => {
     switch (car.status) {
       case 'gereserveerd':
@@ -34,20 +52,44 @@ export default function CarCard({ car, index = 0, compact = false }: CarCardProp
           </span>
         );
       case 'verkocht':
+        if (isRecentVerkocht()) {
+          return (
+            <span className="absolute top-4 left-4 bg-gray-500 text-white px-3 py-1 rounded-full text-sm font-semibold z-10">
+              Recent verkocht
+            </span>
+          );
+        }
         return (
           <span className="absolute top-4 left-4 bg-gray-500 text-white px-3 py-1 rounded-full text-sm font-semibold z-10">
             Verkocht
           </span>
         );
       default:
+        if (isNetBinnen()) {
+          return (
+            <span className="absolute top-4 left-4 bg-[#c8102e] text-white px-3 py-1 rounded-full text-sm font-semibold z-10">
+              Net binnen
+            </span>
+          );
+        }
         return null;
     }
+  };
+
+  // Helper om de juiste URL te bouwen
+  const getCarUrl = (carId: string) => {
+    // Als het ID al een slash bevat (voertuignr/voertuignr_klant formaat)
+    if (carId.includes('/')) {
+      return `/occasions/${carId}`;
+    }
+    // Fallback voor oude kenteken-based IDs
+    return `/occasions/${carId}`;
   };
 
   // Compact version for the marquee
   if (compact) {
     return (
-      <Link href={`/occasions/${car.id}`} className="group block flex-shrink-0 w-[280px] mx-3">
+      <Link href={getCarUrl(car.id)} className="group block flex-shrink-0 w-[280px] mx-3">
         <div className="bg-[#1a1a1a] rounded-2xl overflow-hidden border border-white/10 hover:border-[#c8102e]/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-[#c8102e]/10">
           {/* Image */}
           <div className="relative aspect-[4/3] overflow-hidden bg-[#0d0d0d]">
@@ -77,25 +119,42 @@ export default function CarCard({ car, index = 0, compact = false }: CarCardProp
     );
   }
 
-  // Full version
+  // Full version - Geoptimaliseerd voor performance
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: false, amount: 0.2, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      viewport={{ once: true, amount: 0.05 }}
+      transition={{ duration: 0.2, delay: Math.min(index * 0.03, 0.15) }}
     >
-      <Link href={`/occasions/${car.id}`} className="group block">
-        <div className="bg-[#1a1a1a] rounded-2xl overflow-hidden border border-white/10 hover:border-[#c8102e]/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-[#c8102e]/10">
+      <Link href={getCarUrl(car.id)} className="group block">
+        <div className="bg-[#1a1a1a] rounded-2xl overflow-hidden border border-white/10 hover:border-[#c8102e]/50 transition-all duration-200 hover:-translate-y-1">
           {/* Image */}
           <div className="relative aspect-[4/3] overflow-hidden bg-[#0d0d0d]">
             {getStatusBadge()}
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleCar(car);
+              }}
+              className={`absolute top-4 right-4 z-20 flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                selected
+                  ? 'bg-[#c8102e] text-white'
+                  : 'bg-black/50 text-white hover:bg-black/70'
+              }`}
+              aria-label={selected ? 'Verwijder uit vergelijking' : 'Voeg toe aan vergelijking'}
+            >
+              {selected ? <Check className="w-3.5 h-3.5" /> : <Scale className="w-3.5 h-3.5" />}
+              {selected ? 'In vergelijking' : 'Vergelijk'}
+            </button>
             <Image
               src={car.afbeeldingen[0] || '/cars/placeholder.svg'}
               alt={`${car.merk} ${car.model} ${car.variant} - Tweedehands occasion te koop bij Car Store Cuijk`}
               fill
-              className="object-cover group-hover:scale-110 transition-transform duration-500"
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              loading="lazy"
             />
             {/* Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-transparent to-transparent opacity-60" />

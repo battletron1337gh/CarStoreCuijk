@@ -492,7 +492,8 @@ function VerkochteAutosFilterContent({ cars }: VerkochteAutosFilterProps) {
         {/* Search and Controls Bar */}
         <div className="bg-[#1a1a1a] rounded-2xl border border-white/10 p-4 mb-6">
           <div className="flex flex-col sm:flex-row gap-4">
-            {/* Search */}
+            {/* Search - temporarily disabled due to page not found error */}
+            {/* 
             <div className="relative flex-1">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
               <input
@@ -516,6 +517,7 @@ function VerkochteAutosFilterContent({ cars }: VerkochteAutosFilterProps) {
                 </button>
               )}
             </div>
+            */}
 
             {/* Mobile Filter Toggle */}
             <button

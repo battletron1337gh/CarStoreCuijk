@@ -1,7 +1,14 @@
+import type { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Sparkles, Phone, MessageCircle, CheckCircle, Sun, Shield, Eye } from 'lucide-react';
 import { contactInfo } from '@/data/cars';
+
+export const metadata: Metadata = {
+  title: 'Koplampen Polijsten Cuijk | Vanaf €59 | UV Coating | Car Store',
+  description: 'Koplampen polijsten in Cuijk vanaf €59. Vergeelde koplampen weer helder als nieuw. Inclusief UV-bestendige coating en 6 maanden garantie. Bel 06-87118768.',
+  keywords: 'koplampen polijsten Cuijk, koplamp polijsten, vergeelde koplampen, koplampen renoveren, koplampen poetsen, auto koplampen polijsten',
+};
 
 export default function KoplampenPage() {
   const voordelen = [
@@ -235,7 +242,7 @@ export default function KoplampenPage() {
               met UV-bestendige coating.
             </p>
             <p className="text-white/60 mb-4">
-              Wij zijn RDW erkend met 168 reviews en 5 sterren op Google reviews. Ons polijstproces bestaat 
+              Wij zijn RDW erkend met 175 reviews en 5 sterren op Google reviews. Ons polijstproces bestaat 
               uit meerdere stappen. Eerst reinigen wij de koplampen grondig. Vervolgens schuren wij het oppervlak 
               in vijf stappen om alle verkleuring te verwijderen. Daarna polijsten wij de koplampen tot een helder 
               resultaat. Tot slot brengen wij een UV-bestendige coating aan die de koplampen beschermt tegen 

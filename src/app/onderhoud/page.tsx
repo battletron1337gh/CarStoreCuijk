@@ -24,8 +24,26 @@ export default function OnderhoudPage() {
               </h1>
               <p className="text-xl text-white/50 max-w-2xl mx-auto">
                 Professioneel auto onderhoud voor alle merken. Garage open tot 22:00, altijd bereikbaar voor spoed reparatie. 
-                APK, kleine en grote beurt. Vertrouw op onze ervaren monteurs en moderne werkplaats. 168 reviews, 5 sterren.
+                APK, kleine en grote beurt. Vertrouw op onze ervaren monteurs en moderne werkplaats. 175 reviews, 5 sterren.
               </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Offerte Formulier - DIRECT ONDER HERO (alleen formulier, geen openingstijden) */}
+        <section id="offerte" className="py-20 lg:py-32 bg-[#0d0d0d]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-2xl mx-auto">
+              <div className="text-center mb-10">
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+                  Vraag direct een offerte aan
+                </h2>
+                <p className="text-white/50 text-lg">
+                  Vul het formulier in voor een vrijblijvende offerte voor onderhoud, APK of reparatie. 
+                  Wij nemen zo snel mogelijk contact met u op.
+                </p>
+              </div>
+              <OnderhoudOfferteForm />
             </div>
           </div>
         </section>
@@ -66,22 +84,21 @@ export default function OnderhoudPage() {
           </div>
         </section>
 
-        {/* Offerte Formulier */}
-        <section id="offerte" className="py-20 lg:py-32 bg-[#0d0d0d]">
+        {/* Contact & Openingstijden - ONDERAAN */}
+        <section className="py-20 lg:py-32 bg-[#0d0d0d]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12">
-              {/* Left: Info */}
+              {/* Left: Openingstijden */}
               <div>
                 <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-                  Vraag een offerte aan
+                  Openingstijden
                 </h2>
                 <p className="text-white/50 mb-8 text-lg">
-                  Vul het formulier in voor een vrijblijvende offerte voor onderhoud, APK of reparatie. 
-                  Wij nemen zo snel mogelijk contact met u op.
+                  Wij zijn 7 dagen per week open. Garage open tot 22:00, altijd bereikbaar voor spoed!
                 </p>
 
                 <div className="bg-[#1a1a1a] rounded-2xl p-8 border border-white/5 mb-8">
-                  <h3 className="text-xl font-bold text-white mb-6">Openingstijden</h3>
+                  <h3 className="text-xl font-bold text-white mb-6">Onze Openingstijden</h3>
                   <div className="space-y-3">
                     {openingHours.map((hours) => (
                       <div key={hours.dag} className="flex justify-between py-2 border-b border-white/5 last:border-0">
@@ -94,6 +111,16 @@ export default function OnderhoudPage() {
                     Garage open tot 22:00 - Altijd bereikbaar voor spoed!
                   </p>
                 </div>
+              </div>
+
+              {/* Right: Contact */}
+              <div>
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
+                  Contact
+                </h2>
+                <p className="text-white/50 mb-8 text-lg">
+                  Heeft u vragen? Neem gerust contact met ons op via WhatsApp of telefoon.
+                </p>
 
                 <div className="flex flex-col sm:flex-row gap-4">
                   <a
@@ -103,7 +130,7 @@ export default function OnderhoudPage() {
                     className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-xl font-semibold text-lg transition-all"
                   >
                     <MessageCircle className="w-5 h-5" />
-                    Of via WhatsApp
+                    WhatsApp
                   </a>
                   <a
                     href={`tel:${contactInfo.telefoon.replace(/\s|-/g, '')}`}
@@ -113,11 +140,6 @@ export default function OnderhoudPage() {
                     {contactInfo.telefoon}
                   </a>
                 </div>
-              </div>
-
-              {/* Right: Form */}
-              <div>
-                <OnderhoudOfferteForm />
               </div>
             </div>
           </div>

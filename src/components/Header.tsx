@@ -3,16 +3,19 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X, Phone, MessageCircle, ChevronRight } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { trackWhatsAppClick, trackPhoneClick } from '@/lib/analytics';
+import { contactInfo } from '@/data/cars';
 
 const navItems = [
   { href: '/', label: 'Home' },
   { href: '/occasions', label: 'Occasions' },
   { href: '/auto-verkopen', label: 'Inkoop' },
+  { href: '/verkochte-autos', label: 'Verkocht' },
   { href: '/onderhoud', label: 'Onderhoud' },
   { href: '/financiering', label: 'Financiering' },
   { href: '/kennisbank', label: 'Tips' },
+  { href: '/auto-configurator', label: 'Configurator' },
   { href: '/contact', label: 'Contact' },
 ];
 
@@ -20,6 +23,10 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [pathname, setPathname] = useState('');
+  
+  // Scroll-based logo animation
+  const { scrollY } = useScroll();
+  const logoScale = useTransform(scrollY, [0, 100], [1, 1.3]);
 
   useEffect(() => {
     setPathname(window.location.pathname);
@@ -53,13 +60,14 @@ export default function Header() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20 lg:h-28">
+        <div className={`flex items-center justify-between transition-all duration-300 ${isScrolled ? 'h-16 lg:h-24' : 'h-20 lg:h-28'}`}>
           {/* Desktop: Logo - Left */}
           <Link href="/" className="hidden lg:flex items-center -my-4 lg:-my-6">
-            <img
+            <motion.img
               src="/images/logo.png"
               alt="Car Store Cuijk - Garage en Occasion Dealer in Cuijk"
-              className="h-40 lg:h-52 w-auto object-contain"
+              className="h-40 lg:h-52 w-auto object-contain origin-center"
+              style={{ scale: logoScale }}
             />
           </Link>
 
@@ -83,7 +91,7 @@ export default function Header() {
           {/* Desktop CTA Buttons - Right */}
           <div className="hidden lg:flex items-center gap-4">
             <a
-              href="tel:0687118768"
+              href={`tel:${contactInfo.telefoon.replace(/\s|-/g, '')}`}
               onClick={handlePhoneClick}
               className="flex items-center justify-center w-10 h-10 rounded-lg bg-white/5 hover:bg-white/10 text-white/80 hover:text-white transition-all"
               aria-label="Bel ons"
@@ -91,7 +99,7 @@ export default function Header() {
               <Phone className="w-5 h-5" />
             </a>
             <a
-              href="https://wa.me/31687118768"
+              href={`https://wa.me/${contactInfo.whatsapp.replace(/\s|-/g, '').replace(/^\+/g, '')}`}
               target="_blank"
               rel="noopener noreferrer"
               onClick={handleWhatsAppClick}
@@ -117,16 +125,17 @@ export default function Header() {
 
           {/* Mobile: Logo - Center */}
           <Link href="/" className="lg:hidden flex items-center absolute left-1/2 -translate-x-1/2 -my-4">
-            <img
+            <motion.img
               src="/images/logo.png"
               alt="Car Store Cuijk - Garage en Occasion Dealer in Cuijk"
-              className="h-40 w-auto object-contain"
+              className={`w-auto object-contain origin-center transition-all duration-300 ${isScrolled ? 'h-20' : 'h-40'}`}
+              style={{ scale: logoScale }}
             />
           </Link>
 
           {/* Mobile: Phone Icon - Right */}
           <a
-            href="tel:0687118768"
+            href={`tel:${contactInfo.telefoon.replace(/\s|-/g, '')}`}
             onClick={handlePhoneClick}
             className="lg:hidden p-2 text-white z-10"
             aria-label="Bel ons"
@@ -163,15 +172,15 @@ export default function Header() {
               ))}
               <div className="pt-4 border-t border-white/10 space-y-3">
                 <a
-                  href="tel:0687118768"
+                  href={`tel:${contactInfo.telefoon.replace(/\s|-/g, '')}`}
                   onClick={handlePhoneClick}
                   className="flex items-center justify-center gap-2 text-white/80 hover:text-white transition-colors py-3"
                 >
                   <Phone className="w-4 h-4" />
-                  06 - 871 187 68
+                  {contactInfo.telefoon}
                 </a>
                 <a
-                  href="https://wa.me/31687118768"
+                  href={`https://wa.me/${contactInfo.whatsapp.replace(/\s|-/g, '').replace(/^\+/g, '')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={handleWhatsAppClick}

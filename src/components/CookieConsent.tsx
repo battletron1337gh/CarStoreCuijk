@@ -15,6 +15,71 @@ const defaultPreferences: CookiePreferences = {
   marketing: false,
 };
 
+const META_PIXEL_ID = '601363764708862';
+
+declare global {
+  interface Window {
+    fbq?: (...args: any[]) => void;
+    _fbq?: (...args: any[]) => void;
+    __metaPixelLoaded?: boolean;
+  }
+}
+
+function loadMetaPixel() {
+  if (typeof window === 'undefined' || window.__metaPixelLoaded) return;
+  window.__metaPixelLoaded = true;
+
+  const f = window;
+  const b = document;
+  const e = 'script';
+  const v = 'https://connect.facebook.net/en_US/fbevents.js';
+  if (f.fbq) return;
+
+  const n = f.fbq = function (this: any) {
+    const self = n as any;
+    self.callMethod ? self.callMethod.apply(self, arguments) : self.queue.push(arguments);
+  } as any;
+  if (!f._fbq) f._fbq = n;
+  n.push = n;
+  n.loaded = true;
+  n.version = '2.0';
+  n.queue = [];
+  const t = b.createElement(e);
+  t.async = true;
+  t.src = v;
+  const s = b.getElementsByTagName(e)[0];
+  s.parentNode?.insertBefore(t, s);
+
+  window.fbq?.('init', META_PIXEL_ID);
+  window.fbq?.('track', 'PageView');
+
+  // Noscript fallback pixel toevoegen
+  const noscriptImg = b.createElement('img');
+  noscriptImg.height = 1;
+  noscriptImg.width = 1;
+  noscriptImg.style.display = 'none';
+  noscriptImg.src = `https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`;
+  noscriptImg.alt = '';
+  b.body.appendChild(noscriptImg);
+}
+
+function updateConsent(prefs: CookiePreferences) {
+  if (typeof window === 'undefined') return;
+
+  if ((window as any).gtag) {
+    (window as any).gtag('consent', 'update', {
+      analytics_storage: prefs.analytics ? 'granted' : 'denied',
+      ad_storage: prefs.marketing ? 'granted' : 'denied',
+      ad_user_data: prefs.marketing ? 'granted' : 'denied',
+      ad_personalization: prefs.marketing ? 'granted' : 'denied',
+    });
+  }
+
+  if (prefs.marketing) {
+    loadMetaPixel();
+  }
+}
+
 export default function CookieConsent() {
   const [isVisible, setIsVisible] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -26,7 +91,9 @@ export default function CookieConsent() {
     if (!stored) {
       setIsVisible(true);
     } else {
-      setPreferences(JSON.parse(stored));
+      const parsed = JSON.parse(stored);
+      setPreferences(parsed);
+      updateConsent(parsed);
     }
   }, []);
 
@@ -36,12 +103,7 @@ export default function CookieConsent() {
     setIsVisible(false);
     setShowSettings(false);
 
-    // Initialize GA if analytics is accepted
-    if (prefs.analytics && typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('consent', 'update', {
-        analytics_storage: 'granted',
-      });
-    }
+    updateConsent(prefs);
   };
 
   const handleAcceptAll = () => {

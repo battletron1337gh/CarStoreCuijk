@@ -353,7 +353,7 @@ export const services: Service[] = [
     description: 'Officieel erkend APK-station voor alle merken. Snelle, correcte afhandeling van uw verplichte keuring in Cuijk.',
     icon: 'ClipboardCheck',
     features: ['Officieel erkend', 'Alle merken', 'Direct resultaat'],
-    price: 29.50
+    price: 49.99
   },
   {
     id: 'onderhoud-klein',

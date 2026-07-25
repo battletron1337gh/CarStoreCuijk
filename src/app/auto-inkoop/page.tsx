@@ -1,8 +1,15 @@
+import type { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import AutoInruilForm from '@/components/AutoInruilForm';
 import { Car, Phone, MessageCircle, CheckCircle, DollarSign, Clock, Shield } from 'lucide-react';
 import { contactInfo } from '@/data/cars';
+
+export const metadata: Metadata = {
+  title: 'Auto Inkoop Cuijk | Auto Verkopen | Direct Geld | Car Store',
+  description: 'Auto inkoop Cuijk - Wij kopen uw auto voor een eerlijke prijs. Direct geld, gratis taxatie, alle merken. Bel 06-87118768 of vul het formulier in.',
+  keywords: 'auto inkoop Cuijk, auto verkopen Cuijk, auto opkoper, auto inruilen, auto taxatie, 1ste eigenaar auto inkoop, auto verkoop garage',
+};
 
 export default function AutoInkoopPage() {
   const stappen = [
@@ -41,7 +48,7 @@ export default function AutoInkoopPage() {
               </h1>
               <p className="text-xl text-white/50 max-w-2xl mx-auto">
                 Wij kopen voornamelijk 1ste eigenaar autos - Wij kopen uw auto voor een eerlijke prijs. 
-                Gratis taxatie, snelle afhandeling, direct geld op uw rekening. 168 reviews, 5 sterren.
+                Gratis taxatie, snelle afhandeling, direct geld op uw rekening. 175 reviews, 5 sterren.
               </p>
             </div>
           </div>
@@ -195,7 +202,7 @@ export default function AutoInkoopPage() {
               Heeft u een eerste eigenaar auto? Neem contact op voor een vrijblijvende taxatie.
             </p>
             <p className="text-white/60 mb-4">
-              Wij zijn RDW erkend met 168 reviews en 5 sterren op Google reviews. Het verkopen van uw auto via 
+              Wij zijn RDW erkend met 175 reviews en 5 sterren op Google reviews. Het verkopen van uw auto via 
               Car Store Cuijk heeft veel voordelen ten opzichte van particuliere verkoop. U hoeft niet te wachten 
               op geïnteresseerde kopers, geen gedoe met proefritten, en geen risico op niet-betalende kopers. 
               Wij geven u een eerlijke prijs gebaseerd op de actuele marktwaarde, met name voor 1e eigenaar autos.

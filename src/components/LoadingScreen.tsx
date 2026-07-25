@@ -7,18 +7,21 @@ export default function LoadingScreen({ children }: { children: React.ReactNode 
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // Check of dit de eerste keer is dat de gebruiker de site bezoekt in deze sessie
-    const hasSeenLoading = sessionStorage.getItem('hasSeenLoading');
-    
-    if (!hasSeenLoading) {
-      // Eerste bezoek - toon loading screen
+    // Check of dit het eerste bezoek is in deze sessie
+    const hasVisited = sessionStorage.getItem('hasVisited');
+    const isHomePage = window.location.pathname === '/' || window.location.pathname === '';
+
+    // Toon loading screen alleen bij eerste bezoek op homepage
+    if (isHomePage && !hasVisited) {
       setIsLoading(true);
-      
-      // 4 seconden loading screen
+
+      // Markeer als bezocht
+      sessionStorage.setItem('hasVisited', 'true');
+
+      // Korte intro (1200 ms) — content laadt ondertussen al door
       const timer = setTimeout(() => {
         setIsLoading(false);
-        sessionStorage.setItem('hasSeenLoading', 'true');
-      }, 4000);
+      }, 1200);
 
       return () => clearTimeout(timer);
     }
@@ -112,14 +115,10 @@ export default function LoadingScreen({ children }: { children: React.ReactNode 
         )}
       </AnimatePresence>
 
-      {/* Main Content */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isLoading ? 0 : 1 }}
-        transition={{ duration: 0.5 }}
-      >
+      {/* Main Content — altijd renderen, geen block door loading screen */}
+      <div className={isLoading ? 'opacity-0' : 'opacity-100 transition-opacity duration-500'}>
         {children}
-      </motion.div>
+      </div>
     </>
   );
 }

@@ -38,7 +38,7 @@ const localBusinessSchema = {
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "5.0",
-    "reviewCount": "168"
+    "reviewCount": "175+"
   }
 };
 
@@ -87,7 +87,7 @@ export default function GarageGravePage() {
     'Open tot 22:00, altijd bereikbaar voor spoed',
     'RDW erkend',
     'Alle merken',
-    '168 Google reviews, 5 sterren',
+    '175 Google reviews, 5 sterren',
     'Gratis parkeerplaats',
   ];
 
@@ -448,7 +448,7 @@ export default function GarageGravePage() {
             <p className="text-white/60 mb-4">
               Op zoek naar een garage in Grave? Car Store Cuijk is slechts 5 minuten rijden en biedt 
               alle autodiensten die u nodig heeft. Van auto onderhoud en APK keuring tot spoed reparatie 
-              en airco service. Wij zijn RDW erkend en hebben 168 reviews met 5 sterren op Google.
+              en airco service. Wij zijn RDW erkend en hebben 175 reviews met 5 sterren op Google.
             </p>
             <p className="text-white/60 mb-4">
               Onze garage in Cuijk is zeer gemakkelijk bereikbaar vanuit Grave via de A73 of N324. 

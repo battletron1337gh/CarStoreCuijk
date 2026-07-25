@@ -129,7 +129,7 @@ function Hero() {
           className="text-lg sm:text-xl text-white/50 max-w-2xl mx-auto mb-10"
         >
           Ruim aanbod tweedehands auto's en gebruikte auto's van alle merken. 
-          Garage open tot 22:00, bereikbaar voor spoed reparatie. Auto inkoop, onderhoud, reparatie en airco vullen. 168 reviews, 5 sterren.
+          Garage open tot 22:00, bereikbaar voor spoed reparatie. Auto inkoop, onderhoud, reparatie en airco vullen. 175 reviews, 5 sterren.
         </motion.p>
 
         {/* Review Stats Badge */}
@@ -194,7 +194,7 @@ function Hero() {
           <span className="hidden sm:block text-white/20">•</span>
           <span>{contactInfo.adres}, {contactInfo.plaats}</span>
           <span className="hidden sm:block text-white/20">•</span>
-          <span>168 reviews, 5 sterren</span>
+          <span>175 reviews, 5 sterren</span>
           <span className="hidden sm:block text-white/20">•</span>
           <span>Open tot 22:00</span>
         </motion.div>

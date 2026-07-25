@@ -1,9 +1,16 @@
+import type { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import AutoInruilForm from '@/components/AutoInruilForm';
 import Link from 'next/link';
 import { Car, Phone, MessageCircle, CheckCircle, Shield, FileCheck, Clock } from 'lucide-react';
 import { contactInfo } from '@/data/cars';
+
+export const metadata: Metadata = {
+  title: 'Auto Verkopen Cuijk | Consignatie of Directe Inkoop | Car Store',
+  description: 'Auto verkopen in Cuijk? Kies voor consignatie (hogere prijs) of directe inkoop (direct geld). 175+ reviews, 5 sterren. Bel 06-87118768 voor een taxatie.',
+  keywords: 'auto verkopen Cuijk, auto consignatie, auto direct verkopen, auto inruilen, auto taxatie Cuijk, garage auto verkopen, 1e eigenaar auto verkopen',
+};
 
 export default function AutoVerkopenPage() {
   const opties = [
@@ -239,7 +246,7 @@ export default function AutoVerkopenPage() {
               Onze ervaring in de autobranche garandeert u een professionele behandeling.
             </p>
             <p className="text-white/60 mb-4">
-              Wij zijn RDW erkend met 168 reviews en 5 sterren op Google reviews. Consignatie is ideaal als 
+              Wij zijn RDW erkend met 175 reviews en 5 sterren op Google reviews. Consignatie is ideaal als 
               u de tijd heeft en de maximale opbrengst wilt realiseren. Wij verkopen voornamelijk 1e eigenaar autos 
               en nemen het volledige verkooptraject uit handen: van advertentie tot garantieafhandeling. 
               Bij directe inkoop krijgt u direct geld en bent u binnen een dag van uw auto af. De keuze is aan u.

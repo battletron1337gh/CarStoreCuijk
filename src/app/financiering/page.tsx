@@ -1,10 +1,16 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import FinancingCalculator from '@/components/FinancingCalculator';
+import FinancingContactForm from '@/components/FinancingContactForm';
+import { loadVweCarsFromFile } from '@/data/vwe-cars-static';
 import { Calculator, CheckCircle, Shield, Clock, Wallet, Percent } from 'lucide-react';
 import Link from 'next/link';
 
-export default function FinancieringPage() {
+export default async function FinancieringPage() {
+  // Load cars for the dropdown
+  const cars = await loadVweCarsFromFile();
+  const availableCars = cars.filter(car => car.status === 'beschikbaar');
+
   return (
     <>
       <Header />
@@ -62,10 +68,11 @@ export default function FinancieringPage() {
           </div>
         </section>
 
-        {/* Calculator Section */}
+        {/* Calculator & Contact Form Section */}
         <section className="py-20 lg:py-32 bg-[#0a0a0a]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12 items-start">
+              {/* Calculator */}
               <div>
                 <span className="inline-flex items-center gap-2 bg-[#c8102e]/20 border border-[#c8102e]/40 text-white rounded-full px-4 py-2 mb-6">
                   <Calculator className="w-4 h-4" />
@@ -124,8 +131,87 @@ export default function FinancieringPage() {
           </div>
         </section>
 
-        {/* How It Works */}
+        {/* Contact Form Section */}
         <section className="py-20 lg:py-32 bg-[#0d0d0d]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <span className="inline-flex items-center gap-2 bg-[#c8102e]/20 border border-[#c8102e]/40 text-white rounded-full px-4 py-2 mb-6">
+                <Wallet className="w-4 h-4" />
+                Aanvraag
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
+                Vraag een <span className="text-[#c8102e]">financiering</span> aan
+              </h2>
+              <p className="text-lg text-white/50 max-w-2xl mx-auto">
+                Vul het formulier in en ontvang binnen 24 uur een vrijblijvende offerte op maat.
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-12 items-start">
+              <FinancingContactForm cars={availableCars} />
+              
+              {/* Info Side */}
+              <div className="space-y-8">
+                <div className="bg-[#1a1a1a] rounded-2xl p-8 border border-white/5">
+                  <h3 className="text-xl font-bold text-white mb-4">Wat hebt u nodig?</h3>
+                  <ul className="space-y-4">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-[#c8102e] flex-shrink-0 mt-0.5" />
+                      <span className="text-white/70">Geldig identiteitsbewijs</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-[#c8102e] flex-shrink-0 mt-0.5" />
+                      <span className="text-white/70">Recente loonstrook(en)</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-[#c8102e] flex-shrink-0 mt-0.5" />
+                      <span className="text-white/70">Bankafschriften (laatste 3 maanden)</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-[#c8102e] flex-shrink-0 mt-0.5" />
+                      <span className="text-white/70">Bewijs van woonadres</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="bg-[#1a1a1a] rounded-2xl p-8 border border-white/5">
+                  <h3 className="text-xl font-bold text-white mb-4">Veelgestelde vragen</h3>
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="text-white font-medium mb-1">Hoelang duurt de aanvraag?</h4>
+                      <p className="text-white/50 text-sm">Binnen 24 uur ontvangt u een reactie op uw aanvraag.</p>
+                    </div>
+                    <div>
+                      <h4 className="text-white font-medium mb-1">Kan ik zonder vaste aanstelling financieren?</h4>
+                      <p className="text-white/50 text-sm">Ja, ook met tijdelijke contracten of als zzp'er is financiering mogelijk.</p>
+                    </div>
+                    <div>
+                      <h4 className="text-white font-medium mb-1">Is er een BKR-toetsing?</h4>
+                      <p className="text-white/50 text-sm">In veel gevallen is er geen BKR-toetsing nodig.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-[#c8102e] rounded-2xl p-8">
+                  <h3 className="text-xl font-bold text-white mb-2">Hulp nodig?</h3>
+                  <p className="text-white/80 mb-4">
+                    Neem direct contact met ons op voor persoonlijk advies.
+                  </p>
+                  <a
+                    href="tel:+31687118768"
+                    className="inline-flex items-center gap-2 bg-white text-[#c8102e] px-6 py-3 rounded-xl font-semibold hover:bg-white/90 transition-all"
+                  >
+                    <Wallet className="w-5 h-5" />
+                    +316 - 87 11 87 68
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* How It Works */}
+        <section className="py-20 lg:py-32 bg-[#0a0a0a]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">

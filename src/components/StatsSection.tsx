@@ -16,8 +16,8 @@ interface StatsData {
 
 export default function StatsSection() {
   const [stats, setStats] = useState<StatsData>({
-    google: { gemiddelde: 5.0, totaal: 168 },
-    trustpilot: { gemiddelde: 4.7, totaal: 25 },
+    google: { gemiddelde: 5.0, totaal: 175 },
+    trustpilot: { gemiddelde: 4.7, totaal: 26 },
     loading: true,
   });
 
@@ -46,7 +46,7 @@ export default function StatsSection() {
 
   const statsItems = [
     { 
-      value: stats.loading ? '168+' : `${stats.google.totaal}+`, 
+      value: stats.loading ? '175+' : `${stats.google.totaal}+`, 
       label: 'Tevreden klanten' 
     },
     { value: '5+', label: 'Jaar ervaring' },

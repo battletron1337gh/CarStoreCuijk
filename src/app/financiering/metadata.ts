@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Auto Financiering Cuijk | Lage Rente | 1ste Eigenaar Auto\'s',
-  description: 'Flexibele auto financiering in Cuijk voor 1ste eigenaar autos. Scherpe rentes, snelle afhandeling, geen BKR-toetsing. Financiering voor occasions en 1e eigenaar autos. 168 reviews, 5 sterren.',
+  description: 'Flexibele auto financiering in Cuijk voor 1ste eigenaar autos. Scherpe rentes, snelle afhandeling, geen BKR-toetsing. Financiering voor occasions en 1e eigenaar autos. 175 reviews, 5 sterren.',
   keywords: 'auto financiering Cuijk, 1ste eigenaar auto financieren, auto lease, occasion financiering, auto lening, alle merken, lage rente, geen BKR, auto lening Cuijk',
   alternates: {
     canonical: '/financiering',

@@ -10,7 +10,16 @@ interface CalculationResult {
   totaleRente: number;
 }
 
-export default function FinancingCalculator() {
+interface FinancingCalculatorProps {
+  onCalculationChange?: (data: {
+    aankoopbedrag: number;
+    aanbetaling: number;
+    looptijd: number;
+    maandbedrag: number;
+  }) => void;
+}
+
+export default function FinancingCalculator({ onCalculationChange }: FinancingCalculatorProps) {
   const [aankoopbedrag, setAankoopbedrag] = useState(15000);
   const [aanbetaling, setAanbetaling] = useState(10); // percentage
   const [looptijd, setLooptijd] = useState(60); // maanden
@@ -51,6 +60,16 @@ export default function FinancingCalculator() {
 
     setResult(newResult);
 
+    // Notify parent component of calculation changes
+    if (onCalculationChange) {
+      onCalculationChange({
+        aankoopbedrag,
+        aanbetaling,
+        looptijd,
+        maandbedrag: newResult.maandbedrag,
+      });
+    }
+
     // Debounce tracking - only track after user stops adjusting for 2 seconds
     if (trackTimeoutRef.current) {
       clearTimeout(trackTimeoutRef.current);
@@ -64,7 +83,7 @@ export default function FinancingCalculator() {
         monthlyPayment: newResult.maandbedrag,
       });
     }, 2000);
-  }, [aankoopbedrag, aanbetaling, looptijd, rentevoet]);
+  }, [aankoopbedrag, aanbetaling, looptijd, rentevoet, onCalculationChange]);
 
   useEffect(() => {
     calculate();

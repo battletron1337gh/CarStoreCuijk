@@ -199,12 +199,13 @@ export const googleReviews: Review[] = [
   }
 ];
 
-// Totale stats van Google (168 reviews, 5.0 gemiddeld)
+// Totale stats van Google (175 reviews, 5.0 gemiddeld)
+// Laatste update: 9 mei 2026
 export const reviewStats = {
   gemiddelde: 5.0,
-  totaal: 168,
+  totaal: 175,
   verdeling: {
-    vijfSterren: 168,
+    vijfSterren: 175,
     vierSterren: 0,
     drieSterren: 0,
     tweeSterren: 0,
@@ -215,11 +216,57 @@ export const reviewStats = {
 // Google review link (voor "Schrijf een review" knop)
 export const googleReviewUrl = "https://search.google.com/local/writereview?placeid=ChIJn09CtNR1x0cR0Dj28vR_PxM";
 
-// Trustpilot stats (25 reviews, 4.7 gemiddeld)
-export const trustpilotStats = {
-  gemiddelde: 4.7,
-  totaal: 25,
-};
+/**
+ * Fetch live Google Places reviews client-side.
+ * Falls back to the static list if no API key is configured or the request fails.
+ */
+export async function fetchLiveGoogleReviews(): Promise<{ reviews: Review[]; stats: typeof reviewStats }> {
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY;
+  const placeId = process.env.NEXT_PUBLIC_GOOGLE_PLACE_ID || 'ChIJn09CtNR1x0cR0Dj28vR_PxM';
 
-// Trustpilot URL
-export const trustpilotUrl = "https://nl.trustpilot.com/review/carstorecuijk.nl";
+  if (!apiKey) {
+    return { reviews: googleReviews, stats: reviewStats };
+  }
+
+  try {
+    const res = await fetch(
+      `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews,rating,user_ratings_total&key=${apiKey}`,
+      { cache: 'no-store' }
+    );
+    const data = await res.json();
+
+    if (data.status !== 'OK' || !data.result?.reviews) {
+      console.warn('[Google Reviews] API did not return reviews, falling back:', data.status);
+      return { reviews: googleReviews, stats: reviewStats };
+    }
+
+    const reviews: Review[] = data.result.reviews.map((r: any, idx: number) => ({
+      id: `live-${idx}`,
+      naam: r.author_name || 'Google Gebruiker',
+      beoordeling: r.text || '',
+      sterren: Math.min(5, Math.max(1, Math.round(r.rating || 5))),
+      datum: r.time ? new Date(r.time * 1000).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+    }));
+
+    const total = data.result.user_ratings_total || reviews.length;
+    const rating = data.result.rating || 5;
+
+    return {
+      reviews,
+      stats: {
+        gemiddelde: rating,
+        totaal: total,
+        verdeling: {
+          vijfSterren: total,
+          vierSterren: 0,
+          drieSterren: 0,
+          tweeSterren: 0,
+          eenSter: 0,
+        },
+      },
+    };
+  } catch (err) {
+    console.error('[Google Reviews] Live fetch failed, falling back:', err);
+    return { reviews: googleReviews, stats: reviewStats };
+  }
+}

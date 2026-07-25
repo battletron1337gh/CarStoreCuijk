@@ -38,7 +38,7 @@ const localBusinessSchema = {
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "5.0",
-    "reviewCount": "168"
+    "reviewCount": "175+"
   }
 };
 
@@ -87,7 +87,7 @@ export default function GarageBoxmeerPage() {
     'Open tot 22:00, ook voor spoed',
     'RDW erkend',
     'Alle merken',
-    '168 Google reviews, 5 sterren',
+    '175 Google reviews, 5 sterren',
     'Gratis parkeerplaats',
   ];
 
@@ -427,7 +427,7 @@ export default function GarageBoxmeerPage() {
             <p className="text-white/60 mb-4">
               Op zoek naar een betrouwbare garage in Boxmeer? Car Store Cuijk is slechts 10 minuten 
               rijden en biedt alle autodiensten die u nodig heeft. Van auto onderhoud en APK keuring 
-              tot reparatie en airco service. Wij zijn RDW erkend en hebben 168 reviews met 5 sterren 
+              tot reparatie en airco service. Wij zijn RDW erkend en hebben 175 reviews met 5 sterren 
               op Google.
             </p>
             <p className="text-white/60 mb-4">

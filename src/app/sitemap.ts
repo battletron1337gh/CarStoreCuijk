@@ -1,11 +1,11 @@
 import { MetadataRoute } from 'next';
-import { vweCars } from '@/data/vwe-cars';
+import { loadVweCarsFromFile } from '@/data/vwe-cars-static';
 
 export const dynamic = 'force-static';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.carstorecuijk.nl';
-  
+
   // Statische pagina's
   const staticPages = [
     '',
@@ -35,13 +35,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/kennisbank/wanneer-airco-vullen',
   ];
 
-  // Occasions
-  const occasionPages = vweCars.map((car) => ({
-    url: `${baseUrl}/occasions/${car.id}`,
-    lastModified: new Date(),
-    changeFrequency: 'daily' as const,
-    priority: 0.8,
-  }));
+  // Occasions - laad van lokale file zodat detailpagina's meekomen
+  const cars = await loadVweCarsFromFile();
+  const occasionPages = cars
+    .filter(car => car.status === 'beschikbaar' && car.id)
+    .map((car) => ({
+      url: `${baseUrl}/occasions/${car.id}`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.8,
+    }));
 
   // Combineer alle pagina's
   const allPages = [

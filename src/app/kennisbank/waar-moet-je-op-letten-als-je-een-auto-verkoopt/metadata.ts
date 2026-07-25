@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Waar Moet Je Op Letten Als Je Een Auto Verkoopt? | Car Store Cuijk',
-  description: 'Je auto verkopen? Ontdek waar je op moet letten voor een veilige en succesvolle verkoop. Tips over prijsbepaling, documenten, advertentie en overdracht. 168 reviews, 5 sterren.',
+  description: 'Je auto verkopen? Ontdek waar je op moet letten voor een veilige en succesvolle verkoop. Tips over prijsbepaling, documenten, advertentie en overdracht. 175 reviews, 5 sterren.',
   keywords: 'auto verkopen tips, auto verkopen particulier, waar op letten auto verkopen, auto verkoop checklist, auto verkopen documenten, auto verkopen prijs bepalen, 1ste eigenaar auto verkopen',
   alternates: {
     canonical: '/kennisbank/waar-moet-je-op-letten-als-je-een-auto-verkoopt',

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Auto Reparatie Cuijk | RDW Erkend | Distributieriem & Koppeling',
-  description: 'Vakkundige auto reparatie in Cuijk. Garage open tot 22:00, bereikbaar voor spoed reparatie. Specialist in 1ste eigenaar autos. Distributieriem, ketting, koppeling, remblokken. RDW erkend. 168 reviews, 5 sterren.',
+  description: 'Vakkundige auto reparatie in Cuijk. Garage open tot 22:00, bereikbaar voor spoed reparatie. Specialist in 1ste eigenaar autos. Distributieriem, ketting, koppeling, remblokken. RDW erkend. 175 reviews, 5 sterren.',
   keywords: 'auto reparatie Cuijk, spoed reparatie, garage open tot 22:00, 22:00 bereikbaar, reparatie na sluitingstijd, altijd bereikbaar voor spoed, 1ste eigenaar auto onderhoud, distributieriem vervangen, ketting vervangen, koppeling vervangen, remblokken vervangen, auto reparatie, alle merken, RDW werkplaats',
   alternates: {
     canonical: '/onderhoud/reparaties',
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Auto Reparatie Cuijk | RDW Erkend | Distributieriem, Koppeling, Remmen',
-    description: 'Vakkundige auto reparatie. Distributieriem, ketting, koppeling, remblokken. 168 reviews, 5 sterren.',
+    description: 'Vakkundige auto reparatie. Distributieriem, ketting, koppeling, remblokken. 175 reviews, 5 sterren.',
     type: 'website',
     locale: 'nl_NL',
     url: 'https://www.carstorecuijk.nl/onderhoud/reparaties',
