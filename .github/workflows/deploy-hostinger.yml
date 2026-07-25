@@ -49,6 +49,14 @@ jobs:
             ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:~/domains/carstorecuijk.nl/public_html/vwe-fotos/ \
             public/vwe-fotos/ || echo "No remote vwe-fotos to sync"
 
+      - name: Sync vehicles.json from Hostinger
+        run: |
+          mkdir -p data
+          rsync -avz --progress \
+            -e "ssh -p ${{ secrets.HOSTINGER_PORT }} -i ~/.ssh/hostinger_deploy -o StrictHostKeyChecking=no" \
+            ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:~/domains/carstorecuijk.nl/public_html/data/vehicles.json \
+            data/vehicles.json || echo "No remote vehicles.json to sync"
+
       - name: Clean install dependencies
         run: |
           rm -rf node_modules package-lock.json
