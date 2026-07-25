@@ -14,7 +14,11 @@
   - [x] /auto-reparatie-cuijk
   - [x] /onderhoud
   - [x] /airco-vullen
-- [ ] Overige dienstenpagina's cinematic versterken (APK, banden, koplampen, inkoop, verkoop)
+  - [x] /apk-keuring
+  - [x] /auto-inkoop
+  - [x] /auto-verkopen
+  - [x] /banden-service
+  - [x] /koplampen-polijsten
 - [ ] Algehele premium auto-bedrijf uitstraling verder doorvoeren
 
 ### Configurator (vervolg)
