@@ -12,11 +12,11 @@ import Services from '@/components/Services';
 import WhyChooseUs from '@/components/WhyChooseUs';
 import ReviewMarquee from '@/components/ReviewMarquee';
 import CTASection from '@/components/CTASection';
-import GarageDoorIntro from '@/components/GarageDoorIntro';
+// import GarageDoorIntro from '@/components/GarageDoorIntro';
 import Image from 'next/image';
 import { contactInfo } from '@/data/cars';
 import { reviewStats } from '@/data/google-reviews';
-import { useCars } from '@/hooks/useCars';
+import { Car } from '@/types';
 
 
 
@@ -206,14 +206,23 @@ function Hero() {
 
 
 
-// ==================== FEATURED CARS (3 uitgelicht) ====================
+// ==================== FEATURED CARS (3 meest recent) ====================
 function FeaturedCarsSection() {
-  const { cars: dbCars, isLoading } = useCars();
-  // Toon de 3 duurste beschikbare auto's
-  const featuredCars = dbCars
-    .filter(car => car.afbeeldingen.length > 0 && car.status === 'beschikbaar')
-    .sort((a, b) => b.prijs - a.prijs)
-    .slice(0, 3);
+  const [featuredCars, setFeaturedCars] = useState<Car[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/featured-cars.json')
+      .then((res) => (res.ok ? res.json() : { cars: [] }))
+      .then((data) => {
+        setFeaturedCars(data.cars || []);
+      })
+      .catch((err) => {
+        console.error('Error loading featured cars:', err);
+        setFeaturedCars([]);
+      })
+      .finally(() => setIsLoading(false));
+  }, []);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('nl-NL', {
@@ -232,10 +241,10 @@ function FeaturedCarsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 sm:mb-12">
           <span className="inline-flex items-center gap-2 text-[#c8102e] font-semibold text-sm uppercase tracking-wider mb-4">
-            Uitgelicht
+            Nieuw binnen
           </span>
           <h2 className="text-2xl sm:text-4xl font-bold text-white mb-4">
-            Onze Top Occasions
+            Onze Nieuwste Occasions
           </h2>
           <p className="text-white/50 max-w-2xl mx-auto">
             Bekijk onze nieuwste aanbod. Alle auto's worden geleverd met garantie.
@@ -545,7 +554,7 @@ export default function HomeV5() {
   return (
     <>
       <Header />
-      <GarageDoorIntro />
+      {/* <GarageDoorIntro /> */}
       <main>
         {/* 1. Originele Hero (exact zoals /page.tsx) */}
         <Hero />
