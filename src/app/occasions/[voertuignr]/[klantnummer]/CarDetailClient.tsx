@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -29,10 +29,16 @@ import {
   Info,
   ZoomIn,
   Scale,
+  Send,
+  Loader2,
+  AlertCircle,
+  User,
 } from 'lucide-react';
 import { Car as CarType } from '@/types';
 import ImageLightbox from '@/components/ImageLightbox';
 import { useCompare } from '@/context/CompareContext';
+import HCaptcha from '@hcaptcha/react-hcaptcha';
+import { HCAPTCHA_CONFIG } from '@/lib/hcaptcha';
 
 interface CarDetailClientProps {
   car: CarType;
@@ -45,6 +51,106 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
   const [showContactForm, setShowContactForm] = useState(false);
   const [formType, setFormType] = useState<'contact' | 'proefrit'>('contact');
   const [lightboxOpen, setLightboxOpen] = useState(false);
+
+  // Contact/proefrit modal form state
+  const hcaptchaRef = useRef<HCaptcha>(null);
+  const [contactFormData, setContactFormData] = useState({
+    naam: '',
+    email: '',
+    telefoon: '',
+    gewensteDagTijd: '',
+    opmerkingen: '',
+  });
+  const [contactErrors, setContactErrors] = useState<Record<string, string>>({});
+  const [isContactSubmitting, setIsContactSubmitting] = useState(false);
+  const [isContactSubmitted, setIsContactSubmitted] = useState(false);
+  const [contactSubmitError, setContactSubmitError] = useState<string | null>(null);
+  const [hcaptchaToken, setHcaptchaToken] = useState<string | null>(null);
+
+  const resetContactForm = () => {
+    setContactFormData({
+      naam: '',
+      email: '',
+      telefoon: '',
+      gewensteDagTijd: '',
+      opmerkingen: '',
+    });
+    setContactErrors({});
+    setContactSubmitError(null);
+    setHcaptchaToken(null);
+    hcaptchaRef.current?.resetCaptcha();
+  };
+
+  const validateContactForm = (): boolean => {
+    const errors: Record<string, string> = {};
+    if (!contactFormData.naam.trim() || contactFormData.naam.trim().length < 2) {
+      errors.naam = 'Naam is verplicht';
+    }
+    if (!contactFormData.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactFormData.email)) {
+      errors.email = 'Voer een geldig e-mailadres in';
+    }
+    if (!contactFormData.telefoon.trim() || !/[\d\s\-\+\(\)]{10,}$/.test(contactFormData.telefoon.replace(/\s/g, ''))) {
+      errors.telefoon = 'Voer een geldig telefoonnummer in';
+    }
+    if (!hcaptchaToken) {
+      errors.hcaptcha = 'Bevestig dat u geen robot bent';
+    }
+    setContactErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleContactChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setContactFormData(prev => ({ ...prev, [name]: value }));
+    if (contactErrors[name]) {
+      setContactErrors(prev => ({ ...prev, [name]: '' }));
+    }
+    if (contactSubmitError) setContactSubmitError(null);
+  };
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setContactSubmitError(null);
+    if (!validateContactForm()) return;
+
+    setIsContactSubmitting(true);
+
+    try {
+      const onderwerp = formType === 'proefrit'
+        ? `Proefrit aanvraag: ${car.merk} ${car.model}`
+        : `Contact over occasion: ${car.merk} ${car.model}`;
+
+      const response = await fetch('/api/send-email.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          naam: contactFormData.naam,
+          email: contactFormData.email,
+          telefoon: contactFormData.telefoon,
+          onderwerp,
+          auto_kenteken: car.kenteken || 'Onbekend',
+          auto_merk_model: `${car.merk} ${car.model} ${car.variant}`,
+          auto_id: car.id,
+          gewenste_datum: formType === 'proefrit' ? (contactFormData.gewensteDagTijd || 'Niet opgegeven') : 'Niet van toepassing',
+          opmerkingen: contactFormData.opmerkingen || 'Geen opmerkingen',
+          to_email: 'info@carstorecuijk.nl',
+          hcaptcha_token: hcaptchaToken,
+        }),
+      });
+
+      const data = await response.json();
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to send email');
+      }
+
+      setIsContactSubmitting(false);
+      setIsContactSubmitted(true);
+    } catch (error) {
+      console.error('Email error:', error);
+      setIsContactSubmitting(false);
+      setContactSubmitError('Er is iets misgegaan bij het versturen. Probeer het later opnieuw of neem telefonisch contact op.');
+    }
+  };
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('nl-NL', {
@@ -128,6 +234,7 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
                 </button>
                 <button
                   onClick={() => {
+                    resetContactForm();
                     setFormType('proefrit');
                     setShowContactForm(true);
                   }}
@@ -138,6 +245,7 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
                 </button>
                 <button
                   onClick={() => {
+                    resetContactForm();
                     setFormType('contact');
                     setShowContactForm(true);
                   }}
@@ -456,80 +564,170 @@ export default function CarDetailClient({ car }: CarDetailClientProps) {
                   : `Interesse in ${car.merk} ${car.model}`}
               </h3>
               <button
-                onClick={() => setShowContactForm(false)}
+                onClick={() => {
+                  setShowContactForm(false);
+                  setTimeout(() => {
+                    setIsContactSubmitted(false);
+                    resetContactForm();
+                  }, 300);
+                }}
                 className="text-white/50 hover:text-white"
               >
                 <X className="w-6 h-6" />
               </button>
             </div>
 
-            {/* Simple Contact Form */}
-            <form className="space-y-4">
-              <div>
-                <label className="block text-white/60 text-sm mb-1">Auto *</label>
-                <input
-                  type="text"
-                  readOnly
-                  value={`${car.merk} ${car.model} ${car.variant} (${car.kenteken || 'Kenteken onbekend'})`}
-                  className="w-full bg-[#0a0a0a] border border-white/10 rounded-lg px-4 py-3 text-white/70 focus:outline-none cursor-not-allowed"
-                />
+            {/* Contact / Proefrit Form */}
+            {isContactSubmitted ? (
+              <div className="text-center py-6">
+                <div className="w-16 h-16 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle className="w-8 h-8" />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-2">
+                  {formType === 'proefrit' ? 'Proefrit aangevraagd!' : 'Bericht verstuurd!'}
+                </h3>
+                <p className="text-white/60 mb-6">
+                  We hebben uw aanvraag ontvangen en nemen zo snel mogelijk contact met u op over de {car.merk} {car.model}.
+                </p>
+                <button
+                  onClick={() => {
+                    setIsContactSubmitted(false);
+                    resetContactForm();
+                  }}
+                  className="text-[#c8102e] hover:underline font-medium"
+                >
+                  Nieuwe aanvraag versturen
+                </button>
               </div>
-              <div>
-                <label className="block text-white/60 text-sm mb-1">Naam *</label>
-                <input
-                  type="text"
-                  placeholder="Uw naam"
-                  className="w-full bg-[#0a0a0a] border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-[#c8102e]"
-                />
-              </div>
-              <div>
-                <label className="block text-white/60 text-sm mb-1">E-mail *</label>
-                <input
-                  type="email"
-                  placeholder="uw@email.nl"
-                  className="w-full bg-[#0a0a0a] border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-[#c8102e]"
-                />
-              </div>
-              <div>
-                <label className="block text-white/60 text-sm mb-1">Telefoon *</label>
-                <input
-                  type="tel"
-                  placeholder="06 - 123 456 78"
-                  className="w-full bg-[#0a0a0a] border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-[#c8102e]"
-                />
-              </div>
-              <div>
-                <label className="block text-white/60 text-sm mb-1">
-                  {formType === 'proefrit' ? 'Gewenste dag/tijd (optioneel)' : 'Opmerkingen (optioneel)'}
-                </label>
-                <textarea
-                  rows={3}
-                  placeholder={
-                    formType === 'proefrit'
-                      ? 'Wanneer wilt u langskomen voor een proefrit?'
-                      : 'Eventuele vragen of opmerkingen...'
-                  }
-                  defaultValue={
-                    formType === 'proefrit'
-                      ? `Ik wil graag een proefrit maken in de ${car.merk} ${car.model} ${car.variant}.`
-                      : ''
-                  }
-                  className="w-full bg-[#0a0a0a] border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-[#c8102e] resize-none"
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-[#c8102e] hover:bg-[#a00d24] text-white py-3 rounded-xl font-semibold transition-all"
-              >
-                {formType === 'proefrit' ? 'Proefrit aanvragen' : 'Verstuur bericht'}
-              </button>
-              <p className="text-white/40 text-xs text-center">
-                Door het versturen gaat u akkoord met onze{' '}
-                <Link href="/privacy" className="text-[#c8102e] hover:underline">
-                  privacyverklaring
-                </Link>
-              </p>
-            </form>
+            ) : (
+              <form onSubmit={handleContactSubmit} className="space-y-4">
+                {contactSubmitError && (
+                  <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-start gap-3">
+                    <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                    <p className="text-red-400 text-sm">{contactSubmitError}</p>
+                  </div>
+                )}
+
+                <div>
+                  <label className="block text-white/60 text-sm mb-1">Auto *</label>
+                  <input
+                    type="text"
+                    readOnly
+                    value={`${car.merk} ${car.model} ${car.variant} (${car.kenteken || 'Kenteken onbekend'})`}
+                    className="w-full bg-[#0a0a0a] border border-white/10 rounded-lg px-4 py-3 text-white/70 focus:outline-none cursor-not-allowed"
+                  />
+                </div>
+                <div>
+                  <label className="block text-white/60 text-sm mb-1">Naam *</label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
+                    <input
+                      type="text"
+                      name="naam"
+                      value={contactFormData.naam}
+                      onChange={handleContactChange}
+                      placeholder="Uw naam"
+                      className={`w-full bg-[#0a0a0a] border rounded-lg py-3 pl-10 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-[#c8102e] ${
+                        contactErrors.naam ? 'border-red-500' : 'border-white/10'
+                      }`}
+                    />
+                  </div>
+                  {contactErrors.naam && <p className="text-red-500 text-xs mt-1">{contactErrors.naam}</p>}
+                </div>
+                <div>
+                  <label className="block text-white/60 text-sm mb-1">E-mail *</label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
+                    <input
+                      type="email"
+                      name="email"
+                      value={contactFormData.email}
+                      onChange={handleContactChange}
+                      placeholder="uw@email.nl"
+                      className={`w-full bg-[#0a0a0a] border rounded-lg py-3 pl-10 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-[#c8102e] ${
+                        contactErrors.email ? 'border-red-500' : 'border-white/10'
+                      }`}
+                    />
+                  </div>
+                  {contactErrors.email && <p className="text-red-500 text-xs mt-1">{contactErrors.email}</p>}
+                </div>
+                <div>
+                  <label className="block text-white/60 text-sm mb-1">Telefoon *</label>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
+                    <input
+                      type="tel"
+                      name="telefoon"
+                      value={contactFormData.telefoon}
+                      onChange={handleContactChange}
+                      placeholder="06 - 123 456 78"
+                      className={`w-full bg-[#0a0a0a] border rounded-lg py-3 pl-10 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-[#c8102e] ${
+                        contactErrors.telefoon ? 'border-red-500' : 'border-white/10'
+                      }`}
+                    />
+                  </div>
+                  {contactErrors.telefoon && <p className="text-red-500 text-xs mt-1">{contactErrors.telefoon}</p>}
+                </div>
+                <div>
+                  <label className="block text-white/60 text-sm mb-1">
+                    {formType === 'proefrit' ? 'Gewenste dag/tijd (optioneel)' : 'Opmerkingen (optioneel)'}
+                  </label>
+                  <textarea
+                    name={formType === 'proefrit' ? 'gewensteDagTijd' : 'opmerkingen'}
+                    value={formType === 'proefrit' ? contactFormData.gewensteDagTijd : contactFormData.opmerkingen}
+                    onChange={handleContactChange}
+                    rows={3}
+                    placeholder={
+                      formType === 'proefrit'
+                        ? 'Wanneer wilt u langskomen voor een proefrit?'
+                        : 'Eventuele vragen of opmerkingen...'
+                    }
+                    className="w-full bg-[#0a0a0a] border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-[#c8102e] resize-none"
+                  />
+                </div>
+
+                {/* hCaptcha */}
+                <div className="flex justify-center">
+                  <HCaptcha
+                    ref={hcaptchaRef}
+                    sitekey={HCAPTCHA_CONFIG.SITE_KEY}
+                    onVerify={(token) => {
+                      setHcaptchaToken(token);
+                      if (contactErrors.hcaptcha) {
+                        setContactErrors(prev => ({ ...prev, hcaptcha: '' }));
+                      }
+                    }}
+                    onExpire={() => setHcaptchaToken(null)}
+                    theme="dark"
+                  />
+                </div>
+                {contactErrors.hcaptcha && <p className="text-red-500 text-xs text-center">{contactErrors.hcaptcha}</p>}
+
+                <button
+                  type="submit"
+                  disabled={isContactSubmitting || !hcaptchaToken}
+                  className="w-full flex items-center justify-center gap-2 bg-[#c8102e] hover:bg-[#a00d24] disabled:bg-[#c8102e]/50 text-white py-3 rounded-xl font-semibold transition-all disabled:cursor-not-allowed"
+                >
+                  {isContactSubmitting ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      Verzenden...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5" />
+                      {formType === 'proefrit' ? 'Proefrit aanvragen' : 'Verstuur bericht'}
+                    </>
+                  )}
+                </button>
+                <p className="text-white/40 text-xs text-center">
+                  Door het versturen gaat u akkoord met onze{' '}
+                  <Link href="/privacy" className="text-[#c8102e] hover:underline">
+                    privacyverklaring
+                  </Link>
+                </p>
+              </form>
+            )}
           </motion.div>
         </div>
       )}
