@@ -20,8 +20,10 @@
 - [ ] SendCloud account aanmaken / API-key ophalen
 - [ ] `.env.local` invullen met Supabase keys (publiek toegestaan voor frontend)
 - [ ] PHP API endpoints op Hostinger voor Mollie-webhook + SendCloud secrets (`onderdelen.carstorecuijk.nl/api/`)
-- [ ] Basis Next.js 16 + Tailwind + shadcn/ui project opzetten
-- [ ] Next.js config op `output: 'export'` voor statische build naar Hostinger
+- [x] Basis Next.js 16 + Tailwind + shadcn/ui project opgezet in `/home/battletron/.openclaw/workspace/carstoreparts-shop` ✅
+- [x] Next.js config op `output: 'export'` gezet ✅
+- [x] Eerste build slaagt ✅
+- [x] Deploy-script aangemaakt (pad wordt bevestigd zodra Hostinger map bestaat) ✅
 - [ ] Supabase client + RLS policies instellen
 - [ ] Deploy-script aanmaken voor Hostinger (vergelijkbaar met `deploy-safe.sh`)
 
