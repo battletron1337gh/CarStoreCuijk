@@ -11,9 +11,9 @@
 - [x] Domein registreren/configureren in Hostinger ✅
 - [ ] DNS/Nameservers controleren (Hostinger moet `carstoreparts.nl` naar server wijzen)
 - [ ] Hostinger domein-map aanmaken voor `carstoreparts.nl`
-- [x] Hostingkeuze: onder hetzelfde Hostinger-dak als `carstorecuijk.nl` ✅
-- [ ] Hostinger domein-map aanmaken voor het nieuwe domein
-- [ ] DNS A-record instellen voor het nieuwe domein
+- [x] Hostingkeuze: eigen Hostinger-account van Master (niet het account van de vriend waar `carstorecuijk.nl` op staat) ✅
+- [ ] Hostinger domein-map aanmaken voor `carstoreparts.nl` op eigen account
+- [ ] DNS A-record instellen voor `carstoreparts.nl`
 - [ ] Link/knop toevoegen op `carstorecuijk.nl` naar de nieuwe onderdelenshop
 - [ ] Supabase project aanmaken (PostgreSQL + Auth + Storage)
 - [ ] Mollie account aanmaken / API-key ophalen
