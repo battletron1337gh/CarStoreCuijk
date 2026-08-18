@@ -11,11 +11,11 @@
 - [x] Domein registreren/configureren in Hostinger ✅
 - [ ] DNS/Nameservers controleren (Hostinger moet `carstoreparts.nl` naar server wijzen)
 - [ ] Hostinger domein-map aanmaken voor `carstoreparts.nl`
-- [x] Hostingkeuze: eigen Hostinger Premium Shared Hosting (Master sluit morgen af) ✅
-- [ ] Hostinger Premium Shared Hosting afsluiten — Master regelt dit morgen
-- [ ] `carstoreparts.nl` toevoegen aan het nieuwe Hostinger pakket
-- [ ] Hostinger domein-map aanmaken voor `carstoreparts.nl` op eigen account
-- [ ] DNS A-record instellen voor `carstoreparts.nl`
+- [x] Tijdelijke hostingkeuze: **Vercel Hobby** (gratis) tot Hostinger pakket is gekocht ✅
+- [ ] `carstoreparts.nl` nameservers/CNAME naar Vercel wijzen
+- [ ] Vercel project aanmaken en koppelen aan repo
+- [ ] Later migreren naar Hostinger Premium Shared Hosting (Master regelt dit)
+- [ ] Na migratie: deploy-script + PHP endpoints aanpassen naar Hostinger
 - [ ] Link/knop toevoegen op `carstorecuijk.nl` naar de nieuwe onderdelenshop
 - [ ] Supabase project aanmaken (PostgreSQL + Auth + Storage)
 - [ ] Mollie account aanmaken / API-key ophalen

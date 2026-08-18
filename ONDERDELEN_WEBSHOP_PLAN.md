@@ -104,24 +104,26 @@ Zonder API-koppeling van de leverancier is "pas bestellen als de klant bestelt" 
 
 ## 3. Technische architectuur
 
-### Optie A — Eigen domein op Hostinger (aanbevolen)
+### Optie A — Eigen domein op Vercel (tijdelijk, tot Hostinger pakket is gekocht)
 | Laag | Keuze |
 |------|-------|
-| Webshop frontend | Next.js 16 (App Router), Tailwind, statische export naar `carstoreparts.nl` |
-| Hosting | **Hostinger** — zelfde account als `carstorecuijk.nl`, domein-map voor `carstoreparts.nl` |
+| Webshop frontend | Next.js 16 (App Router), Tailwind, op `carstoreparts.nl` |
+| Hosting | **Vercel Hobby** (gratis tier) — later migreren naar Hostinger |
 | Database | **Supabase** PostgreSQL (gratis tier) |
 | Auth | **Supabase Auth** (email/wachtwoord, rollen, optioneel 2FA) |
 | Bestandsopslag | Supabase Storage (productfoto’s, label-PDF’s) |
-| Betalingen | Mollie API via PHP endpoint op Hostinger (webhook + secret key) |
-| Verzending | SendCloud API via PHP endpoint op Hostinger (secret key) |
+| Betalingen | Mollie API via Next.js API route of Supabase Edge Function (webhook) |
+| Verzending | SendCloud API via Next.js API route of Supabase Edge Function |
 | Kenteken data | RDW Open Data API / overheid.io (gratis) |
 | kType/fitment | Channelmotive API of RDWkentekeninformatie.nl + groothandelfeeds |
 
-**Waarom:**  
-- De shop staat op een eigen domein, los van de showroom en onderhoudssite.  
-- Alles blijft op hetzelfde Hostinger-account, zonder extra hostingkosten.  
-- CarStore Cuijk kan doorlinken naar de shop, maar de sites raken elkaar niet.  
-- Supabase regelt database, auth en storage in één gratis/laagdrempelig pakket.
+**Waarom nu Vercel:**  
+- Geen hostingkosten tot de shop geld verdient.  
+- Snel live zonder te wachten op een nieuw Hostinger pakket.  
+- Native Next.js support, makkelijke previews per branch.  
+- Migratie naar Hostinger later is prima te doen; we houden de architectuur simpel.
+
+**Migratie later:** zodra Hostinger Premium Shared Hosting er is, verplaatsen we de frontend naar een static export op Hostinger en de server-side secrets naar PHP endpoints.
 
 ### Optie B — Binnen bestaande site
 - De webshop wordt een `/onderdelen` pad binnen de bestaande Next.js-site.
