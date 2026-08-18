@@ -68,6 +68,36 @@ De shop richt zich op **beide**:
 - **B2C**: consumenten, prijzen incl. BTW, direct betalen via iDEAL/creditcard.
 - **B2B**: garages, monteurs, wederverkopers. Prijzen zowel incl. als excl. BTW tonen. Voor de MVP bestellen B2B-klanten ook direct via de shop; later kunnen we factuur/kredietlimiet toevoegen.
 
+### Domein: onder CarStore Cuijk of apart?
+Een korte, pakkende naam zoals `carparts...nl` klinkt mooi, maar in de praktijk wint de bestaande merknaam:
+- **CarStore Cuijk heeft al vertrouwen, SEO en lokale bekendheid.**
+- Klanten die een auto bij je kopen, zien direct dat ze onderdelen bij dezelfde partij kunnen kopen.
+- Een nieuw domein begint bij nul: geen backlinks, geen autoriteit, extra marketingbudget nodig.
+- Een apart domein kan later altijd nog, als de shop zelfstandig genoeg is geworden.
+
+**Advies:** start op `onderdelen.carstorecuijk.nl`. Later eventueel een eigen domein met redirect.
+
+### Hoe concurreren zonder kentekencheck?
+Je hebt gelijk: op pure gemak/concurrentie met Onderdelenlijn, Autodoc, Winparts en Autoonderdelen.nl kom je niet zonder kentekenmatching en live prijs/voorraad. Zonder leveranciers-API is dat helemaal moeilijk.
+
+**Daarom moeten we het niet op hun manier spelen.** Onze kaarten:
+1. **Specialisatie** — focus op de merken/types die CarStore Cuijk zelf verkoopt en onderhoudt.
+2. **Lokaal + snel** — ophalen in Cuijk/omgeving, soms nog dezelfde dag, persoonlijk advies.
+3. **Service** — klant kan bellen/appen, wij zoeken het juiste onderdeel op. Dat doen de grote jongens niet.
+4. **B2B vertrouwen** — garages kopen liever bij een lokale leverancier die meedenkt dan via een anonieme site.
+5. **Combinatie met werkplaats** — onderdeel + montage in één keer afspreken.
+
+**Conclusie:** we worden geen tweede Winparts. We worden de lokale onderdelenpartner met een werkende webshop voor de klanten die weten wat ze nodig hebben (of ons even bellen).
+
+### Voorraad vs. bestellen bij de klant
+Zonder API-koppeling van de leverancier is "pas bestellen als de klant bestelt" een handmatig, foutgevoelig proces:
+- Je moet elke keer stock/check en order los plaatsen.
+- Levertijd is onbekend voor de klant.
+- Retouren lopen via jou, niet via de leverancier.
+- Je kunt niet realtime tonen of iets op voorraad is.
+
+**Beter:** begin met **kleine eigen voorraad** van de sneldraaiende artikelen. Pas als een leverancier later wél een feed/API biedt, voegen we dropship of back-to-back bestellen toe.
+
 ## 3. Technische architectuur
 
 ### Optie A — Subdomein op Hostinger (aanbevolen, onder één dak)
@@ -381,7 +411,7 @@ Alternatief: directe PostNL/DHL business API (eigen contract nodig, meer werk).
 
 ## 15. Openstaande beslissingen
 
-1. **Subdomein:** ✅ `onderdelen.carstorecuijk.nl`.
+1. **Subdomein:** ✅ `onderdelen.carstorecuijk.nl` — voor nu; apart domein later optioneel.
 2. **Hosting:** ✅ Onder hetzelfde Hostinger-dak als `carstorecuijk.nl`; geen Vercel.
 3. **Route bevestigd:** we starten met MVP zonder kentekenmatching (zoeken op bandenmaat / OEM / artikelnummer / categorie).
 4. **Leveranciers:** ✅ Excluparts, PartsPoint, WM Parts, Molco — inkoop op eigen voorraad, geen dropship in MVP.
