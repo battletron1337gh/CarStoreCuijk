@@ -75,10 +75,9 @@ Master wil het **los houden** van de verkoop- en onderhoudssite om het overzicht
 - Vanaf `carstorecuijk.nl` komt een duidelijke link/knop naar de onderdelenshop.
 - Beide sites blijven op hetzelfde Hostinger-account staan.
 
-**Nog te kiezen:** het exacte domein. Opties:
-- Merk/SEO-gericht: `autoshopcuijk.nl`, `autowinkelcuijk.nl`, `cuijkparts.nl`
-- Breed inzetbaar: `carstoreparts.nl`, `autostorecuijk.nl`
-- Lokaal: `onderdelencarstore.nl`, `partsbystore.nl`
+**Gekozen domein:** `carstoreparts.nl`
+
+De webshop wordt een zelfstandig project op dit domein, gescheiden van de showroom en onderhoudssite. Vanaf `carstorecuijk.nl` komt een duidelijke link/knop naar `carstoreparts.nl`.
 
 **Advies:** kies een .nl-domein dat makkelijk te onthouden is, lokaal herkenbaar, en niet te algemeen (zodat het niet in de massa verdwijnt).
 
@@ -108,8 +107,8 @@ Zonder API-koppeling van de leverancier is "pas bestellen als de klant bestelt" 
 ### Optie A — Eigen domein op Hostinger (aanbevolen)
 | Laag | Keuze |
 |------|-------|
-| Webshop frontend | Next.js 16 (App Router), Tailwind, statische export naar eigen domein (nog te kiezen) |
-| Hosting | **Hostinger** — zelfde account als `carstorecuijk.nl`, aparte domein-map |
+| Webshop frontend | Next.js 16 (App Router), Tailwind, statische export naar `carstoreparts.nl` |
+| Hosting | **Hostinger** — zelfde account als `carstorecuijk.nl`, domein-map voor `carstoreparts.nl` |
 | Database | **Supabase** PostgreSQL (gratis tier) |
 | Auth | **Supabase Auth** (email/wachtwoord, rollen, optioneel 2FA) |
 | Bestandsopslag | Supabase Storage (productfoto’s, label-PDF’s) |
@@ -416,7 +415,7 @@ Alternatief: directe PostNL/DHL business API (eigen contract nodig, meer werk).
 
 ## 15. Openstaande beslissingen
 
-1. **Domein:** los eigen domein gekozen; exacte naam nog bepalen. Niet meer `onderdelen.carstorecuijk.nl`.
+1. **Domein:** ✅ `carstoreparts.nl` — eigen domein, los van CarStore Cuijk.
 2. **Hosting:** ✅ Onder hetzelfde Hostinger-dak als `carstorecuijk.nl`; geen Vercel.
 3. **Route bevestigd:** we starten met MVP zonder kentekenmatching (zoeken op bandenmaat / OEM / artikelnummer / categorie).
 4. **Leveranciers:** ✅ Excluparts, PartsPoint, WM Parts, Molco — inkoop op eigen voorraad, geen dropship in MVP.

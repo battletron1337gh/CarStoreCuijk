@@ -7,8 +7,8 @@
 
 ## Fase 0 — Setup (1 dag)
 
-- [ ] Domeinnaam kiezen voor de onderdelenshop (eigen domein, los van CarStore Cuijk)
-- [ ] Domein registreren/configureren in Hostinger
+- [x] Domeinnaam kiezen: `carstoreparts.nl` ✅
+- [ ] Domein registreren/configureren in Hostinger (Master regelt dit)
 - [x] Hostingkeuze: onder hetzelfde Hostinger-dak als `carstorecuijk.nl` ✅
 - [ ] Hostinger domein-map aanmaken voor het nieuwe domein
 - [ ] DNS A-record instellen voor het nieuwe domein
