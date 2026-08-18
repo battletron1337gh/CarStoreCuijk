@@ -7,10 +7,12 @@
 
 ## Fase 0 — Setup (1 dag)
 
-- [x] Subdomein vastleggen: `onderdelen.carstorecuijk.nl` ✅
+- [ ] Domeinnaam kiezen voor de onderdelenshop (eigen domein, los van CarStore Cuijk)
+- [ ] Domein registreren/configureren in Hostinger
 - [x] Hostingkeuze: onder hetzelfde Hostinger-dak als `carstorecuijk.nl` ✅
-- [ ] Hostinger subdomein-map aanmaken: `~/domains/onderdelen.carstorecuijk.nl/public_html/`
-- [ ] DNS A-record instellen voor `onderdelen.carstorecuijk.nl`
+- [ ] Hostinger domein-map aanmaken voor het nieuwe domein
+- [ ] DNS A-record instellen voor het nieuwe domein
+- [ ] Link/knop toevoegen op `carstorecuijk.nl` naar de nieuwe onderdelenshop
 - [ ] Supabase project aanmaken (PostgreSQL + Auth + Storage)
 - [ ] Mollie account aanmaken / API-key ophalen
 - [ ] SendCloud account aanmaken / API-key ophalen
@@ -182,4 +184,5 @@
 4. ✅ B2C + B2B — prijzen tonen incl. en excl. BTW; B2B-factuur/krediet later uitbreiden.
 5. ✅ Bandenmerken start: Highfly, Hankook, Vredestein + meest voorkomende maten (zie plan).
 6. ✅ Magazijnruimte is er. Picken gebeurt op eigen locatie.
-7. Nog te bepalen: exacte eerste 100 SKU’s en locaties in magazijn.
+7. ⚠️ Domein: los eigen domein gekozen; exacte naam nog bepalen.
+8. Nog te bepalen: exacte eerste 100 SKU’s en locaties in magazijn.

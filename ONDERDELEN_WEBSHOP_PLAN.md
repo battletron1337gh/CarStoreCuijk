@@ -69,13 +69,18 @@ De shop richt zich op **beide**:
 - **B2B**: garages, monteurs, wederverkopers. Prijzen zowel incl. als excl. BTW tonen. Voor de MVP bestellen B2B-klanten ook direct via de shop; later kunnen we factuur/kredietlimiet toevoegen.
 
 ### Domein: onder CarStore Cuijk of apart?
-Een korte, pakkende naam zoals `carparts...nl` klinkt mooi, maar in de praktijk wint de bestaande merknaam:
-- **CarStore Cuijk heeft al vertrouwen, SEO en lokale bekendheid.**
-- Klanten die een auto bij je kopen, zien direct dat ze onderdelen bij dezelfde partij kunnen kopen.
-- Een nieuw domein begint bij nul: geen backlinks, geen autoriteit, extra marketingbudget nodig.
-- Een apart domein kan later altijd nog, als de shop zelfstandig genoeg is geworden.
+Master wil het **los houden** van de verkoop- en onderhoudssite om het overzicht te bewaren. Dat is een valide keuze:
+- De webshop wordt een zelfstandig project met eigen domein.
+- CarStore Cuijk blijft gericht op auto's verkopen en onderhoud.
+- Vanaf `carstorecuijk.nl` komt een duidelijke link/knop naar de onderdelenshop.
+- Beide sites blijven op hetzelfde Hostinger-account staan.
 
-**Advies:** start op `onderdelen.carstorecuijk.nl`. Later eventueel een eigen domein met redirect.
+**Nog te kiezen:** het exacte domein. Opties:
+- Merk/SEO-gericht: `autoshopcuijk.nl`, `autowinkelcuijk.nl`, `cuijkparts.nl`
+- Breed inzetbaar: `carstoreparts.nl`, `autostorecuijk.nl`
+- Lokaal: `onderdelencarstore.nl`, `partsbystore.nl`
+
+**Advies:** kies een .nl-domein dat makkelijk te onthouden is, lokaal herkenbaar, en niet te algemeen (zodat het niet in de massa verdwijnt).
 
 ### Hoe concurreren zonder kentekencheck?
 Je hebt gelijk: op pure gemak/concurrentie met Onderdelenlijn, Autodoc, Winparts en Autoonderdelen.nl kom je niet zonder kentekenmatching en live prijs/voorraad. Zonder leveranciers-API is dat helemaal moeilijk.
@@ -100,11 +105,11 @@ Zonder API-koppeling van de leverancier is "pas bestellen als de klant bestelt" 
 
 ## 3. Technische architectuur
 
-### Optie A — Subdomein op Hostinger (aanbevolen, onder één dak)
+### Optie A — Eigen domein op Hostinger (aanbevolen)
 | Laag | Keuze |
 |------|-------|
-| Webshop frontend | Next.js 16 (App Router), Tailwind, statische export naar `onderdelen.carstorecuijk.nl` |
-| Hosting | **Hostinger** — zelfde account als `carstorecuijk.nl`, subdomein-map |
+| Webshop frontend | Next.js 16 (App Router), Tailwind, statische export naar eigen domein (nog te kiezen) |
+| Hosting | **Hostinger** — zelfde account als `carstorecuijk.nl`, aparte domein-map |
 | Database | **Supabase** PostgreSQL (gratis tier) |
 | Auth | **Supabase Auth** (email/wachtwoord, rollen, optioneel 2FA) |
 | Bestandsopslag | Supabase Storage (productfoto’s, label-PDF’s) |
@@ -114,9 +119,9 @@ Zonder API-koppeling van de leverancier is "pas bestellen als de klant bestelt" 
 | kType/fitment | Channelmotive API of RDWkentekeninformatie.nl + groothandelfeeds |
 
 **Waarom:**  
-- Alles staat onder hetzelfde Hostinger-dak als de bestaande site.  
-- Geen extra hostingplatform (Vercel) of extra maandkosten.  
-- De bestaande Car Store Cuijk-site blijft ongemoeid in zijn eigen map.  
+- De shop staat op een eigen domein, los van de showroom en onderhoudssite.  
+- Alles blijft op hetzelfde Hostinger-account, zonder extra hostingkosten.  
+- CarStore Cuijk kan doorlinken naar de shop, maar de sites raken elkaar niet.  
 - Supabase regelt database, auth en storage in één gratis/laagdrempelig pakket.
 
 ### Optie B — Binnen bestaande site
@@ -411,7 +416,7 @@ Alternatief: directe PostNL/DHL business API (eigen contract nodig, meer werk).
 
 ## 15. Openstaande beslissingen
 
-1. **Subdomein:** ✅ `onderdelen.carstorecuijk.nl` — voor nu; apart domein later optioneel.
+1. **Domein:** los eigen domein gekozen; exacte naam nog bepalen. Niet meer `onderdelen.carstorecuijk.nl`.
 2. **Hosting:** ✅ Onder hetzelfde Hostinger-dak als `carstorecuijk.nl`; geen Vercel.
 3. **Route bevestigd:** we starten met MVP zonder kentekenmatching (zoeken op bandenmaat / OEM / artikelnummer / categorie).
 4. **Leveranciers:** ✅ Excluparts, PartsPoint, WM Parts, Molco — inkoop op eigen voorraad, geen dropship in MVP.
