@@ -178,7 +178,8 @@
 
 1. ✅ Subdomein: `onderdelen.carstorecuijk.nl` — bevestigd.
 2. ✅ Hosting: onder hetzelfde Hostinger-dak als `carstorecuijk.nl` — bevestigd.
-3. Welke leveranciers kunnen prijslijsten/feeds aanleveren?
-4. Welke bandenmaten en merken gaan we als eerste opnemen?
-5. Moet de shop B2C, B2B of beide ondersteunen?
-6. Waar wordt er opgeslagen/gepickt? Heb je al ruimte?
+3. ✅ Leveranciers: Excluparts, PartsPoint, WM Parts, Molco — bestellen op eigen inkoop en in eigen voorraad zetten. Geen dropship in MVP.
+4. ✅ B2C + B2B — prijzen tonen incl. en excl. BTW; B2B-factuur/krediet later uitbreiden.
+5. ✅ Bandenmerken start: Highfly, Hankook, Vredestein + meest voorkomende maten (zie plan).
+6. ✅ Magazijnruimte is er. Picken gebeurt op eigen locatie.
+7. Nog te bepalen: exacte eerste 100 SKU’s en locaties in magazijn.

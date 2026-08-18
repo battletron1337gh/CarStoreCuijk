@@ -28,11 +28,47 @@
 ### Slimme start
 Begin met **onderdelen voor de merken/types die Car Store Cuijk zelf verkoopt** + veelvoorkomende slijtage-onderdelen:
 - Oliefilters, luchtfilters, interieurfilters, ruitenwissers, remblokken, remschijven, bougies, accu’s, distributieriem/ketting-setjes, airco-onderdelen, vloeistoffen.
+- **Banden startassortiment:** merken **Highfly, Hankook, Vredestein** in de meest voorkomende maten:
+  - 205/55 R16
+  - 195/65 R15
+  - 225/45 R17
+  - 215/60 R16
+  - 185/65 R15
+  - 225/40 R18
+  - 235/55 R17
+  - 195/55 R16
+  - 205/60 R16
+  - 225/50 R17
 - Later uitbreiden naar breder assortiment via groothandelfeeds.
 
 ---
 
-## 2. Technische architectuur
+## 2. Leveranciers & voorraadstrategie
+
+### Leveranciers
+Master heeft al B2B-contacten voor inkoop:
+- **Excluparts**
+- **PartsPoint**
+- **WM Parts**
+- **Molco**
+
+Deze worden gebruikt om zelf in te kopen en op voorraad te leggen. Voor de MVP is dat de juiste keuze: wij controleren kwaliteit, verpakking en levering; klanten krijgen consistente service.
+
+### Dropshippen?
+Nee, niet in fase 1. Dropshippen van alle onderdelen klinkt makkelijk, maar geeft:
+- Geen controle over levering en kwaliteit.
+- Complexe returns (wie neemt retour?).
+- Lagere marges.
+- Meer technische integratie (live feeds, voorraadsync, meerdere verzendadressen).
+
+**Strategie:** eerst eigen voorraad opbouwen van sneldraaiende artikelen. Later kunnen we dropship toevoegen voor specifieke, zware of langzame artikelen.
+
+### B2C + B2B
+De shop richt zich op **beide**:
+- **B2C**: consumenten, prijzen incl. BTW, direct betalen via iDEAL/creditcard.
+- **B2B**: garages, monteurs, wederverkopers. Prijzen zowel incl. als excl. BTW tonen. Voor de MVP bestellen B2B-klanten ook direct via de shop; later kunnen we factuur/kredietlimiet toevoegen.
+
+## 3. Technische architectuur
 
 ### Optie A — Subdomein op Hostinger (aanbevolen, onder één dak)
 | Laag | Keuze |
@@ -63,7 +99,7 @@ Begin met **onderdelen voor de merken/types die Car Store Cuijk zelf verkoopt** 
 
 ---
 
-## 3. Zoeken & matching
+## 4. Zoeken & matching
 
 ### Fase 1: zoeken zonder kentekenmatching
 Voor de MVP starten we zonder kentekenkoppeling. De klant vindt producten op basis van:
@@ -179,7 +215,7 @@ Dit is waarschijnlijk exact wat je ziet bij andere webshops.
 
 ---
 
-## 4. Database schema (vereenvoudigd)
+## 5. Database schema (vereenvoudigd)
 
 ```
 users                 — admin accounts, rollen
@@ -197,7 +233,7 @@ shipments             — verzendlabel URL, track&trace, carrier
 
 ---
 
-## 5. Admin & beveiliging
+## 6. Admin & beveiliging
 
 - **Supabase Auth** met email + sterk wachtwoord.
 - Rollen: `admin` (alles), `warehouse` (pick/pack/labels, geen prijzen/producten wijzigen).
@@ -208,7 +244,7 @@ shipments             — verzendlabel URL, track&trace, carrier
 
 ---
 
-## 6. Product- & voorraadbeheer
+## 7. Product- & voorraadbeheer
 
 Admin mogelijkheden:
 - Product toevoegen/bewerken: titel, SKU, EAN/OEM, omschrijving, afbeeldingen, categorie, prijs, inkoop, voorraad, locatie in magazijn.
@@ -220,7 +256,7 @@ Admin mogelijkheden:
 
 ---
 
-## 7. Klantflow op de webshop
+## 8. Klantflow op de webshop
 
 1. Klant komt op `/onderdelen`.
 2. Klant kiest zoekmethode:
@@ -234,7 +270,7 @@ Admin mogelijkheden:
 
 ---
 
-## 8. Pick-Pack-Print flow (magazijn)
+## 9. Pick-Pack-Print flow (magazijn)
 
 ### Stap 1 — Pickbon printen
 - Admin opent bestelling, klikt **“Pickbon printen”**.
@@ -264,7 +300,7 @@ Admin mogelijkheden:
 
 ---
 
-## 9. Verzending
+## 10. Verzending
 
 **SendCloud** (aanbevolen):
 - Gratis plan: geen maandkosten, betaal per label.
@@ -276,7 +312,7 @@ Alternatief: directe PostNL/DHL business API (eigen contract nodig, meer werk).
 
 ---
 
-## 10. Betaling
+## 11. Betaling
 
 **Mollie**:
 - iDEAL, creditcard, Bancontact, Apple Pay.
@@ -285,7 +321,7 @@ Alternatief: directe PostNL/DHL business API (eigen contract nodig, meer werk).
 
 ---
 
-## 11. Hardware aanbeveling
+## 12. Hardware aanbeveling
 
 | Hardware | Doel | Voorbeeld |
 |----------|------|-----------|
@@ -297,7 +333,7 @@ Alternatief: directe PostNL/DHL business API (eigen contract nodig, meer werk).
 
 ---
 
-## 12. Fasering
+## 13. Fasering
 
 ### Fase 0 — Keuzes & setup (week 1)
 - ✅ Subdomein + hosting: `onderdelen.carstorecuijk.nl` op Hostinger (zelfde dak als hoofdsite).
@@ -327,7 +363,7 @@ Alternatief: directe PostNL/DHL business API (eigen contract nodig, meer werk).
 
 ---
 
-## 13. Kostenindicatie (start)
+## 14. Kostenindicatie (start)
 
 | Onderdeel | Kosten |
 |-----------|--------|
@@ -343,22 +379,21 @@ Alternatief: directe PostNL/DHL business API (eigen contract nodig, meer werk).
 
 ---
 
-## 14. Openstaande beslissingen
+## 15. Openstaande beslissingen
 
 1. **Subdomein:** ✅ `onderdelen.carstorecuijk.nl`.
 2. **Hosting:** ✅ Onder hetzelfde Hostinger-dak als `carstorecuijk.nl`; geen Vercel.
 3. **Route bevestigd:** we starten met MVP zonder kentekenmatching (zoeken op bandenmaat / OEM / artikelnummer / categorie).
-4. **Beginassortiment:** welke categorieën/merken willen we als eerste?  
-   Aanbeveling: populaire bandenmaten + slijtage-onderdelen voor merken die Car Store Cuijk verkoopt.
-5. **Leverancier(s):** heb je al B2B-accounts bij onderdelengroothandels of bandenleveranciers?  
-   Zo ja: vraag een prijslijst/feed aan met artikelnummers, OEM-nummers en voorraad.
-6. **B2C, B2B of beide?** Bepaalt of we prijzen excl./incl. BTW tonen en of er een inlog nodig is.
-7. **Kentekenmatching later:** willen we later Channelmotive/TecDoc inzetten?
-8. **Magazijn & logistiek:** waar wordt opgeslagen en gepickt? Heb je daar al ruimte/processen?
+4. **Leveranciers:** ✅ Excluparts, PartsPoint, WM Parts, Molco — inkoop op eigen voorraad, geen dropship in MVP.
+5. **B2C, B2B of beide?** ✅ Beide — prijzen tonen incl. én excl. BTW; B2B factuur/krediet later.
+6. **Bandenmerken start:** ✅ Highfly, Hankook, Vredestein + meest voorkomende maten.
+7. **Magazijn & logistiek:** ✅ Er is ruimte; picking/packing op eigen locatie.
+8. **Kentekenmatching later:** willen we later Channelmotive/TecDoc inzetten?
+9. **Nog open:** exacte eerste 100 SKU’s en magazijnlocaties per product.
 
 ---
 
-## 15. Samenvatting
+## 16. Samenvatting
 
 - **Gratis kenteken-API = RDW / overheid.io.**  
 - **Gratis onderdelen-op-kenteken API bestaat niet.**  
