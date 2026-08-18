@@ -11,7 +11,9 @@
 - [x] Domein registreren/configureren in Hostinger ✅
 - [ ] DNS/Nameservers controleren (Hostinger moet `carstoreparts.nl` naar server wijzen)
 - [ ] Hostinger domein-map aanmaken voor `carstoreparts.nl`
-- [x] Hostingkeuze: eigen Hostinger-account van Master (niet het account van de vriend waar `carstorecuijk.nl` op staat) ✅
+- [x] Hostingkeuze: eigen Hostinger Premium Shared Hosting (Master sluit morgen af) ✅
+- [ ] Hostinger Premium Shared Hosting afsluiten — Master regelt dit morgen
+- [ ] `carstoreparts.nl` toevoegen aan het nieuwe Hostinger pakket
 - [ ] Hostinger domein-map aanmaken voor `carstoreparts.nl` op eigen account
 - [ ] DNS A-record instellen voor `carstoreparts.nl`
 - [ ] Link/knop toevoegen op `carstorecuijk.nl` naar de nieuwe onderdelenshop
