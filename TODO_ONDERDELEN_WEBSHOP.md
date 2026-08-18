@@ -8,7 +8,9 @@
 ## Fase 0 — Setup (1 dag)
 
 - [x] Domeinnaam kiezen: `carstoreparts.nl` ✅
-- [ ] Domein registreren/configureren in Hostinger (Master regelt dit)
+- [x] Domein registreren/configureren in Hostinger ✅
+- [ ] DNS/Nameservers controleren (Hostinger moet `carstoreparts.nl` naar server wijzen)
+- [ ] Hostinger domein-map aanmaken voor `carstoreparts.nl`
 - [x] Hostingkeuze: onder hetzelfde Hostinger-dak als `carstorecuijk.nl` ✅
 - [ ] Hostinger domein-map aanmaken voor het nieuwe domein
 - [ ] DNS A-record instellen voor het nieuwe domein
