@@ -12,8 +12,10 @@
 - [ ] DNS/Nameservers controleren (Hostinger moet `carstoreparts.nl` naar server wijzen)
 - [ ] Hostinger domein-map aanmaken voor `carstoreparts.nl`
 - [x] Tijdelijke hostingkeuze: **Vercel Hobby** (gratis) tot Hostinger pakket is gekocht ✅
-- [ ] `carstoreparts.nl` nameservers/CNAME naar Vercel wijzen
-- [ ] Vercel project aanmaken en koppelen aan repo
+- [x] Vercel project aangemaakt: https://carstoreparts-shop.vercel.app ✅
+- [x] `carstoreparts.nl` toegevoegd aan Vercel project ✅
+- [ ] DNS A-record instellen bij Hostinger: `carstoreparts.nl` → `76.76.21.21` (Master regelt dit)
+- [ ] GitHub auto-deploy koppeling herstellen (optioneel)
 - [ ] Later migreren naar Hostinger Premium Shared Hosting (Master regelt dit)
 - [ ] Na migratie: deploy-script + PHP endpoints aanpassen naar Hostinger
 - [ ] Link/knop toevoegen op `carstorecuijk.nl` naar de nieuwe onderdelenshop
